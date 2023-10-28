@@ -1,7 +1,11 @@
 import React from "react";
 
 const HomeScreen = () => {
-  return <View></View>;
+  return (
+    <View>
+      <Text>Helele</Text>
+    </View>
+  );
 };
 
 export default HomeScreen;

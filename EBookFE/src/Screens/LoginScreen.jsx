@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "../Services/interceptor";
 import {
   StyleSheet,
   SafeAreaView,
@@ -16,11 +17,13 @@ import {
 } from "../Services/AuthService";
 import { useNavigation } from "@react-navigation/native";
 import Alert from "../Components/CustomAlert";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+// import axios from "axios";
 
 export const LoginScreen = () => {
   const navigation = useNavigation();
-  const [email, setEmail] = useState("Customer@gmail.com");
-  const [password, setPassword] = useState("Customer@12345");
+  const [email, setEmail] = useState("admin");
+  const [password, setPassword] = useState("123qwe");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(false);
@@ -29,30 +32,27 @@ export const LoginScreen = () => {
   const [alertMessage, setAlertMessage] = useState("");
 
   const handleLogin = async () => {
-    const checkEmail = ValidationEmail(email);
-    const checkPassword = ValidationPassword(password);
+    // const checkEmail = ValidationEmail(email);
+    // const checkPassword = ValidationPassword(password);
 
-    if (checkEmail !== null) {
-      setEmailError(checkEmail);
-      setIsValidEmail(true);
-    }
-    if (checkPassword !== null) {
-      setPasswordError(checkPassword);
-      setIsValidPassword(true);
-    } else {
-      setEmailError("");
-      setIsValidEmail(false);
-      setPasswordError("");
-      setIsValidPassword(false);
-    }
+    // if (checkEmail !== null) {
+    //   setEmailError(checkEmail);
+    //   setIsValidEmail(true);
+    // }
+    // if (checkPassword !== null) {
+    //   setPasswordError(checkPassword);
+    //   setIsValidPassword(true);
+    // } else {
+    //   setEmailError("");
+    //   setIsValidEmail(false);
+    //   setPasswordError("");
+    //   setIsValidPassword(false);
+    // }
 
     const result = await login(email, password);
-
+    console.log(result.data);
     if (result) {
-      const accessToken = await getAccessToken();
-      const refreshToken = await getRefreshToken();
-      console.log("accessToken", accessToken);
-      console.log("refreshToken", refreshToken);
+      console.log("accessToken", result.data);
       navigation.replace("HomeScreen");
     } else {
       setAlertMessage("Email hoặc mật khẩu không đúng, mời đăng nhập lại");
@@ -170,6 +170,26 @@ export const LoginScreen = () => {
               Đăng kí
             </Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, styles.registerButton]}
+            activeOpacity={0.7}
+            onPress={() => {
+              axios
+                .get("http://192.168.1.10:5010/api/ping")
+                .then((res) => console.log(res.data));
+            }}
+          >
+            <Text
+              style={{
+                textAlign: "center",
+                fontSize: 14,
+                color: "#51d67b",
+                fontWeight: "600",
+              }}
+            >
+              Ping
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -189,10 +209,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#fff",
     width: "100%",
-    marginTop: 20,
   },
 
   logoApp: {
+    marginTop: 90,
     width: "100%",
     justifyContent: "center",
     alignItems: "center",

@@ -5,13 +5,13 @@ const baseUrl = `${BaseUrl}/users`;
 
 export const login = async (email, password) => {
   try {
-    const response = await axios.post(`${baseUrl}/login`, {
+    const response = await axios.post(`http://192.168.1.10/api/users/login`, {
       email,
       password,
     });
-    const accessToken = response.data.accessToken;
-    await AsyncStorage.setItem("accessToken", accessToken);
-    return response.data;
+    // const accessToken = response.data;
+    // await AsyncStorage.setItem("accessToken", accessToken);
+    return response;
   } catch (error) {
     console.log(error);
     return null;
@@ -27,7 +27,7 @@ export const logout = async () => {
 
 export const register = async (email, password) => {
   try {
-    const response = await axios.post(`${baseURL}/register`, {
+    const response = await axios.post(`${baseUrl}/register`, {
       email,
       password,
     });

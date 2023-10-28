@@ -240,6 +240,7 @@ const styles = StyleSheet.create({
   logoImage: {
     width: 250,
     height: 150,
+    marginVertical: 50,
   },
 
   formLogin: {
