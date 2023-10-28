@@ -1,14 +1,32 @@
-﻿namespace EBook.Dto.Books
+﻿using EBook.Entities;
+
+namespace EBook.Dto.Books
 {
     public class BookDto
     {
+        public int Id { get; set; }
+        public int UserId { get; set; }
+
+        /// <summary>
+        /// Tên sách
+        /// </summary>
         public string? Name { get; set; }
+
+        /// <summary>
+        /// Mã sách
+        /// </summary>
         public string? Code { get; set; }
 
         /// <summary>
-        /// Loại sách
+        /// Đường dẫn file
         /// </summary>
-        public int Category { get; set; }
+        public string? FileUrl { get; set; }
+        /// <summary>
+        /// Id loại sách
+        /// </summary>
+        public int CategoryId { get; set; }
+        public string? CategoryName { get; set; }
+        public Category Category { get; set; }
 
         /// <summary>
         /// Tác giả
@@ -28,10 +46,19 @@
         /// <summary>
         /// Số lượng
         /// </summary>
-        public int Quantity { get; set; }
-        public int QuantityRemain { get; set; }
-        public int Id { get; set; }
+        public int? Quantity { get; set; }
+
+        /// <summary>
+        /// Mô tả
+        /// </summary>
+        public string? Description { get; set; }
+
+        /// <summary>
+        /// Ảnh của sách
+        /// </summary>
         public string? ImageUrl { get; set; }
         public DateTime CreatedDate { get; set; }
+
+        public bool IsLike { get; set; }
     }
 }

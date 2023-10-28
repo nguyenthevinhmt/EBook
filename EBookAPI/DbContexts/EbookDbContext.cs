@@ -8,6 +8,7 @@ namespace EBook.DbContexts
         public DbSet<User> Users { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<FavoriteBook> FavoriteBooks { get; set; }
 
         public EbookDbContext(DbContextOptions<EbookDbContext> options) : base(options)
         {
@@ -35,6 +36,10 @@ namespace EBook.DbContexts
                 .HasMaxLength(50);
 
             });
+
+            modelBuilder.Entity<Category>().HasData(
+                new Category { Id = 1, CategoryName = "Văn học", CategoryDescription = "Văn học nghệ thuật" }
+                );
         }
     }
 }

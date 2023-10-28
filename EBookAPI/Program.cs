@@ -1,6 +1,7 @@
 
 using BookManagement.Entities.MapperProfiles;
 using EBook.DbContexts;
+using EBook.Dtos.Files;
 using EBook.Services.Abstracts;
 using EBook.Services.Implements;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -66,22 +67,25 @@ namespace EBook
                 });
 
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
                 {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            new string[] {}
-        }
-    });
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] {}
+                    }
+                });
             });
+            builder.Services.Configure<FileConfig>(builder.Configuration.GetSection("FileConfig:File"));
             // Add Scoped
             builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IFileService, FileService>();
+            builder.Services.AddScoped<IBookService, BookService>();
             builder.Services.AddCors(p => p.AddPolicy("MyCors", build =>
             {
                 build.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
@@ -100,11 +104,11 @@ namespace EBook
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseStaticFiles(new StaticFileOptions
+            /*app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "PdfBookFileStore")),
                 RequestPath = "/PdfBookFileStore"
-            });
+            });*/
 
             app.MapControllers();
 

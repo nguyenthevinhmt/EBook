@@ -2,17 +2,34 @@
 {
     public class CreateBookDto
     {
-        public string Name { get; set; } = null!;
+        private string _name = null!;
+        /// <summary>
+        /// Tên sách
+        /// </summary>
+        public string Name 
+        { 
+            get => _name; 
+            set => _name = value.Trim(); 
+        }
 
         /// <summary>
-        /// Loại sách
+        /// Mã sách
         /// </summary>
-        public int Category { get; set; }
+        public string Code { get; set; } = null!;
+
+        /// <summary>
+        /// Đường dẫn file
+        /// </summary>
+        public IFormFile FileUrl { get; set; } = null!;
+        /// <summary>
+        /// Id loại sách
+        /// </summary>
+        public int CategoryId { get; set; }
 
         /// <summary>
         /// Tác giả
         /// </summary>
-        public string? Author { get; set; }
+        public string Author { get; set; } = null!;
 
         /// <summary>
         /// Nhà xuất bản
@@ -29,6 +46,14 @@
         /// </summary>
         public int Quantity { get; set; }
 
-        public string ImageUrl { get; set; } = null!;
+        /// <summary>
+        /// Mô tả
+        /// </summary>
+        public string? Description { get; set; }
+
+        /// <summary>
+        /// Ảnh của sách
+        /// </summary>
+        public IFormFile ImageUrl { get; set; } = null!;
     }
 }
