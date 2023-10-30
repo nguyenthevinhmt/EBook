@@ -14,6 +14,10 @@
         /// Mã sách
         /// </summary>
         public string Code { get; set; } = null!;
+        /// <summary>
+        /// Lượt like
+        /// </summary>
+        public int LikeCount {  get; set; }
 
         /// <summary>
         /// Đường dẫn file

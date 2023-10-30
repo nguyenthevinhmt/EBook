@@ -90,8 +90,6 @@ namespace EBook
             {
                 build.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
             }));
-
-
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

@@ -4,12 +4,12 @@ namespace EBook.Dtos.Users
 {
     public class LoginDto
     {
-        private string _username;
+        private string _email;
         [Required(AllowEmptyStrings = false, ErrorMessage = "Tên đăng nhập không được bỏ trống")]
-        public string Username
+        public string Email
         {
-            get => _username;
-            set => _username = value?.Trim();
+            get => _email;
+            set => _email = value?.Trim();
         }
 
         private string _password;

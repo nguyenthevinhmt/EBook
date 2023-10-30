@@ -2,10 +2,6 @@
 {
     public class CreateUserInfoDto
     {
-        /// <summary>
-        /// Email
-        /// </summary>
-        public string Email { get; set; } = null!;
 
         /// <summary>
         /// Tên đầy đủ

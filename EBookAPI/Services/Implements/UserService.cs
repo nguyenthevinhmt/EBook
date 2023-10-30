@@ -42,14 +42,14 @@ namespace EBook.Services.Implements
 
         public void Create(CreateUserDto input)
         {
-            var checkUsername = _dbContext.Users.Any(u => u.Username == input.Username);
-            if (checkUsername)
+            var checkEmail = _dbContext.Users.Any(u => u.Email == input.Email);
+            if (checkEmail)
             {
                 throw new Exception($"Tài khoản người dùng đã tồi tại");
             }
             _dbContext.Users.Add(new User
             {
-                Username = input.Username,
+                Email = input.Email,
                 Password = CommonUtils.CreateMD5(input.Password),
                 Usertype = 2
             });
@@ -64,14 +64,13 @@ namespace EBook.Services.Implements
             if (user != null)
             {
                 user.FullName = input.FullName;
-                user.Email = input.Email;
             }
             _dbContext.SaveChanges();
         }
 
         public LoginResultDto Login(LoginDto input)
         {
-            var user = _dbContext.Users.FirstOrDefault(u => u.Username == input.Username);
+            var user = _dbContext.Users.FirstOrDefault(u => u.Email == input.Email);
             if (user == null)
             {
                 throw new Exception($"Tài khoản hoặc mật khẩu không chính xác");

@@ -11,6 +11,10 @@ namespace EBook.Dto.Books
         /// Tên sách
         /// </summary>
         public string? Name { get; set; }
+        /// <summary>
+        /// Lượt thích
+        /// </summary>
+        public int LikeCount {  get; set; }
 
         /// <summary>
         /// Mã sách
@@ -26,7 +30,7 @@ namespace EBook.Dto.Books
         /// </summary>
         public int CategoryId { get; set; }
         public string? CategoryName { get; set; }
-        public Category Category { get; set; }
+        public Category? Category { get; set; }
 
         /// <summary>
         /// Tác giả

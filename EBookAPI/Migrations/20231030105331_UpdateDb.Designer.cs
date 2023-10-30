@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EBook.Migrations
 {
     [DbContext(typeof(EbookDbContext))]
-    [Migration("20231027163157_UpdateDb")]
+    [Migration("20231030105331_UpdateDb")]
     partial class UpdateDb
     {
         /// <inheritdoc />
@@ -34,14 +34,12 @@ namespace EBook.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Author")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Code")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
@@ -50,16 +48,19 @@ namespace EBook.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FileUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("LikeCount")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PublishingCompany")
@@ -93,12 +94,19 @@ namespace EBook.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CategoryName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryDescription = "Văn học nghệ thuật",
+                            CategoryName = "Văn học"
+                        });
                 });
 
             modelBuilder.Entity("EBook.Entities.FavoriteBook", b =>
@@ -121,7 +129,7 @@ namespace EBook.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("FavoriteBook");
+                    b.ToTable("FavoriteBooks");
                 });
 
             modelBuilder.Entity("EBook.Entities.User", b =>
@@ -136,20 +144,18 @@ namespace EBook.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(128)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .IsUnicode(true)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("Usertype")
                         .HasColumnType("int");
@@ -161,13 +167,11 @@ namespace EBook.Migrations
 
             modelBuilder.Entity("EBook.Entities.Book", b =>
                 {
-                    b.HasOne("EBook.Entities.Category", "Category")
+                    b.HasOne("EBook.Entities.Category", null)
                         .WithMany("Books")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("EBook.Entities.FavoriteBook", b =>

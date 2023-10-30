@@ -1,13 +1,14 @@
 ﻿using EBook.Dtos.Users;
 using EBook.Services.Abstracts;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EBook.Controllers
 {
     [ApiController]
     [Route("api/users")]
-    // [EnableCors("MyCors")]
+    //[EnableCors("MyCors")]
     public class UsersController : ApiControllerBase
     {
         private readonly IUserService _usersServices;

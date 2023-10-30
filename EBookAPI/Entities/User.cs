@@ -8,11 +8,6 @@ namespace EBook.Entities
         public int Id { get; set; }
 
         /// <summary>
-        /// Tên đăng nhập
-        /// </summary>
-        public string Username { get; set; } = null!;
-
-        /// <summary>
         /// 1: Admin, 2 Username
         /// </summary>
         public int Usertype { get; set; }
@@ -20,17 +15,17 @@ namespace EBook.Entities
         /// <summary>
         /// Mật khẩu
         /// </summary>
-        public string Password { get; set; } = null!;
+        public string Password { get; set; } 
 
         /// <summary>
         /// Email
         /// </summary>
-        public string? Email { get; set; }
+        public string Email { get; set; }
 
         /// <summary>
         /// Tên đầy đủ
         /// </summary>
-        public string? FullName { get; set; }
+        public string FullName { get; set; }
         public List<FavoriteBook> FavoriteBooks { get; set; } = new();
 
     }

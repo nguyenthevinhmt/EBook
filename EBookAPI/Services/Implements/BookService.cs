@@ -123,6 +123,7 @@ namespace EBook.Services.Implements
                                 Id = book.Id,
                                 Code = book.Code,
                                 Name = book.Name,
+                                LikeCount = book.LikeCount,
                                 CategoryId = book.CategoryId,
                                 CategoryName = book.Category.CategoryName,
                                 Author = book.Author,

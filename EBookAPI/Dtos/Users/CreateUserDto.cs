@@ -3,13 +3,13 @@
     public class CreateUserDto
     {
         /// <summary>
-        /// Tên người dùng
+        /// Email
         /// </summary>
-        public string Username { get; set; } = null!;
+        public string Email { get; set; }
         /// <summary>
         /// Mật khẩu
         /// </summary>
-        public string Password { get; set; } = null!;
+        public string Password { get; set; }
 
     }
 }

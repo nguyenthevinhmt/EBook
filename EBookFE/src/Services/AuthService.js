@@ -1,19 +1,29 @@
 import { BaseUrl } from "../Utils/BaseUrl";
 import axios from "../Services/interceptor";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+// import { Axios } from "axios";
 const baseUrl = `${BaseUrl}/users`;
 
 export const login = async (email, password) => {
   try {
-    const response = await axios.post(`http://192.168.1.10/api/users/login`, {
-      email,
-      password,
+    const response = await axios({
+      method: "POST",
+      url: `http://10.13.0.59:5010/api/users/login`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: {
+        email,
+        password,
+      },
     });
+    console.log(response.data);
     // const accessToken = response.data;
     // await AsyncStorage.setItem("accessToken", accessToken);
     return response;
   } catch (error) {
-    console.log(error);
+    console.log("Lỗi");
+    console.log(error.response);
     return null;
   }
 };
@@ -27,13 +37,16 @@ export const logout = async () => {
 
 export const register = async (email, password) => {
   try {
-    const response = await axios.post(`${baseUrl}/register`, {
-      email,
-      password,
-    });
+    const response = await axios.post(
+      `http://10.13.0.59:5010/api/users/register`,
+      {
+        email,
+        password,
+      }
+    );
     return response;
   } catch (error) {
-    console.log(error);
-    return null;
+    console.log(error.response);
+    console.log("Lỗi");
   }
 };

@@ -24,10 +24,6 @@ namespace EBook.DbContexts
                     .ValueGeneratedOnAdd()
                     .IsRequired();
 
-                entity.Property(e => e.Username)
-                    .HasMaxLength(50)
-                    .IsRequired();
-
                 entity.Property(e => e.Password)
                     .HasMaxLength(500)
                     .IsRequired();

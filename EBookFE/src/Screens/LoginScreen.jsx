@@ -22,8 +22,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const LoginScreen = () => {
   const navigation = useNavigation();
-  const [email, setEmail] = useState("admin");
-  const [password, setPassword] = useState("123qwe");
+  const [email, setEmail] = useState("admin@gmail.com");
+  const [password, setPassword] = useState("Admin@12345");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(false);
@@ -32,22 +32,22 @@ export const LoginScreen = () => {
   const [alertMessage, setAlertMessage] = useState("");
 
   const handleLogin = async () => {
-    // const checkEmail = ValidationEmail(email);
-    // const checkPassword = ValidationPassword(password);
+    const checkEmail = ValidationEmail(email);
+    const checkPassword = ValidationPassword(password);
 
-    // if (checkEmail !== null) {
-    //   setEmailError(checkEmail);
-    //   setIsValidEmail(true);
-    // }
-    // if (checkPassword !== null) {
-    //   setPasswordError(checkPassword);
-    //   setIsValidPassword(true);
-    // } else {
-    //   setEmailError("");
-    //   setIsValidEmail(false);
-    //   setPasswordError("");
-    //   setIsValidPassword(false);
-    // }
+    if (checkEmail !== null) {
+      setEmailError(checkEmail);
+      setIsValidEmail(true);
+    }
+    if (checkPassword !== null) {
+      setPasswordError(checkPassword);
+      setIsValidPassword(true);
+    } else {
+      setEmailError("");
+      setIsValidEmail(false);
+      setPasswordError("");
+      setIsValidPassword(false);
+    }
 
     const result = await login(email, password);
     console.log(result.data);
@@ -175,7 +175,7 @@ export const LoginScreen = () => {
             activeOpacity={0.7}
             onPress={() => {
               axios
-                .get("http://192.168.1.10:5010/api/ping")
+                .get("http://10.13.0.59:5010/api/ping")
                 .then((res) => console.log(res.data));
             }}
           >

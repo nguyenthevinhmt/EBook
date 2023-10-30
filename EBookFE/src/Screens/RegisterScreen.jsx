@@ -63,7 +63,6 @@ export const RegisterScreen = () => {
       console.log(result);
     } else {
       hasError = false;
-      console.log(result);
     }
 
     if (hasError == true) {
@@ -240,11 +239,12 @@ const styles = StyleSheet.create({
   logoImage: {
     width: 250,
     height: 150,
-    marginVertical: 50,
+    marginVertical: 90,
   },
 
   formLogin: {
     flex: 3,
+    marginTop: 100,
   },
 
   inputField: {
