@@ -88,7 +88,7 @@ namespace EBook.Services.Implements
                 var token = new JwtSecurityToken(
                     issuer: _configuration["JWT:ValidIssuer"],
                     audience: _configuration["JWT:ValidAudience"],
-                    expires: DateTime.Now.AddSeconds(_configuration.GetValue<int>("JWT:Expires")),
+                    expires: DateTime.Now.AddSeconds(86400),
                     claims: claims,
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );

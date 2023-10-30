@@ -8,7 +8,7 @@ export const login = async (email, password) => {
   try {
     const response = await axios({
       method: "POST",
-      url: `http://10.13.0.59:5010/api/users/login`,
+      url: `http://192.168.1.11:5010/api/users/login`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -17,9 +17,9 @@ export const login = async (email, password) => {
         password,
       },
     });
-    console.log(response.data);
-    // const accessToken = response.data;
-    // await AsyncStorage.setItem("accessToken", accessToken);
+    // console.log(response.data);
+    const accessToken = response.data.token;
+    await AsyncStorage.setItem("accessToken", accessToken);
     return response;
   } catch (error) {
     console.log("Lỗi");
@@ -38,7 +38,7 @@ export const logout = async () => {
 export const register = async (email, password) => {
   try {
     const response = await axios.post(
-      `http://10.13.0.59:5010/api/users/register`,
+      `http://192.168.1.11:5010/api/users/register`,
       {
         email,
         password,
