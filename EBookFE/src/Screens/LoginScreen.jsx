@@ -22,8 +22,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const LoginScreen = () => {
   const navigation = useNavigation();
-  const [email, setEmail] = useState("admin@gmail.com");
-  const [password, setPassword] = useState("Admin@12345");
+  const [email, setEmail] = useState("Customer@gmail.com");
+  const [password, setPassword] = useState("Customer@12345");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(false);
@@ -53,7 +53,7 @@ export const LoginScreen = () => {
     console.log(result.data);
     if (result) {
       console.log("accessToken", result.data);
-      navigation.replace("HomeScreen");
+      navigation.replace("MainScreen");
     } else {
       setAlertMessage("Email hoặc mật khẩu không đúng, mời đăng nhập lại");
       setShowAlert(true);
@@ -168,26 +168,6 @@ export const LoginScreen = () => {
               }}
             >
               Đăng kí
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.button, styles.registerButton]}
-            activeOpacity={0.7}
-            onPress={() => {
-              axios
-                .get("http://10.13.0.59:5010/api/ping")
-                .then((res) => console.log(res.data));
-            }}
-          >
-            <Text
-              style={{
-                textAlign: "center",
-                fontSize: 14,
-                color: "#51d67b",
-                fontWeight: "600",
-              }}
-            >
-              Ping
             </Text>
           </TouchableOpacity>
         </View>

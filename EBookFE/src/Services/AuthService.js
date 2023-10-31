@@ -17,9 +17,9 @@ export const login = async (email, password) => {
         password,
       },
     });
-    console.log(response.data);
-    // const accessToken = response.data;
-    // await AsyncStorage.setItem("accessToken", accessToken);
+    // console.log(response.data);
+    const accessToken = response.data.token;
+    await AsyncStorage.setItem("accessToken", accessToken);
     return response;
   } catch (error) {
     console.log("Lỗi");

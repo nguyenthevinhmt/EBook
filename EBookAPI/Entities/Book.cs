@@ -17,7 +17,7 @@
         /// <summary>
         /// Lượt like
         /// </summary>
-        public int LikeCount {  get; set; }
+        public int LikeCount { get; set; }
 
         /// <summary>
         /// Đường dẫn file
@@ -27,7 +27,7 @@
         /// Id loại sách
         /// </summary>
         public int CategoryId { get; set; }
-        public Category Category { get;} = new();
+        public Category Category { get; } = new();
 
         /// <summary>
         /// Tác giả
@@ -37,12 +37,12 @@
         /// <summary>
         /// Nhà xuất bản
         /// </summary>
-        public string? PublishingCompany { get; set; }
+        public string PublishingCompany { get; set; }
 
         /// <summary>
         /// Năm xuất bản
         /// </summary>
-        public string? PublishingYear { get; set; }
+        public string PublishingYear { get; set; }
 
         /// <summary>
         /// Số lượng
