@@ -16,7 +16,7 @@ namespace EBook.Services.Abstracts
         /// <summary>
         /// Cập nhật danh mục
         /// </summary>
-        void Update();
+        void Update(UpdateCategoryDto input);
         /// <summary>
         /// Xóa danh mục sách
         /// </summary>

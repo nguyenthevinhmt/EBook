@@ -2,9 +2,7 @@
 using EBook.DbContexts;
 using EBook.Dtos.Categories;
 using EBook.Entities;
-using EBook.Migrations;
 using EBook.Services.Abstracts;
-using Microsoft.EntityFrameworkCore;
 
 namespace EBook.Services.Implements
 {
@@ -13,13 +11,18 @@ namespace EBook.Services.Implements
         private readonly EbookDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public CategoryService(EbookDbContext dbContext, IMapper mapper) {
+        public CategoryService(EbookDbContext dbContext, IMapper mapper)
+        {
             _dbContext = dbContext;
             _mapper = mapper;
         }
         public void Add(CreateCategoryDto input)
         {
-            var check = _dbContext.Categories.FirstOrDefault(c => c.CategoryName == input.CategoryName) ?? throw new Exception("Tên danh mục sách đã tồn tại");
+            var check = _dbContext.Categories.Any(c => c.CategoryName == input.CategoryName);
+            if (check)
+            {
+                throw new Exception("Tên danh mục sách đã tồn tại");
+            }
             var book = _dbContext.Categories.Add(new Category
             {
                 CategoryName = input.CategoryName,
@@ -30,7 +33,7 @@ namespace EBook.Services.Implements
 
         public void Delete(int id)
         {
-            var check = _dbContext.Categories.FirstOrDefault(c => c.Id == id);
+            var check = _dbContext.Categories.FirstOrDefault(c => c.Id == id) ?? throw new Exception("Danh mục không tồn tại");
             _dbContext.Categories.Remove(check);
             _dbContext.SaveChanges();
         }
@@ -41,9 +44,12 @@ namespace EBook.Services.Implements
             return _mapper.Map<List<CategoryDto>>(result);
         }
 
-        public void Update()
+        public void Update(UpdateCategoryDto input)
         {
-            throw new NotImplementedException();
+            var check = _dbContext.Categories.FirstOrDefault(c => c.Id == input.Id) ?? throw new Exception("Danh mục không tồn tại");
+            check.CategoryName = input.CategoryName;
+            check.CategoryDescription = input.CategoryDescription;
+            _dbContext.SaveChanges();
         }
     }
 }

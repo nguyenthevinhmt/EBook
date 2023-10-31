@@ -51,7 +51,7 @@ namespace EBook.Services.Implements
             {
                 Email = input.Email,
                 Password = CommonUtils.CreateMD5(input.Password),
-                Usertype = 2
+                Usertype = input.Usertype
             });
             _dbContext.SaveChanges();
         }

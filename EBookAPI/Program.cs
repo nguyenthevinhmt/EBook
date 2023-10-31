@@ -6,7 +6,6 @@ using EBook.Services.Abstracts;
 using EBook.Services.Implements;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -86,6 +85,7 @@ namespace EBook
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IFileService, FileService>();
             builder.Services.AddScoped<IBookService, BookService>();
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddCors(p => p.AddPolicy("MyCors", build =>
             {
                 build.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
