@@ -2,28 +2,30 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect } from "react";
 import { View, Image, Text, StyleSheet } from "react-native";
-// import { jwt-decode } from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
+import { decode } from "base-64";
 
+if (!global.atob) {
+  global.atob = decode;
+}
 const SplashScreen = () => {
   const navigation = useNavigation();
   const logoImage = require("../images/logo.png");
+  // var jwtDecode = require("jwt-decode");
   useEffect(() => {
     const checkTokenValidity = async () => {
       const accessToken = await AsyncStorage.getItem("accessToken");
       console.log("accessToken: ", accessToken);
 
-      if (accessToken !== "") {
+      if (accessToken !== null) {
         const decodedToken = jwtDecode(accessToken);
         const currentTime = Math.floor(Date.now() / 1000);
         if (decodedToken.exp < currentTime) {
-          console.log(1);
           navigation.replace("LoginScreen");
-        } else {
-          console.log(2);
+        } else if (decodedToken.exp > currentTime) {
           navigation.replace("MainScreen");
         }
       } else {
-        console.log(3);
         navigation.replace("LoginScreen");
       }
     };
