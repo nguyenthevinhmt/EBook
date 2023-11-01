@@ -6,6 +6,7 @@ import MainScreen from "./src/Screens/MainScreen";
 // import BookScreen from "./src/Screens/BookScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import BookInfomationScreen from "./src/Screens/BookInformationScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,7 +22,7 @@ export default function App() {
         <Stack.Screen name={"RegisterScreen"} component={RegisterScreen} />
         <Stack.Screen name={"MainScreen"} component={MainScreen} />
         {/* <Stack.Screen name={"CategoryScreen"} component={CategoryScreen} /> */}
-        {/* <Stack.Screen name={"BookScreen"} component={BookScreen} /> */}
+        <Stack.Screen name={"BookInfomationScreen"} component={BookInfomationScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
