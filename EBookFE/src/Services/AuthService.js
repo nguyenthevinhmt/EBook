@@ -1,14 +1,12 @@
-import { BaseUrl } from "../Utils/BaseUrl";
+import BaseUrl from "../Utils/BaseUrl";
 import axios from "../Services/interceptor";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// import { Axios } from "axios";
-const baseUrl = `${BaseUrl}/users`;
 
 export const login = async (email, password) => {
   try {
     const response = await axios({
       method: "POST",
-      url: `http://10.13.0.59:5010/api/users/login`,
+      url: `${BaseUrl}/users/login`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -38,7 +36,7 @@ export const logout = async () => {
 export const register = async (email, password) => {
   try {
     const response = await axios.post(
-      `http://10.13.0.59:5010/api/users/register`,
+      `http://192.168.90.6:45455/api/users/register`,
       {
         email,
         password,

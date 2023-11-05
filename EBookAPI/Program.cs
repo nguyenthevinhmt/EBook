@@ -102,11 +102,6 @@ namespace EBook
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
-            /*app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "PdfBookFileStore")),
-                RequestPath = "/PdfBookFileStore"
-            });*/
 
             app.MapControllers();
 
