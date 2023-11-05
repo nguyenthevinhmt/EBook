@@ -6,7 +6,7 @@ export const login = async (email, password) => {
   try {
     const response = await axios({
       method: "POST",
-      url: `${BaseUrl}/users/login`,
+      url: `${BaseUrl}api/users/login`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -36,7 +36,7 @@ export const logout = async () => {
 export const register = async (email, password) => {
   try {
     const response = await axios.post(
-      `http://192.168.90.6:45455/api/users/register`,
+      `${BaseUrl}api/users/register`,
       {
         email,
         password,
