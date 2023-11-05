@@ -1,4 +1,6 @@
-﻿namespace EBook.Dtos.Users
+﻿using EBook.Utils;
+
+namespace EBook.Dtos.Users
 {
     public class CreateUserDto
     {
@@ -10,6 +12,11 @@
         /// Mật khẩu
         /// </summary>
         public string Password { get; set; }
+        /// <summary>
+        /// Loại người dùng
+        /// </summary>
+        [IntegerRange(AllowableValues = new int[] { 1, 2 })]
+        public int Usertype { get; set; }
 
     }
 }

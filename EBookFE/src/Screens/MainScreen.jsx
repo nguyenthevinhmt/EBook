@@ -42,7 +42,7 @@ const MainScreen = () => {
         name="BookInfomation"
         component={BookInfomationScreen}
         options={{
-          tabBarLabel: "Trang chủ",
+          tabBarLabel: "Chi tiết",
           tabBarIcon: ({ focused }) => (
             <Image
               source={require("../images/navigationIcon/home-svgrepo-com.png")}

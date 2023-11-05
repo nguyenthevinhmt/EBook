@@ -13,9 +13,8 @@ import { useState, useRef, useMemo } from "react";
 import Icons from "react-native-vector-icons/Feather";
 import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from "expo-image-picker";
-import axios from "axios";
 
-const BookAddScreen = ({ navigation }) => {
+const AddCategoryScreen = ({ navigation }) => {
   const { width } = useWindowDimensions();
   const [imageUrl, setImageUrl] = useState();
   const [fileAudio, setFileAudio] = useState(null);
@@ -130,7 +129,7 @@ const BookAddScreen = ({ navigation }) => {
             onChangeText={(value) => setDescription(value)}
           />
         </View>
-        <View style={{ ...styles.uploadAudio }}>
+        {/* <View style={{ ...styles.uploadAudio }}>
           <TouchableOpacity
             onPress={pickAudio}
             style={{ marginRight: 10, width: "100%" }}
@@ -201,7 +200,7 @@ const BookAddScreen = ({ navigation }) => {
               }}
             />
           ) : null}
-        </View>
+        </View> */}
         <TouchableOpacity
           onPress={uploadFile}
           style={{
@@ -260,4 +259,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BookAddScreen;
+export default AddCategoryScreen;

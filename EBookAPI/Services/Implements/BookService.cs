@@ -5,6 +5,7 @@ using EBook.Dtos.Files;
 using EBook.Entities;
 using EBook.Services.Abstracts;
 using EBook.Utils;
+using Microsoft.EntityFrameworkCore;
 
 namespace EBook.Services.Implements
 {
@@ -114,25 +115,45 @@ namespace EBook.Services.Implements
 
         public List<BookDto> GetAllBook(FilterBookDto input)
         {
-            var bookQuery = from book in _dbContext.Books
-                            where !book.Deleted && (input.CategoryId == null || input.CategoryId == book.CategoryId)
-                            && (input.Name == null || book.Name.Contains(input.Name))
-                            && (input.Code == null || book.Code.Contains(input.Code))
-                            select new BookDto
-                            {
-                                Id = book.Id,
-                                Code = book.Code,
-                                Name = book.Name,
-                                LikeCount = book.LikeCount,
-                                CategoryId = book.CategoryId,
-                                CategoryName = book.Category.CategoryName,
-                                Author = book.Author,
-                                ImageUrl = book.ImageUrl,
-                                FileUrl = book.FileUrl,
-                                PublishingCompany = book.PublishingCompany,
-                                PublishingYear = book.PublishingYear,
-                                Description = book.Description
-                            };
+            var bookQuery = _dbContext.Books.Include(c => c.FavoriteBooks).Where(c => !c.Deleted && (input.CategoryId == null || input.CategoryId == c.CategoryId))
+                                            .Select(c => new BookDto
+                                            {
+                                                Id = c.Id,
+                                                Code = c.Code,
+                                                Name = c.Name,
+                                                LikeCount = c.FavoriteBooks.Count(),
+                                                CategoryId = c.CategoryId,
+                                                CategoryName = c.Category.CategoryName,
+                                                Author = c.Author,
+                                                ImageUrl = c.ImageUrl,
+                                                FileUrl = c.FileUrl,
+                                                PublishingCompany = c.PublishingCompany,
+                                                PublishingYear = c.PublishingYear,
+                                                Description = c.Description,
+                                            });
+            //                && (input.Name == null || book.Name.Contains(input.Name))
+            //                && (input.Code == null || book.Code.Contains(input.Code));
+            //var bookQuery = from book in _dbContext.Books
+            //                join favorite in _dbContext.FavoriteBooks on book.Id equals favorite.BookId
+            //                where !book.Deleted && (input.CategoryId == null || input.CategoryId == book.CategoryId)
+            //                && (input.Name == null || book.Name.Contains(input.Name))
+            //                && (input.Code == null || book.Code.Contains(input.Code))
+            //                select new BookDto
+            //                {
+            //                    Id = book.Id,
+            //                    Code = book.Code,
+            //                    Name = book.Name,
+            //                    LikeCount = favorite.,
+            //                    CategoryId = book.CategoryId,
+            //                    CategoryName = book.Category.CategoryName,
+            //                    Author = book.Author,
+            //                    ImageUrl = book.ImageUrl,
+            //                    FileUrl = book.FileUrl,
+            //                    PublishingCompany = book.PublishingCompany,
+            //                    PublishingYear = book.PublishingYear,
+            //                    Description = book.Description,
+
+            //                };
             return bookQuery.ToList();
         }
 
@@ -159,5 +180,6 @@ namespace EBook.Services.Implements
                 return true;
             }
         }
+
     }
 }

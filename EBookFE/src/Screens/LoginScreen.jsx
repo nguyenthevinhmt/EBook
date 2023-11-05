@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "../Services/interceptor";
 import {
   StyleSheet,
   SafeAreaView,
@@ -10,15 +9,9 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { ValidationEmail, ValidationPassword } from "../Utils/validation";
-import {
-  getAccessToken,
-  getRefreshToken,
-  login,
-} from "../Services/AuthService";
+import { login } from "../Services/AuthService";
 import { useNavigation } from "@react-navigation/native";
 import Alert from "../Components/CustomAlert";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-// import axios from "axios";
 
 export const LoginScreen = () => {
   const navigation = useNavigation();
@@ -48,16 +41,15 @@ export const LoginScreen = () => {
       setPasswordError("");
       setIsValidPassword(false);
     }
-
-    const result = await login(email, password);
-    console.log(result.data);
-    if (result) {
-      console.log("accessToken", result.data);
-      navigation.replace("MainScreen");
-    } else {
-      setAlertMessage("Email hoặc mật khẩu không đúng, mời đăng nhập lại");
-      setShowAlert(true);
-      console.log("Đăng nhập lỗi");
+    try {
+      const result = await login(email, password);
+      console.log(result.data);
+      if (result) {
+        console.log("accessToken", result.data);
+        navigation.replace("MainScreen");
+      }
+    } catch (error) {
+      alert("Tài khoản hoặc mật khẩu không đúng");
     }
   };
 
