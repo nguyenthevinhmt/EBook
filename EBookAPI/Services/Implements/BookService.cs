@@ -34,7 +34,7 @@ namespace EBook.Services.Implements
 
         public BookDto AddBook(CreateBookDto input)
         {
-            var userId = CommonUtils.GetCurrentUserId(_httpContext);
+            var userId = 1;// CommonUtils.GetCurrentUserId(_httpContext);
             var bookUrl = _fileService.UploadFile(new UploadFileModel
             {
                 File = input.FileUrl,

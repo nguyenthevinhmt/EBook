@@ -42,6 +42,7 @@ namespace EBook.Controllers
                 ".gif" => File(fileByte, MimeTypeNames.ImageGif),
                 ".mp4" => File(fileByte, MimeTypeNames.VideoMp4),
                 ".mp3" => File(fileByte, MimeTypeNames.AudioMp4),
+                ".pdf" => File(fileByte, MimeTypeNames.ApplicationPdf),
                 //".pdf" => File(fileByte, MimeTypeNames.ApplicationPdf);
                 _ => File(fileByte, MimeTypeNames.ApplicationOctetStream, fileName),
             };
