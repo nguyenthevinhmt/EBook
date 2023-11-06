@@ -6,7 +6,7 @@ export const login = async (email, password) => {
   try {
     const response = await axios({
       method: "POST",
-      url: `${BaseUrl}api/users/login`,
+      url: `${BaseUrl}/users/login`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -35,13 +35,10 @@ export const logout = async () => {
 
 export const register = async (email, password) => {
   try {
-    const response = await axios.post(
-      `${BaseUrl}api/users/register`,
-      {
-        email,
-        password,
-      }
-    );
+    const response = await axios.post(`${BaseUrl}/users/register`, {
+      email,
+      password,
+    });
     return response;
   } catch (error) {
     console.log(error.response);

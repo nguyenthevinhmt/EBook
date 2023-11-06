@@ -1,64 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  FlatList,
   KeyboardAvoidingView,
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  FlatList,
 } from "react-native";
-
 import { SafeAreaView } from "react-native-safe-area-context";
-import BookCard from "../Components/BookCard";
-// import Icon from "react-native-vector-icons";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { bookFavorite } from "../Services/BookService";
-const FavoriteScreen = ({ navigation }) => {
-  const data = [
-    {
-      id: "1",
-      name: "Năng Lượng Tĩnh Lặng ",
-      author: "Eckhart Tolle",
-      image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
-    },
-    {
-      id: "2",
-      name: "Bí Mật Tư Duy Triệu Phú T. ",
-      author: "Harv Eker",
-      image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
-    },
-    {
-      id: "3",
-      name: "7 Thói Quen Hiệu Quả Stephen",
-      author: " R. Covey",
-      image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
-    },
-    {
-      id: "4",
-      name: "Nhìn Xa, Nhìn Rõ - Dr. Wayne ",
-      author: "W. Dyer",
-      image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
-    },
-  ];
-  const [books, setBooks] = useState([]);
-  const getBookFavorite = async () => {
-    const result = await bookFavorite();
-    setBooks(result.data);
-  };
-  useEffect(() => {
-    async () => await getBookFavorite();
-  }, []);
 
+const SearchScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <KeyboardAvoidingView style={styles.container} behavior="height">
         <View style={styles.headerSearch}>
           <Icon name="magnify" size={18} color={"#666"}></Icon>
-          <TextInput
-            style={{ paddingHorizontal: 10 }}
-            placeholder="Tìm kiếm sách yêu thích của bạn ..."
-          />
+          <TextInput style={{ paddingHorizontal: 10 }} placeholder="Tìm kiếm" />
         </View>
         <View
           style={{
@@ -96,7 +54,7 @@ const FavoriteScreen = ({ navigation }) => {
             alignItems: "center",
           }}
         >
-          <FlatList
+          {/* <FlatList
             data={books}
             showsVerticalScrollIndicator={false}
             keyExtractor={(item) => item.id.toString()}
@@ -115,13 +73,12 @@ const FavoriteScreen = ({ navigation }) => {
             )}
             numColumns={3}
             contentContainerStyle={styles.flatListContentContainer}
-          />
+          /> */}
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -148,4 +105,4 @@ const styles = StyleSheet.create({
   },
   flatListContentContainer: {},
 });
-export default FavoriteScreen;
+export default SearchScreen;

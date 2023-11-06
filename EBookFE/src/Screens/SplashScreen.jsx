@@ -11,7 +11,6 @@ if (!global.atob) {
 const SplashScreen = () => {
   const navigation = useNavigation();
   const logoImage = require("../images/logo.png");
-  // var jwtDecode = require("jwt-decode");
   useEffect(() => {
     const checkTokenValidity = async () => {
       const accessToken = await AsyncStorage.getItem("accessToken");
