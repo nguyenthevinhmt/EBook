@@ -2,7 +2,11 @@
 {
     public class FilterBookDto
     {
-        public string? Name { get; set; }
+        private string? _name {  get; set; }
+        public string? Name 
+        { 
+            get => _name; 
+            set => _name = value?.Trim(); }
         public string? Code { get; set; }
 
         /// <summary>
@@ -10,5 +14,9 @@
         /// </summary>
         public int? CategoryId { get; set; }
 
+        /// <summary>
+        /// Lấy bao nhiêu bản ghi
+        /// </summary>
+        public int? Index {  get; set; }
     }
 }

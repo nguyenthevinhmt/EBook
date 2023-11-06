@@ -72,6 +72,48 @@ namespace EBook.Controllers
             }
         }
 
+        [HttpGet("get-all-like")]
+        public IActionResult GetAllBookLike([FromQuery] FilterBookDto input)
+        {
+            try
+            {
+
+                return Ok(_bookServices.GetAllBookLike(input));
+            }
+            catch (Exception ex)
+            {
+                return ReturnException(ex);
+            }
+        }
+
+        [HttpGet("get-all-admin")]
+        public IActionResult GetAllBookAdmin([FromQuery] FilterBookDto input)
+        {
+            try
+            {
+
+                return Ok(_bookServices.GetAllBookAdmin(input));
+            }
+            catch (Exception ex)
+            {
+                return ReturnException(ex);
+            }
+        }
+
+        [HttpGet("search-book")]
+        public IActionResult SearchBook([FromQuery] FilterBookDto input)
+        {
+            try
+            {
+
+                return Ok(_bookServices.SearchBook(input));
+            }
+            catch (Exception ex)
+            {
+                return ReturnException(ex);
+            }
+        }
+
         [HttpPut("like/{bookId}")]
         public IActionResult LikeBook(int bookId)
         {

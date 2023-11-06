@@ -9,5 +9,8 @@ namespace EBook.Services.Abstracts
         List<BookDto> GetAllBook(FilterBookDto input);
         void Update(UpdateBookDto input);
         bool LikeBook(int bookId);
+        List<BookDto> GetAllBookAdmin(FilterBookDto input);
+        List<BookDto> GetAllBookLike(FilterBookDto input);
+        List<BookDto> SearchBook(FilterBookDto input);
     }
 }
