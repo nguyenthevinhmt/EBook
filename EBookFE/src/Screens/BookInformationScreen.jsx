@@ -10,16 +10,10 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useState, useRef, useMemo, useEffect } from "react";
-
-const data = {
-  id: "2",
-  name: "Bí Mật Tư Duy Triệu Phú Tư duy. ",
-  author: "Harv Eker",
-  publishingCompany: "NXB Kim đồng",
-  description:
-    "Tâm lý học tội phạm là bộ sách gồm 2 tập đề cập đến quyền lựa chọn, ý chí tự do, cái thiện và cái ác, phản ứng trước cám dỗ và sự thể hiện lòng dũng cảm hay hèn nhát khi đối mặt với nghịch cảnh của",
-  imageUrl: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
-};
+import { favoriteBook } from "../Services/BookService";
+import { useRoute } from '@react-navigation/native';
+import { getBookById } from "../Services/BookService";
+import BaseUrl from "../Utils/BaseUrl";
 
 const Form = ({ title, lable }) => (
   <View
@@ -41,16 +35,26 @@ const Form = ({ title, lable }) => (
 );
 
 const BookInfomationScreen = ({ navigation }) => {
+  const route = useRoute();
+  const { bookId } = route.params;
   const [isHeart, setIsHeart] = useState(false);
-  const [bookInfo, setBookInfo] = useState(data);
+  const [bookInfo, setBookInfo] = useState(null);
 
-  // Thả tim
-  const LikeBook = () => {
-    setIsHeart(!isHeart);
-    // like_book(bookInfo?.id ?? 0, (res) => {
-    //   setIsHeart(res)
-    // })
+  const getById = async () => {
+    const result = await getBookById(bookId);
+    setBookInfo(result?.data);
+    setIsHeart(result?.data?.isLike)
   };
+  // Thả tim
+  const LikeBook = async (bookId) => {
+    const result = await favoriteBook(bookId);
+    setIsHeart(result.data);
+  };
+
+  useEffect(() => {
+    getById();
+  }, []);
+
   return (
     <View style={{ flex: 1 }}>
       <View
@@ -70,7 +74,7 @@ const BookInfomationScreen = ({ navigation }) => {
           <Icon name="arrow-back" size={25} color="black"></Icon>
         </TouchableOpacity>
         <View style={{ width: "65%", height: "30%", justifyContent: "center" }}>
-          <Text style={{ fontWeight: "500" }}>{bookInfo.name}</Text>
+          <Text style={{ fontWeight: "500" }}>{bookInfo?.name}</Text>
         </View>
         <View
           style={{
@@ -86,9 +90,7 @@ const BookInfomationScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </View>
-      <ScrollView
-        contentContainerStyle={{ flex: 1, alignItems: "center", marginTop: 10 }}
-      >
+      <ScrollView contentContainerStyle={{ flex: 1, alignItems: "center", marginTop: 10 }} >
         <View style={{ height: "80%", width: "95%" }}>
           <View
             style={{
@@ -101,35 +103,35 @@ const BookInfomationScreen = ({ navigation }) => {
           >
             <View style={{ width: "45%" }}>
               <Image
-                source={{ uri: bookInfo.imageUrl }}
-                style={{ height: "70%", width: "80%" }}
+                source={{ uri: `${BaseUrl}${bookInfo?.imageUrl}` }}
+                style={{ height: "70%", width: "80%", borderRadius: 10 }}
               ></Image>
             </View>
             <View style={{ height: "70%", width: "60%" }}>
               <Text style={{ fontWeight: "700", fontSize: 17 }}>
-                {bookInfo.name}
+                {bookInfo?.name}
               </Text>
-              <Text style={{ marginTop: 10 }}>{bookInfo.author}</Text>
+              <Text style={{ marginTop: 10 }}>{bookInfo?.author}</Text>
               <Text style={{ marginTop: 10 }}>0 đánh giá</Text>
               <View style={styles.position}>
-                <View>
-                  <TouchableOpacity onPress={LikeBook}>
+                <View style={{alignItems: 'center'}}>
+                  <TouchableOpacity onPress={ () => LikeBook(bookId)}>
                     <Icon
                       name={isHeart ? "heart" : "heart-outline"}
                       style={{ fontSize: 20 }}
                       color={isHeart ? "red" : "black"}
                     ></Icon>
                   </TouchableOpacity>
-                  <Text>30</Text>
+                  <Text>{bookInfo?.countLike}</Text>
                 </View>
-                <View>
+                <View style={{alignItems: 'center'}}>
                   <Icon name="eye-outline" style={{ fontSize: 20 }}></Icon>
-                  <Text>100</Text>
+                  <Text>{bookInfo?.viewBook}</Text>
                 </View>
               </View>
             </View>
           </View>
-          <Text style={{ marginTop: 10 }}>{bookInfo.description}</Text>
+          <Text style={{ marginTop: 10 }}>{bookInfo?.description}</Text>
           <View
             style={{
               height: "40%",
@@ -144,7 +146,7 @@ const BookInfomationScreen = ({ navigation }) => {
               lable={"Tâm Lý - Hành vi - Tội phạm"}
               title={"Thể loại"}
             ></Form>
-            <Form lable={bookInfo.author} title={"Tác giả"}></Form>
+            <Form lable={bookInfo?.author} title={"Tác giả"}></Form>
             <Form lable={"VIP"} title={"Loại sách"}></Form>
             <Form lable={"Tiếng việt"} title={"Ngôn ngữ"}></Form>
           </View>

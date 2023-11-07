@@ -108,8 +108,18 @@ namespace EBook.Services.Implements
         {
             var book = _dbContext.Books.FirstOrDefault(b => b.Id == bookId && !b.Deleted)
                 ?? throw new Exception($"Không tìm thấy sách");
+            book.ViewBook += 1;
+            _dbContext.SaveChanges();
             var result = _mapper.Map<BookDto>(book);
-            result.IsLike = _dbContext.FavoriteBooks.Any(b => b.UserId == CommonUtils.GetCurrentUserId(_httpContext));
+            result.CountLike = _dbContext.FavoriteBooks.Count(b => b.BookId == book.Id);
+            try
+            {
+                result.IsLike = _dbContext.FavoriteBooks.Any(b => b.BookId == book.Id && b.UserId == CommonUtils.GetCurrentUserId(_httpContext));
+            }
+            catch (Exception ex)
+            {
+
+            }
             return result;
         }
 

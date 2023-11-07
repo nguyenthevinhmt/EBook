@@ -4,6 +4,7 @@ using EBook.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EBook.Migrations
 {
     [DbContext(typeof(EbookDbContext))]
-    partial class EbookDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231107161531_FieldViewBook")]
+    partial class FieldViewBook
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,7 +72,7 @@ namespace EBook.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ViewBook")
+                    b.Property<int?>("ViewBook")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

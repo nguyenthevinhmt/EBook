@@ -3,12 +3,12 @@ import axios from "axios";
 
 const instance = axios.create();
 
-const token = await AsyncStorage.getItem("accessToken");
+const token = AsyncStorage.getItem("accessToken");
 //request
 instance.interceptors.request.use(
   (config) => {
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = `Bearer ${token._j}`;
       return config;
     }
   },

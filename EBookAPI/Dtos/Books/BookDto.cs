@@ -63,6 +63,11 @@ namespace EBook.Dto.Books
         public string ImageUrl { get; set; }
         public DateTime CreatedDate { get; set; }
 
+        /// <summary>
+        /// Số lượt xem sách
+        /// </summary>
+        public int? ViewBook { get; set; }
         public bool IsLike { get; set; }
+        public int CountLike { get; set; }
     }
 }
