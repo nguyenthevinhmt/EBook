@@ -25,7 +25,7 @@ export const bookFavorite = async () => {
     try {
       const response = await axios({
         method: "GET",
-        url: `${BaseUrl}api/book/get-all`,
+        url: `${BaseUrl}api/book/get-all-like`,
       });
       console.log(response.data);
       return response;
