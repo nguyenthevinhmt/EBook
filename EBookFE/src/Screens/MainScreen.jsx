@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import FavoriteScreen from "./FavoriteScreen";
 import UserScreen from "./UserScreen";
 import HomeScreen from "./HomeScreen";
-import { Image } from "react-native";
+import { Image, View, Text } from "react-native";
 import BookInfomationScreen from "./BookInformationScreen";
 import BookAddScreen from "./BookAddScreen";
 
@@ -11,7 +11,7 @@ const BottomTabs = createBottomTabNavigator();
 const MainScreen = () => {
   return (
     <BottomTabs.Navigator
-      initialRouteName="Home"
+      initialRouteName="HomeScreen"
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarActiveTintColor: "#51d67b",
@@ -21,11 +21,28 @@ const MainScreen = () => {
         },
       })}
     >
-      <BottomTabs.Screen
+      {/* <BottomTabs.Screen
         name="Home"
         component={HomeScreen}
         options={{
           tabBarLabel: "Trang chủ",
+          tabBarIcon: ({ focused }) => (
+            <Image
+              source={require("../images/navigationIcon/home-svgrepo-com.png")}
+              style={{
+                width: 24,
+                height: 24,
+                tintColor: focused ? "#51d67b" : "gray",
+              }}
+            />
+          ),
+        }}
+      /> */}
+      <BottomTabs.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{
+          tabBarLabel: "Home",
           tabBarIcon: ({ focused }) => (
             <Image
               source={require("../images/navigationIcon/home-svgrepo-com.png")}

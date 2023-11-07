@@ -23,6 +23,7 @@ const SplashScreen = () => {
         if (decodedToken.exp < currentTime) {
           navigation.replace("LoginScreen");
         } else if (decodedToken.exp > currentTime) {
+          console.log(decodedToken);
           navigation.replace("MainScreen");
         }
       } else {
@@ -32,6 +33,7 @@ const SplashScreen = () => {
 
     const timer = setTimeout(() => {
       checkTokenValidity();
+      console.log("call back work");
     }, 2000);
 
     return () => {
