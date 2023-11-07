@@ -6,7 +6,6 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
-  FlatList,
   SafeAreaView,
   KeyboardAvoidingView,
 } from "react-native";
@@ -129,6 +128,7 @@ const HomeScreen = () => {
               //justifyContent: "space-between",
             }}
             onPress={() => BookInformation(item.id)}
+            key={item.id}
           >
             <Image
               style={{ height: "85%", width: "100%", borderRadius: 5 }}
@@ -222,6 +222,7 @@ const HomeScreen = () => {
                       justifyContent: "space-between",
                       alignItems: "center",
                     }}
+                    key={item.id}
                   >
                     <Image
                       style={{ height: "85%", width: "100%" }}
