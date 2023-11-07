@@ -1,2 +1,2 @@
-const BaseUrl = `http://192.168.90.5:45455/`;
+const BaseUrl = `http://192.168.1.10:5010/api`;
 export default BaseUrl;
