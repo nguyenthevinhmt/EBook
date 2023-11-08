@@ -23,16 +23,72 @@ export const addBook = async (formData) => {
   }
 };
 
+export const bookGetAll = async () => {
+  try {
+    const response = await axios({
+      method: "GET",
+      url: `${BaseUrl}/book/get-all`,
+    });
+    return response;
+  } catch (error) {
+    console.log("Lỗi");
+    console.log(error.response);
+    return null;
+  }
+};
+
+export const getBookById = async (bookId) => {
+  try {
+    const response = await axios({
+      method: "GET",
+      url: `${BaseUrl}/book/find-by-id/${bookId}`,
+    });
+    return response;
+  } catch (error) {
+    console.log("Lỗi");
+    console.log(error.response);
+    return null;
+  }
+};
+
 export const bookFavorite = async () => {
   try {
     const response = await axios({
       method: "GET",
-      url: `${BaseUrl}api/book/get-all`,
-      headers: {
-        Authorization: `Bearer ${token}`,
+      url: `${BaseUrl}/book/get-all-like`,
+    });
+    return response;
+  } catch (error) {
+    console.log("Lỗi");
+    console.log(error.response);
+    return null;
+  }
+};
+
+// yêu thích sách
+export const favoriteBook = async (bookId) => {
+  try {
+    const response = await axios({
+      method: "PUT",
+      url: `${BaseUrl}/book/like/${bookId}`,
+    });
+    return response;
+  } catch (error) {
+    console.log("Lỗi");
+    console.log(error.response);
+    return null;
+  }
+};
+
+export const searchBook = async (keyword) => {
+  try {
+    const response = await axios({
+      method: "GET",
+      url: `${BaseUrl}/book/get-all`,
+      params: {
+        Name: keyword,
       },
     });
-    console.log(response.data);
     return response;
   } catch (error) {
     console.log("Lỗi");

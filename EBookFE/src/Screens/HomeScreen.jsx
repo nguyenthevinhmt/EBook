@@ -11,6 +11,9 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/native";
+import { bookGetAll } from "../Services/BookService";
+import BaseUrl from "../Utils/BaseUrl";
+import { useState, useEffect } from "react";
 
 const data = [
   {
@@ -50,72 +53,27 @@ const data = [
     image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
   },
 ];
-const items = [
-  {
-    id: "1",
-    name: "Sức Mạnh Của Năng Lượng Tĩnh Lặng ",
-    author: "Eckhart Tolle",
-    image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
-  },
-  {
-    id: "2",
-    name: "Bí Mật Tư Duy Triệu Phú T. ",
-    author: "Harv Eker",
-    image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
-  },
-  {
-    id: "3",
-    name: "7 Thói Quen Hiệu Quả Stephen",
-    author: " R. Covey",
-    image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
-  },
-  {
-    id: "4",
-    name: "Nhìn Xa, Nhìn Rõ - Dr. Wayne ",
-    author: "W. Dyer",
-    image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
-  },
-  {
-    id: "5",
-    name: "Tư Duy Tích Cực ",
-    author: " Norman Vincent Peale",
-    image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
-  },
-  {
-    id: "6",
-    name: "Tư Duy Nhanh Và Chậm ",
-    author: " Daniel Kahneman",
-    image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
-  },
-  {
-    id: "7",
-    name: "Sức Mạnh Của Sự Tập Trung ",
-    author: "Daniel Goleman",
-    image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
-  },
-  {
-    id: "8",
-    name: "Tâm Lý Học Hạnh Phúc",
-    author: "Martin Seligman",
-    image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
-  },
-  {
-    id: "9",
-    name: "Tâm Trạng Lo Lắng  ",
-    author: "Robert L. Leahy",
-    image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
-  },
-];
+
 const itemsPerRow = 3;
 const HomeScreen = () => {
   const navigation = useNavigation();
+  const [books, setBooks] = useState([]);
+  const [keyword, setKeyword] = useState("");
   const BookInformation = (bookId) => {
     navigation.navigate("BookInfomationScreen", { bookId });
   };
 
+  const getBooks = async () => {
+    const result = await bookGetAll();
+    setBooks(result?.data);
+  };
+  useEffect(() => {
+    getBooks();
+  }, []);
+
   const rows = [];
-  for (let i = 0; i < items.length; i += itemsPerRow) {
-    const rowItems = items.slice(i, i + itemsPerRow);
+  for (let i = 0; i < books.length; i += itemsPerRow) {
+    const rowItems = books.slice(i, i + itemsPerRow);
     const row = (
       <View key={i} style={styles.row}>
         {rowItems.map((item) => (
@@ -132,7 +90,7 @@ const HomeScreen = () => {
           >
             <Image
               style={{ height: "85%", width: "100%", borderRadius: 5 }}
-              source={{ uri: item.image }}
+              source={{ uri: `${BaseUrl}${item.imageUrl}` }}
             ></Image>
             <View style={{ flexDirection: "column", height: 30 }}>
               <Text style={{ marginTop: 10 }} numberOfLines={1}>
@@ -194,6 +152,11 @@ const HomeScreen = () => {
                 style={{ height: "100%", width: "85%" }}
                 placeholder="Tìm kiếm danh sách"
                 placeholderTextColor={"#555"}
+                value={keyword}
+                onChangeText={(value) => setKeyword(value)}
+                onSubmitEditing={() => {
+                  navigation.navigate("SearchScreen", { keyword });
+                }}
               />
             </View>
           </View>
@@ -270,9 +233,7 @@ const HomeScreen = () => {
                 <Icon name="chevron-down" size={25} color={"black"}></Icon>
               </View>
             </View>
-            <ScrollView
-              contentContainerStyle={{ alignItems: "center", marginTop: 10 }}
-            >
+            <ScrollView contentContainerStyle={{ marginTop: 10 }}>
               {rows}
             </ScrollView>
           </View>
@@ -293,7 +254,7 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     marginBottom: 10,
   },
 });

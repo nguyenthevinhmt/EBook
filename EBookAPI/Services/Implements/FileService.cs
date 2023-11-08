@@ -106,7 +106,7 @@ namespace EBook.Services.Implements
         {
             fileName = HttpUtility.UrlEncode(fileName);
             folder = HttpUtility.UrlEncode(folder);
-            return $"api/{endpoint}?folder={folder}&file={fileName}";
+            return $"/{endpoint}?folder={folder}&file={fileName}";
         }
     }
 }

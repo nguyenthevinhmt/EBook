@@ -15,39 +15,14 @@ import BookCard from "../Components/BookCard";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { bookFavorite } from "../Services/BookService";
 const FavoriteScreen = ({ navigation }) => {
-  const data = [
-    {
-      id: "1",
-      name: "Năng Lượng Tĩnh Lặng ",
-      author: "Eckhart Tolle",
-      image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
-    },
-    {
-      id: "2",
-      name: "Bí Mật Tư Duy Triệu Phú T. ",
-      author: "Harv Eker",
-      image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
-    },
-    {
-      id: "3",
-      name: "7 Thói Quen Hiệu Quả Stephen",
-      author: " R. Covey",
-      image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
-    },
-    {
-      id: "4",
-      name: "Nhìn Xa, Nhìn Rõ - Dr. Wayne ",
-      author: "W. Dyer",
-      image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
-    },
-  ];
+
   const [books, setBooks] = useState([]);
   const getBookFavorite = async () => {
     const result = await bookFavorite();
-    setBooks(result.data);
+    setBooks(result?.data);
   };
   useEffect(() => {
-    async () => await getBookFavorite();
+    getBookFavorite();
   }, []);
 
   return (
@@ -93,7 +68,7 @@ const FavoriteScreen = ({ navigation }) => {
             flex: 1,
             width: "100%",
             justifyContent: "center",
-            alignItems: "center",
+            //alignItems: "center",
           }}
         >
           <FlatList
@@ -108,7 +83,7 @@ const FavoriteScreen = ({ navigation }) => {
                 onPress={() => {
                   navigation.navigate(
                     "BookInfomationScreen",
-                    (params = { id: item.id })
+                    (params = { bookId: item.id })
                   );
                 }}
               />

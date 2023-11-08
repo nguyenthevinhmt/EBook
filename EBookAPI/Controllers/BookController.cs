@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EBook.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/book")]
     public class BookController : ApiControllerBase
@@ -65,6 +65,48 @@ namespace EBook.Controllers
             {
                 
                 return Ok(_bookServices.GetAllBook(input));
+            }
+            catch (Exception ex)
+            {
+                return ReturnException(ex);
+            }
+        }
+
+        [HttpGet("get-all-like")]
+        public IActionResult GetAllBookLike([FromQuery] FilterBookDto input)
+        {
+            try
+            {
+
+                return Ok(_bookServices.GetAllBookLike(input));
+            }
+            catch (Exception ex)
+            {
+                return ReturnException(ex);
+            }
+        }
+
+        [HttpGet("get-all-admin")]
+        public IActionResult GetAllBookAdmin([FromQuery] FilterBookDto input)
+        {
+            try
+            {
+
+                return Ok(_bookServices.GetAllBookAdmin(input));
+            }
+            catch (Exception ex)
+            {
+                return ReturnException(ex);
+            }
+        }
+
+        [HttpGet("search-book")]
+        public IActionResult SearchBook([FromQuery] FilterBookDto input)
+        {
+            try
+            {
+
+                return Ok(_bookServices.SearchBook(input));
             }
             catch (Exception ex)
             {

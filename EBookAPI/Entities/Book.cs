@@ -54,6 +54,10 @@
         public string? Description { get; set; }
 
         /// <summary>
+        /// Số lượt xem sách
+        /// </summary>
+        public int ViewBook { get; set; }
+        /// <summary>
         /// Ảnh của sách
         /// </summary>
         public string ImageUrl { get; set; } = null!;

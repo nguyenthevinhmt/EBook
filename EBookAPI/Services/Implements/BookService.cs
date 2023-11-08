@@ -34,7 +34,7 @@ namespace EBook.Services.Implements
 
         public BookDto AddBook(CreateBookDto input)
         {
-            var userId = 1;// CommonUtils.GetCurrentUserId(_httpContext);
+            var userId = CommonUtils.GetCurrentUserId(_httpContext);
             var bookUrl = _fileService.UploadFile(new UploadFileModel
             {
                 File = input.FileUrl,
@@ -108,9 +108,46 @@ namespace EBook.Services.Implements
         {
             var book = _dbContext.Books.FirstOrDefault(b => b.Id == bookId && !b.Deleted)
                 ?? throw new Exception($"Không tìm thấy sách");
+            book.ViewBook += 1;
+            _dbContext.SaveChanges();
             var result = _mapper.Map<BookDto>(book);
-            result.IsLike = _dbContext.FavoriteBooks.Any(b => b.UserId == CommonUtils.GetCurrentUserId(_httpContext));
+            result.CountLike = _dbContext.FavoriteBooks.Count(b => b.BookId == book.Id);
+            try
+            {
+                result.IsLike = _dbContext.FavoriteBooks.Any(b => b.BookId == book.Id && b.UserId == CommonUtils.GetCurrentUserId(_httpContext));
+            }
+            catch (Exception ex)
+            {
+
+            }
             return result;
+        }
+
+        public List<BookDto> SearchBook(FilterBookDto input)
+        {
+            var bookQuery = _dbContext.Books.Include(c => c.FavoriteBooks)
+                            .Where(c => !c.Deleted && (input.CategoryId == null || input.CategoryId == c.CategoryId)
+                                && (input.Name == null || c.Name.Contains(input.Name)))
+                            .Select(c => new BookDto
+                            {
+                                Id = c.Id,
+                                Code = c.Code,
+                                Name = c.Name,
+                                LikeCount = c.FavoriteBooks.Count(),
+                                CategoryId = c.CategoryId,
+                                CategoryName = c.Category.CategoryName,
+                                Author = c.Author,
+                                ImageUrl = c.ImageUrl,
+                                FileUrl = c.FileUrl,
+                                PublishingCompany = c.PublishingCompany,
+                                PublishingYear = c.PublishingYear,
+                                Description = c.Description,
+                            });
+            if (input.Index != null)
+            {
+                bookQuery = bookQuery.Take(input.Index ?? 0);
+            }
+            return bookQuery.ToList();
         }
 
         public List<BookDto> GetAllBook(FilterBookDto input)
@@ -154,6 +191,58 @@ namespace EBook.Services.Implements
             //                    Description = book.Description,
 
             //                };
+            if (input.Index != null)
+            {
+                bookQuery = bookQuery.Take(input.Index ?? 0);
+            }
+            return bookQuery.ToList();
+        }
+
+        public List<BookDto> GetAllBookAdmin(FilterBookDto input)
+        {
+            var userId = CommonUtils.GetCurrentUserId(_httpContext);
+            var bookQuery = _dbContext.Books.Include(c => c.FavoriteBooks).Where(c => c.UserId == userId && !c.Deleted && (input.CategoryId == null || input.CategoryId == c.CategoryId))
+                                            .Select(c => new BookDto
+                                            {
+                                                Id = c.Id,
+                                                Code = c.Code,
+                                                Name = c.Name,
+                                                LikeCount = c.FavoriteBooks.Count(),
+                                                CategoryId = c.CategoryId,
+                                                CategoryName = c.Category.CategoryName,
+                                                Author = c.Author,
+                                                ImageUrl = c.ImageUrl,
+                                                FileUrl = c.FileUrl,
+                                                PublishingCompany = c.PublishingCompany,
+                                                PublishingYear = c.PublishingYear,
+                                                Description = c.Description,
+                                            });
+            if (input.Index != null)
+            {
+                bookQuery = bookQuery.Take(input.Index ?? 0);
+            }
+            return bookQuery.ToList();
+        }
+
+        public List<BookDto> GetAllBookLike(FilterBookDto input)
+        {
+            var userId = CommonUtils.GetCurrentUserId(_httpContext);
+            var bookQuery = _dbContext.Books.Include(c => c.FavoriteBooks).Where(c => c.FavoriteBooks.Any(b => b.UserId == userId) && !c.Deleted && (input.CategoryId == null || input.CategoryId == c.CategoryId))
+                                            .Select(c => new BookDto
+                                            {
+                                                Id = c.Id,
+                                                Code = c.Code,
+                                                Name = c.Name,
+                                                LikeCount = c.FavoriteBooks.Count(),
+                                                CategoryId = c.CategoryId,
+                                                CategoryName = c.Category.CategoryName,
+                                                Author = c.Author,
+                                                ImageUrl = c.ImageUrl,
+                                                FileUrl = c.FileUrl,
+                                                PublishingCompany = c.PublishingCompany,
+                                                PublishingYear = c.PublishingYear,
+                                                Description = c.Description,
+                                            });
             return bookQuery.ToList();
         }
 
