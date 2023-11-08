@@ -6,8 +6,6 @@ import {
   Image,
   useWindowDimensions,
   TouchableOpacity,
-  TouchableWithoutFeedback,
-  KeyboardAvoidingView,
 } from "react-native";
 import { useState, useRef, useMemo } from "react";
 import Icons from "react-native-vector-icons/Feather";

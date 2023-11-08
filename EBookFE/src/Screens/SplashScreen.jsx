@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { View, Image, Text, StyleSheet } from "react-native";
 import { jwtDecode } from "jwt-decode";
 import { decode } from "base-64";
+import { logout } from "../Services/AuthService";
 
 if (!global.atob) {
   global.atob = decode;
@@ -20,19 +21,20 @@ const SplashScreen = () => {
         const decodedToken = jwtDecode(accessToken);
         const currentTime = Math.floor(Date.now() / 1000);
         if (decodedToken.exp < currentTime) {
+          await logout();
           navigation.replace("LoginScreen");
         } else if (decodedToken.exp > currentTime) {
           console.log(decodedToken);
           navigation.replace("MainScreen");
         }
       } else {
+        await logout();
         navigation.replace("LoginScreen");
       }
     };
 
     const timer = setTimeout(() => {
       checkTokenValidity();
-      console.log("call back work");
     }, 2000);
 
     return () => {

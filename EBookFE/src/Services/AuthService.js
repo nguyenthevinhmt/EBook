@@ -1,4 +1,4 @@
-import BaseUrl from "../Utils/BaseUrl";
+import { BaseUrl } from "../Utils/BaseUrl";
 import axios from "../Services/interceptor";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -21,7 +21,7 @@ export const login = async (email, password) => {
     return response;
   } catch (error) {
     console.log("Lỗi");
-    console.log(error.response);
+    console.log(error);
     return null;
   }
 };
@@ -41,7 +41,7 @@ export const register = async (email, password) => {
     });
     return response;
   } catch (error) {
-    console.log(error.response);
+    console.log(error);
     console.log("Lỗi");
   }
 };

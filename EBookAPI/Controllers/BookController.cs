@@ -1,5 +1,4 @@
 ﻿using EBook.Dto.Books;
-using EBook.Dtos.Users;
 using EBook.Services.Abstracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -63,7 +62,7 @@ namespace EBook.Controllers
         {
             try
             {
-                
+
                 return Ok(_bookServices.GetAllBook(input));
             }
             catch (Exception ex)

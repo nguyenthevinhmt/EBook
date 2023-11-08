@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import BookInfomationScreen from "./src/Screens/BookInformationScreen";
 import AddCategoryScreen from "./src/Screens/AddCategoryScreen";
 import SearchScreen from "./src/Screens/SearchScreen";
+import UserDetailScreen from "./src/Screens/UserDetailScreen";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -29,6 +30,7 @@ export default function App() {
           name={"AddCategoryScreen"}
           component={AddCategoryScreen}
         />
+        <Stack.Screen name={"UserDetailScreen"} component={UserDetailScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -115,11 +115,14 @@ const UserScreen = ({ navigation }) => {
               </Text>
             </TouchableOpacity>
           </View>
-          <View style={{ width: "90%" }}>
+          <TouchableOpacity
+            style={{ width: "90%" }}
+            onPress={() => navigation.navigate("UserDetailScreen")}
+          >
             <Text style={{ fontSize: 20, fontWeight: "700" }}>
               Thông tin tài khoản
             </Text>
-          </View>
+          </TouchableOpacity>
           <View
             style={{
               width: "90%",
