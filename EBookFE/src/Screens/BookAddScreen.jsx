@@ -13,15 +13,16 @@ import { useState, useRef, useMemo } from "react";
 import Icons from "react-native-vector-icons/Feather";
 import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from "expo-image-picker";
-import axios from "axios";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { addBook } from "../Services/BookService";
 const BookAddScreen = ({ navigation }) => {
   const { width } = useWindowDimensions();
   const [imageUrl, setImageUrl] = useState();
-  const [fileAudio, setFileAudio] = useState(null);
+  const [filePdf, setFilePdf] = useState(null);
+  const [categoryId, setCategoryId] = useState(1);
   const [name, setName] = useState("");
-  const [musician, setMusician] = useState("");
-  const [singer, setSinger] = useState("");
+  const [publishingCompany, setPublishingCompany] = useState("");
+  const [author, setAuthor] = useState("");
   const [description, setDescription] = useState("");
 
   const pickImage = async () => {
@@ -39,12 +40,10 @@ const BookAddScreen = ({ navigation }) => {
   const pickAudio = async () => {
     try {
       const result = await DocumentPicker.getDocumentAsync({
-        type: "audio/*",
+        type: "application/pdf",
       });
       if (result.assets[0]) {
-        console.log(result.assets[0]);
-        setFileAudio(result.assets[0]);
-        // uploadFile(fileAudio)
+        setFilePdf(result.assets[0]);
       }
     } catch (err) {
       console.error("Error picking document: ", err);
@@ -52,13 +51,13 @@ const BookAddScreen = ({ navigation }) => {
   };
 
   // Tải bài hát
-  const uploadFile = () => {
+  const uploadFile = async () => {
     try {
       const formData = new FormData();
-      formData.append("Music", {
-        uri: fileAudio.uri,
-        type: fileAudio.mimeType, // Replace with the appropriate MIME type
-        name: fileAudio.name, // Replace with the desired file name
+      formData.append("FileUrl", {
+        uri: filePdf.uri,
+        type: filePdf.mimeType, // Replace with the appropriate MIME type
+        name: filePdf.name, // Replace with the desired file name
       });
       // Nếu có upload ảnh
       if (imageUrl) {
@@ -71,24 +70,19 @@ const BookAddScreen = ({ navigation }) => {
         // Loại file ảnh
         let typeImage = match ? `image/${match[1]}` : `image`;
 
-        formData.append("Image", {
+        formData.append("ImageUrl", {
           uri: imageUrl,
           type: typeImage, // Replace with the appropriate MIME type
           name: imageName, // Replace with the desired file name
         });
       }
       formData.append("name", name);
-      formData.append("musician", musician);
-      formData.append("singer", singer);
+      formData.append("author", author);
+      formData.append("publishingCompany", publishingCompany);
+      formData.append("categoryId", categoryId);
       formData.append("description", description);
-      console.log(formData);
-      //   upload_music(dispatch, formData,  (res) => {
-      //     setTimeout(() => {
-      //         navigation.navigate('BottomTabs', {
-      //           screen: 'MySong'
-      //         });
-      //       }, 500);
-      //   });
+      const result = await addBook(formData);
+      console.log(result)
     } catch (error) {
       console.error("Lỗi tải file nhạc:", error);
     }
@@ -116,10 +110,30 @@ const BookAddScreen = ({ navigation }) => {
             style={styles.viewInput}
             placeholder="Nhập vào tên tác giả ..."
             placeholderTextColor={"#686868"}
-            value={singer}
-            onChangeText={(value) => setSinger(value)}
+            value={author}
+            onChangeText={(value) => setAuthor(value)}
           />
         </View>
+        <View style={{ flexDirection: "column", width: "100%", marginTop: 20 }}>
+          <Text style={styles.orText}>Nhà xuất bản</Text>
+          <TextInput
+            style={styles.viewInput}
+            placeholder="Nhập vào tên nhà xuất bản ..."
+            placeholderTextColor={"#686868"}
+            value={publishingCompany}
+            onChangeText={(value) => setPublishingCompany(value)}
+          />
+        </View>
+        {/* <View style={{ flexDirection: "column", width: "100%", marginTop: 20 }}>
+          <Text style={styles.orText}>Năm xuất bản</Text>
+          <TextInput
+            style={styles.viewInput}
+            placeholder="Nhập vào năm xuất bản ..."
+            placeholderTextColor={"#686868"}
+            value={author}
+            onChangeText={(value) => setAuthor(value)}
+          />
+        </View> */}
         <View style={{ flexDirection: "column", width: "100%", marginTop: 20 }}>
           <Text style={styles.orText}>Mô tả sách</Text>
           <TextInput
@@ -152,7 +166,10 @@ const BookAddScreen = ({ navigation }) => {
               </Text>
             </View>
           </TouchableOpacity>
-          {fileAudio ? (
+          
+        </View>
+        <View>
+        {filePdf ? (
             <View>
               <Text
                 style={{
@@ -161,7 +178,7 @@ const BookAddScreen = ({ navigation }) => {
                   borderBottomColor: "#ffffff99",
                 }}
               >
-                {fileAudio.name}
+                {filePdf.name}
               </Text>
             </View>
           ) : null}

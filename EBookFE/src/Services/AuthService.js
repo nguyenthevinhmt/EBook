@@ -35,13 +35,10 @@ export const logout = async () => {
 
 export const register = async (email, password) => {
   try {
-    const response = await axios.post(
-      `http://192.168.90.6:45455/api/users/register`,
-      {
-        email,
-        password,
-      }
-    );
+    const response = await axios.post(`${BaseUrl}/users/register`, {
+      email,
+      password,
+    });
     return response;
   } catch (error) {
     console.log(error.response);

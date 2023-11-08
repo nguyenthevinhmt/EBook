@@ -8,6 +8,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
+import BaseUrl from "../Utils/BaseUrl";
 
 const { width } = Dimensions.get("window");
 // Lấy chiều rộng của màn hình
@@ -18,7 +19,7 @@ const BookCard = ({ imageUrl, title, author, onPress }) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity style={styles.cardContainer} onPress={onPress}>
-      <Image source={{ uri: imageUrl }} style={styles.image} />
+      <Image source={{ uri: `${BaseUrl}${imageUrl}` }} style={styles.image} />
       <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
         {title}
       </Text>
