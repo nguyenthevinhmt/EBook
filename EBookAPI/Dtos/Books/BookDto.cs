@@ -1,4 +1,5 @@
-﻿using EBook.Entities;
+﻿using EBook.Dtos.Books;
+using EBook.Entities;
 
 namespace EBook.Dto.Books
 {
@@ -69,5 +70,8 @@ namespace EBook.Dto.Books
         public int? ViewBook { get; set; }
         public bool IsLike { get; set; }
         public int CountLike { get; set; }
+
+        public int Rate { get; set; }
+        public List<RatingBookDto> RatingBooks { get; set; }
     }
 }

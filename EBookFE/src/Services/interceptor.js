@@ -6,6 +6,7 @@ const instance = axios.create();
 const token = AsyncStorage.getItem("accessToken");
 //request
 instance.interceptors.request.use(
+  
   (config) => {
     if (token) {
       config.headers.Authorization = `Bearer ${token._j}`;

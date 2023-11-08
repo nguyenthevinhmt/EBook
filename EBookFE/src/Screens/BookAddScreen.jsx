@@ -35,8 +35,7 @@ const BookAddScreen = ({ navigation }) => {
     }
   };
 
-  // Chọn bài hát
-  const pickAudio = async () => {
+  const pickPdf = async () => {
     try {
       const result = await DocumentPicker.getDocumentAsync({
         type: "application/pdf",
@@ -145,7 +144,7 @@ const BookAddScreen = ({ navigation }) => {
         </View>
         <View style={{ ...styles.uploadAudio }}>
           <TouchableOpacity
-            onPress={pickAudio}
+            onPress={pickPdf}
             style={{ marginRight: 10, width: "100%" }}
           >
             <View
@@ -160,7 +159,7 @@ const BookAddScreen = ({ navigation }) => {
               <Text
                 style={{ fontSize: 13, fontWeight: "600", color: "#ffffff" }}
               >
-                Tải file nhạc{" "}
+                Tải nội dung{" "}
                 <Icons name={"folder-plus"} size={15} color={"#ffffff"} />
               </Text>
             </View>

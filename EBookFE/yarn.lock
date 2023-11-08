@@ -1172,6 +1172,11 @@
     "@babel/helper-validator-identifier" "^7.22.20"
     to-fast-properties "^2.0.0"
 
+"@devvie/bottom-sheet@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.npmjs.org/@devvie/bottom-sheet/-/bottom-sheet-0.1.2.tgz"
+  integrity sha512-44SUvGwetz2q42sfxeQJf1wlk1xhDnBG8ju8jF7e7zLpv59Y0M7TSOw4RdX+LWepqie6ST7yeBCOwq9bLCFA2A==
+
 "@egjs/hammerjs@^2.0.17":
   version "2.0.17"
   resolved "https://registry.npmjs.org/@egjs/hammerjs/-/hammerjs-2.0.17.tgz"
@@ -5815,6 +5820,11 @@ react-native-root-siblings@^3.2.1:
   dependencies:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
+
+react-native-stock-star-rating@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.npmjs.org/react-native-stock-star-rating/-/react-native-stock-star-rating-1.0.6.tgz"
+  integrity sha512-YQMGVYX03kq9cW0Of0y+fad9A1RpyM/ZOKMb2o15DfITcceLlrz5x83B6kBOl6SxM/YzdXpMvphWNZehilJ46g==
 
 react-native-vector-icons@^10.0.1:
   version "10.0.1"

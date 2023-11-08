@@ -1,4 +1,5 @@
 ﻿using EBook.Dto.Books;
+using EBook.Dtos.Books;
 using EBook.Dtos.Users;
 using EBook.Services.Abstracts;
 using Microsoft.AspNetCore.Authorization;
@@ -120,6 +121,34 @@ namespace EBook.Controllers
             try
             {
                 return Ok(_bookServices.LikeBook(bookId));
+            }
+            catch (Exception ex)
+            {
+                return ReturnException(ex);
+            }
+        }
+
+        [HttpGet("get-rating-book/{bookId}")]
+        public IActionResult RatingBook(int bookId)
+        {
+            try
+            {
+
+                return Ok(_bookServices.RatingBook(bookId));
+            }
+            catch (Exception ex)
+            {
+                return ReturnException(ex);
+            }
+        }
+
+        [HttpPost("add-rating-book")]
+        public IActionResult AddRatingBook(AddRatingBookDto input)
+        {
+            try
+            {
+                AddRatingBook(input);
+                return Ok();
             }
             catch (Exception ex)
             {

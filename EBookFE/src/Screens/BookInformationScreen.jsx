@@ -7,13 +7,17 @@ import {
   TextInput,
   TouchableOpacity,
   FlatList,
+  Button,
+  Modal,
+  Pressable
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useState, useRef, useMemo, useEffect } from "react";
 import { favoriteBook } from "../Services/BookService";
 import { useRoute } from '@react-navigation/native';
-import { getBookById } from "../Services/BookService";
+import { getBookById, rateBook } from "../Services/BookService";
 import BaseUrl from "../Utils/BaseUrl";
+import { Rating, RatingInput } from "react-native-stock-star-rating";
 
 const Form = ({ title, lable }) => (
   <View
@@ -39,7 +43,10 @@ const BookInfomationScreen = ({ navigation }) => {
   const { bookId } = route.params;
   const [isHeart, setIsHeart] = useState(false);
   const [bookInfo, setBookInfo] = useState(null);
-
+  const [comments, setComments] = useState([]);
+  const [ratingContent, setRatingContent] = useState(null);
+  const [rating, setRating] = useState(0);
+  const [modalVisible, setModalVisible] = useState(false);
   const getById = async () => {
     const result = await getBookById(bookId);
     setBookInfo(result?.data);
@@ -49,6 +56,13 @@ const BookInfomationScreen = ({ navigation }) => {
   const LikeBook = async (bookId) => {
     const result = await favoriteBook(bookId);
     setIsHeart(result.data);
+  };
+
+  const Rating = () => {
+    const data = {bookId : bookId, rate : rating, content: ratingContent}
+    console.log(data)
+    //const result = await rateBook(data);
+    //setIsHeart(result.data);
   };
 
   useEffect(() => {
@@ -112,21 +126,26 @@ const BookInfomationScreen = ({ navigation }) => {
                 {bookInfo?.name}
               </Text>
               <Text style={{ marginTop: 10 }}>{bookInfo?.author}</Text>
-              <Text style={{ marginTop: 10 }}>0 đánh giá</Text>
-              <View style={styles.position}>
-                <View style={{alignItems: 'center'}}>
-                  <TouchableOpacity onPress={ () => LikeBook(bookId)}>
-                    <Icon
-                      name={isHeart ? "heart" : "heart-outline"}
-                      style={{ fontSize: 20 }}
-                      color={isHeart ? "red" : "black"}
-                    ></Icon>
-                  </TouchableOpacity>
-                  <Text>{bookInfo?.countLike}</Text>
+              <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
+                <View>
+                  <Rating stars={bookInfo?.rate ?? 0} maxStars={5} size={20} />
+                  <Text style={{ marginTop: 5 }}>0 đánh giá</Text>
                 </View>
-                <View style={{alignItems: 'center'}}>
-                  <Icon name="eye-outline" style={{ fontSize: 20 }}></Icon>
-                  <Text>{bookInfo?.viewBook}</Text>
+                <View style={styles.position}>
+                  <View style={{ alignItems: 'center' }}>
+                    <TouchableOpacity onPress={() => LikeBook(bookId)}>
+                      <Icon
+                        name={isHeart ? "heart" : "heart-outline"}
+                        style={{ fontSize: 20 }}
+                        color={isHeart ? "red" : "black"}
+                      ></Icon>
+                    </TouchableOpacity>
+                    <Text>{bookInfo?.countLike}</Text>
+                  </View>
+                  <View style={{ alignItems: 'center' }}>
+                    <Icon name="eye-outline" style={{ fontSize: 20 }}></Icon>
+                    <Text>{bookInfo?.viewBook}</Text>
+                  </View>
                 </View>
               </View>
             </View>
@@ -150,6 +169,33 @@ const BookInfomationScreen = ({ navigation }) => {
             <Form lable={"VIP"} title={"Loại sách"}></Form>
             <Form lable={"Tiếng việt"} title={"Ngôn ngữ"}></Form>
           </View>
+        </View>
+        {/* Bình luận đánh giá */}
+        <View style={{ width: '95%' }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text style={{ fontWeight: "700", fontSize: 16 }}>Đánh giá sách</Text>
+            <Text>Xem tất cả</Text>
+          </View>
+          <View style={{ marginTop: 10 }}>
+
+          </View>
+          {comments.length > 0 ?
+            <View></View>
+            :
+            <View>
+              <Text style={{ color: '#cecece' }}>Không có đánh giá nào</Text>
+            </View>}
+          <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
+            <TouchableOpacity
+              style={{ ...styles.button }}
+              onPress={() => setModalVisible(!modalVisible)}
+            >
+              <Text style={{ fontSize: 14, fontWeight: "500", color: "#87c1a1" }}>
+                Đánh giá sách
+              </Text>
+            </TouchableOpacity>
+          </View>
+
         </View>
       </ScrollView>
       <View
@@ -175,6 +221,56 @@ const BookInfomationScreen = ({ navigation }) => {
           </Text>
         </TouchableOpacity>
       </View>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={{ ...styles.modalView }}>
+            <Text style={{ fontWeight: '600', fontSize: 15 }}>
+              Đánh giá về cuốn sách
+            </Text>
+            <View style={{ alignItems: 'center' }}>
+              <RatingInput rating={rating} setRating={setRating} size={50} maxStars={5} bordered={false} />
+            </View>
+            <TextInput
+              style={styles.viewInput}
+              placeholder="Nhập vào nội dung đánh giá ..."
+              placeholderTextColor={"#686868"}
+              value={ratingContent}
+              onChangeText={(value) => setRatingContent(value)}
+            />
+            <View style={{ marginTop: 10, width: '95%', flexDirection: 'row', justifyContent: 'flex-end' }}>
+              <TouchableOpacity
+                style={{ ...styles.button, borderColor: 'red' }}
+                onPress={() => setModalVisible(!modalVisible)}
+              >
+                <Text style={{ fontSize: 14, fontWeight: "500", color: "red" }}>
+                  Hủy
+                </Text>
+              </TouchableOpacity>
+              {/* <Pressable
+                style={[styles.button, styles.buttonOpen]}
+                onPress={Rating}>
+                <Text style={styles.textStyle}>Show Modal</Text>
+              </Pressable> */}
+              <TouchableOpacity
+                style={{ ...styles.button, marginLeft: 10 }}
+                onPress={() => { Rating }}
+              >
+                <Text style={{ fontSize: 14, fontWeight: "500", color: "#87c1a1" }}>
+                  Đánh giá sách
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -190,9 +286,58 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     flexDirection: "row",
-    position: "relative",
-    left: "90%",
-    bottom: 20,
+    marginRight: 10
+  },
+  viewInput: {
+    height: 40,
+    width: '95%',
+    borderBottomWidth: 1,
+    borderBottomColor: "#686868",
+    flexDirection: "row",
+    paddingHorizontal: 15,
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    color: "#686868",
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#9f9f9fb8'
+  },
+  modalView: {
+    width: '90%',
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    height: 35,
+    width: "35%",
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: "#87c1a1"
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
   },
 });
 export default BookInfomationScreen;

@@ -9,6 +9,7 @@ namespace EBook.DbContexts
         public DbSet<Book> Books { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<FavoriteBook> FavoriteBooks { get; set; }
+        public DbSet<RatingBook> RatingBooks { get; set; }
 
         public EbookDbContext(DbContextOptions<EbookDbContext> options) : base(options)
         {

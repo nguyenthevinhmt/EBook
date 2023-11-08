@@ -15,8 +15,8 @@ import Alert from "../Components/CustomAlert";
 
 export const LoginScreen = () => {
   const navigation = useNavigation();
-  const [email, setEmail] = useState("Customer@gmail.com");
-  const [password, setPassword] = useState("Customer@12345");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(false);

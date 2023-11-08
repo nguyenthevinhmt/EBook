@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EBook.DbContexts;
 using EBook.Dto.Books;
+using EBook.Dtos.Books;
 using EBook.Dtos.Files;
 using EBook.Entities;
 using EBook.Services.Abstracts;
@@ -119,6 +120,11 @@ namespace EBook.Services.Implements
             catch (Exception ex)
             {
 
+            }
+            result.RatingBooks = RatingBook(bookId);
+            if (result.RatingBooks.Count() > 0)
+            {
+                result.Rate = result.RatingBooks.Select(x => x.Rate).Sum() / result.RatingBooks.Count();
             }
             return result;
         }
@@ -248,5 +254,45 @@ namespace EBook.Services.Implements
             }
         }
 
+        public List<RatingBookDto> RatingBook(int bookId)
+        {
+            var result = from rating in _dbContext.RatingBooks
+                         join user in _dbContext.Users on rating.UserId equals user.Id
+                         where rating.BookId == bookId && !rating.Deleted
+                         select new RatingBookDto
+                         {
+                             BookId = rating.BookId,
+                             Content = rating.Content,
+                             Rate = rating.Rate,
+                             Email = user.Email,
+                             FullName = user.FullName
+                         };
+            return result.ToList();
+        }
+
+        public void AddRatingBook(AddRatingBookDto input)
+        {
+            var userId = CommonUtils.GetCurrentUserId(_httpContext);
+            var book = _dbContext.Books.FirstOrDefault(b => b.Id == input.BookId && !b.Deleted)
+                ?? throw new Exception($"Không tìm thấy sách");
+            var rating = _dbContext.RatingBooks.FirstOrDefault(b => b.BookId == input.BookId && b.UserId == userId);
+            if (rating != null)
+            {
+                rating.Rate = input.Rate;
+                rating.Content = input.Content;   
+                _dbContext.SaveChanges();
+            }
+            else
+            {
+                _dbContext.RatingBooks.Add(new RatingBook
+                {
+                    UserId = userId,
+                    BookId = input.BookId,
+                    Content = input.Content,
+                    Rate = input.Rate,
+                });
+                _dbContext.SaveChanges();
+            }
+        }
     }
 }

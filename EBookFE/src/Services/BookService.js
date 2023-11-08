@@ -1,26 +1,30 @@
 import BaseUrl from "../Utils/BaseUrl";
 import axios from "../Services/interceptor";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-const token = AsyncStorage.getItem("accessToken");
+
 export const addBook = async (formData) => {
   const token = await AsyncStorage.getItem("accessToken");
-  try {
-    const response = await axios({
-      method: "POST",
-      url: `${BaseUrl}api/book/add`,
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${token}`,
+  console.log('token', token)
+  axios
+    .post(
+      `${BaseUrl}/book/add`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`
+        }
       },
-      data: formData,
+    )
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      console.log("Lỗi");
+      console.log(error?.response);
+      return null;
     });
-    // console.log(response.data);
-    return response;
-  } catch (error) {
-    console.log("Lỗi");
-    console.log(error.response);
-    return null;
-  }
+
 };
 
 export const bookGetAll = async () => {
@@ -88,6 +92,21 @@ export const searchBook = async (keyword) => {
       params: {
         Name: keyword,
       },
+    });
+    return response;
+  } catch (error) {
+    console.log("Lỗi");
+    console.log(error.response);
+    return null;
+  }
+};
+
+export const rateBook = async (input) => {
+  try {
+    const response = await axios({
+      method: "POST",
+      input,
+      url: `${BaseUrl}/book/add-rating-book`,
     });
     return response;
   } catch (error) {

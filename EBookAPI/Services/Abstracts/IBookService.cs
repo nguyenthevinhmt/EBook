@@ -1,4 +1,5 @@
 ﻿using EBook.Dto.Books;
+using EBook.Dtos.Books;
 
 namespace EBook.Services.Abstracts
 {
@@ -12,5 +13,18 @@ namespace EBook.Services.Abstracts
         List<BookDto> GetAllBookAdmin(FilterBookDto input);
         List<BookDto> GetAllBookLike(FilterBookDto input);
         List<BookDto> SearchBook(FilterBookDto input);
+
+        /// <summary>
+        /// Danh sách Đánh giá sách
+        /// </summary>
+        /// <param name="bookId"></param>
+        /// <returns></returns>
+        List<RatingBookDto> RatingBook(int bookId);
+
+        /// <summary>
+        /// Đánh giá sachs
+        /// </summary>
+        /// <param name="input"></param>
+        void AddRatingBook(AddRatingBookDto input);
     }
 }

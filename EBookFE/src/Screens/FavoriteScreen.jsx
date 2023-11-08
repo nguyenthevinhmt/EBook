@@ -14,10 +14,12 @@ import BookCard from "../Components/BookCard";
 // import Icon from "react-native-vector-icons";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { bookFavorite } from "../Services/BookService";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const FavoriteScreen = ({ navigation }) => {
 
   const [books, setBooks] = useState([]);
   const getBookFavorite = async () => {
+    //await AsyncStorage.removeItem("accessToken");
     const result = await bookFavorite();
     setBooks(result?.data);
   };
