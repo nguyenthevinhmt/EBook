@@ -79,3 +79,20 @@ export const favoriteBook = async (bookId) => {
     return null;
   }
 };
+
+export const searchBook = async (keyword) => {
+  try {
+    const response = await axios({
+      method: "GET",
+      url: `${BaseUrl}/book/get-all`,
+      params: {
+        Name: keyword,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log("Lỗi");
+    console.log(error.response);
+    return null;
+  }
+};

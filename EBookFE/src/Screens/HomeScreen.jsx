@@ -58,7 +58,7 @@ const itemsPerRow = 3;
 const HomeScreen = () => {
   const navigation = useNavigation();
   const [books, setBooks] = useState([]);
-
+  const [keyword, setKeyword] = useState("");
   const BookInformation = (bookId) => {
     navigation.navigate("BookInfomationScreen", { bookId });
   };
@@ -152,6 +152,11 @@ const HomeScreen = () => {
                 style={{ height: "100%", width: "85%" }}
                 placeholder="Tìm kiếm danh sách"
                 placeholderTextColor={"#555"}
+                value={keyword}
+                onChangeText={(value) => setKeyword(value)}
+                onSubmitEditing={() => {
+                  navigation.navigate("SearchScreen", { keyword });
+                }}
               />
             </View>
           </View>
@@ -228,7 +233,7 @@ const HomeScreen = () => {
                 <Icon name="chevron-down" size={25} color={"black"}></Icon>
               </View>
             </View>
-            <ScrollView contentContainerStyle={{marginTop: 10 }} >
+            <ScrollView contentContainerStyle={{ marginTop: 10 }}>
               {rows}
             </ScrollView>
           </View>
@@ -249,7 +254,7 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
-    justifyContent: 'flex-start',
+    justifyContent: "flex-start",
     marginBottom: 10,
   },
 });

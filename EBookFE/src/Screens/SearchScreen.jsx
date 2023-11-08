@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   KeyboardAvoidingView,
@@ -9,8 +9,17 @@ import {
   FlatList,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-const SearchScreen = () => {
+import { searchBook } from "../Services/BookService";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+const SearchScreen = ({ route }) => {
+  const [result, setResult] = useState([]);
+  const { keyword } = route.params;
+  useEffect(() => {
+    async () => {
+      const res = await searchBook(keyword);
+      setResult(res.data);
+    };
+  }, []);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <KeyboardAvoidingView style={styles.container} behavior="height">
@@ -54,8 +63,8 @@ const SearchScreen = () => {
             alignItems: "center",
           }}
         >
-          {/* <FlatList
-            data={books}
+          <FlatList
+            data={result}
             showsVerticalScrollIndicator={false}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
@@ -73,7 +82,7 @@ const SearchScreen = () => {
             )}
             numColumns={3}
             contentContainerStyle={styles.flatListContentContainer}
-          /> */}
+          />
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>

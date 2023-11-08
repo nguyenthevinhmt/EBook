@@ -6,6 +6,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import BookInfomationScreen from "./src/Screens/BookInformationScreen";
 import AddCategoryScreen from "./src/Screens/AddCategoryScreen";
+import SearchScreen from "./src/Screens/SearchScreen";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -19,6 +20,7 @@ export default function App() {
         <Stack.Screen name={"LoginScreen"} component={LoginScreen} />
         <Stack.Screen name={"RegisterScreen"} component={RegisterScreen} />
         <Stack.Screen name={"MainScreen"} component={MainScreen} />
+        <Stack.Screen name={"SearchScreen"} component={SearchScreen} />
         <Stack.Screen
           name={"BookInfomationScreen"}
           component={BookInfomationScreen}
