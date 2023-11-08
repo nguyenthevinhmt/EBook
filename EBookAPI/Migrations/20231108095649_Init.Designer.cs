@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EBook.Migrations
 {
     [DbContext(typeof(EbookDbContext))]
-    [Migration("20231107161531_FieldViewBook")]
-    partial class FieldViewBook
+    [Migration("20231108095649_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,7 +72,7 @@ namespace EBook.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ViewBook")
+                    b.Property<int>("ViewBook")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
