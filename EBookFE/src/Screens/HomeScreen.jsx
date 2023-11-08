@@ -72,7 +72,7 @@ const HomeScreen = () => {
   }, []);
 
   const rows = [];
-  for (let i = 0; i < books.length; i += itemsPerRow) {
+  for (let i = 0; i < books?.length; i += itemsPerRow) {
     const rowItems = books.slice(i, i + itemsPerRow);
     const row = (
       <View key={i} style={styles.row}>

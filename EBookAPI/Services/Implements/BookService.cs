@@ -152,7 +152,8 @@ namespace EBook.Services.Implements
 
         public List<BookDto> GetAllBook(FilterBookDto input)
         {
-            var bookQuery = _dbContext.Books.Include(c => c.FavoriteBooks).Where(c => !c.Deleted && (input.CategoryId == null || input.CategoryId == c.CategoryId))
+            var bookQuery = _dbContext.Books.Include(c => c.FavoriteBooks).Where(c => !c.Deleted && (input.CategoryId == null || input.CategoryId == c.CategoryId)
+                                            && (input.Name == null || c.Name.ToLower().Contains(input.Name.ToLower())))
                                             .Select(c => new BookDto
                                             {
                                                 Id = c.Id,
@@ -168,29 +169,6 @@ namespace EBook.Services.Implements
                                                 PublishingYear = c.PublishingYear,
                                                 Description = c.Description,
                                             });
-            //                && (input.Name == null || book.Name.Contains(input.Name))
-            //                && (input.Code == null || book.Code.Contains(input.Code));
-            //var bookQuery = from book in _dbContext.Books
-            //                join favorite in _dbContext.FavoriteBooks on book.Id equals favorite.BookId
-            //                where !book.Deleted && (input.CategoryId == null || input.CategoryId == book.CategoryId)
-            //                && (input.Name == null || book.Name.Contains(input.Name))
-            //                && (input.Code == null || book.Code.Contains(input.Code))
-            //                select new BookDto
-            //                {
-            //                    Id = book.Id,
-            //                    Code = book.Code,
-            //                    Name = book.Name,
-            //                    LikeCount = favorite.,
-            //                    CategoryId = book.CategoryId,
-            //                    CategoryName = book.Category.CategoryName,
-            //                    Author = book.Author,
-            //                    ImageUrl = book.ImageUrl,
-            //                    FileUrl = book.FileUrl,
-            //                    PublishingCompany = book.PublishingCompany,
-            //                    PublishingYear = book.PublishingYear,
-            //                    Description = book.Description,
-
-            //                };
             if (input.Index != null)
             {
                 bookQuery = bookQuery.Take(input.Index ?? 0);

@@ -11,14 +11,18 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { searchBook } from "../Services/BookService";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-const SearchScreen = ({ route }) => {
+import BookCard from "../Components/BookCard";
+const SearchScreen = ({navigation, route }) => {
   const [result, setResult] = useState([]);
   const { keyword } = route.params;
+
+  const search = async () => {
+    const result = await searchBook(keyword);
+    setResult(result.data);
+  };
+
   useEffect(() => {
-    async () => {
-      const res = await searchBook(keyword);
-      setResult(res.data);
-    };
+    search();
   }, []);
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -60,7 +64,7 @@ const SearchScreen = ({ route }) => {
             flex: 1,
             width: "100%",
             justifyContent: "center",
-            alignItems: "center",
+            //alignItems: "center",
           }}
         >
           <FlatList
@@ -75,7 +79,7 @@ const SearchScreen = ({ route }) => {
                 onPress={() => {
                   navigation.navigate(
                     "BookInfomationScreen",
-                    (params = { id: item.id })
+                    (params = { bookId: item.id })
                   );
                 }}
               />
