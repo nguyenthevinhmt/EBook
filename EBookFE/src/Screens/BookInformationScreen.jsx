@@ -74,143 +74,129 @@ const BookInfomationScreen = ({ navigation }) => {
     <View style={{ flex: 1 }}>
       <View
         style={{
-          height: "8%",
-          width: "95%",
-          marginLeft: "2.5%",
+          marginTop: 10,
+          height: 50,
+          width: "100%",
+          //marginLeft: "2.5%",
           flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "flex-end",
+          justifyContent: 'flex-start',
+          alignItems: "center",
+          //backgroundColor:'red'
         }}
       >
         <TouchableOpacity
-          style={{ height: "36%" }}
+          style={{ marginLeft: 10, width: '10%' }}
           onPress={() => navigation.goBack()}
         >
-          <Icon name="arrow-back" size={25} color="black"></Icon>
+          <Icon name="arrow-back" size={35} color="black"></Icon>
         </TouchableOpacity>
-        <View style={{ width: "65%", height: "30%", justifyContent: "center" }}>
-          <Text style={{ fontWeight: "500" }}>{bookInfo?.name}</Text>
-        </View>
-        <View
-          style={{
-            flexDirection: "row",
-            height: "30%",
-            width: "15%",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <TouchableOpacity>
-            <Image style={styles.icon}></Image>
-          </TouchableOpacity>
+        <View style={{ width: "65%", justifyContent: "center" }}>
+          <Text style={{ fontWeight: "500", fontSize: 17 }}>{bookInfo?.name}</Text>
         </View>
       </View>
-      <ScrollView contentContainerStyle={{ flex: 1, marginTop: 10, backgroundColor: 'green', width: '100%', justifyContent: 'center', alignItems:'center' }} >
-        <View style={{ height: "80%", width: "95%" }}>
-          <View
-            style={{
-              height: "45%",
-              width: "100%",
-              flexDirection: "row",
-              justifyContent: "space-around",
-              alignItems: "center",
-            }}
-          >
-            <View style={{ width: "45%" }}>
-              <Image
-                source={{ uri: `${BaseUrl}${bookInfo?.imageUrl}` }}
-                style={{ height: "70%", width: "80%", borderRadius: 10 }}
-              ></Image>
-            </View>
-            <View style={{ height: "70%", width: "60%" }}>
-              <Text style={{ fontWeight: "700", fontSize: 17 }}>
-                {bookInfo?.name}
-              </Text>
-              <Text style={{ marginTop: 10 }}>{bookInfo?.author}</Text>
-              <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-                <View>
-                  <Rating stars={bookInfo?.rate ?? 0} maxStars={5} size={20} />
-                  <Text style={{ marginTop: 5 }}>{bookInfo?.rateCount} đánh giá</Text>
-                </View>
-                <View style={styles.position}>
-                  <View style={{ alignItems: 'center' }}>
-                    <TouchableOpacity onPress={() => LikeBook(bookId)}>
-                      <Icon
-                        name={isHeart ? "heart" : "heart-outline"}
-                        style={{ fontSize: 20 }}
-                        color={isHeart ? "red" : "black"}
-                      ></Icon>
-                    </TouchableOpacity>
-                    <Text>{bookInfo?.countLike}</Text>
+      <ScrollView>
+        <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+
+          <View style={{ width: "95%" }}>
+            <View
+              style={{
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: 'flex-start',
+                alignItems: "center",
+                //backgroundColor: 'red'
+              }}
+            >
+              <View style={{ width: '45%' }}>
+                <Image
+                  source={{ uri: `${BaseUrl}${bookInfo?.imageUrl}` }}
+                  style={{ height: 190, width: "80%", borderRadius: 10 }}
+                ></Image>
+              </View>
+              <View style={{ width: '55%', height: '100%' }}>
+                <Text style={{ fontWeight: "700", fontSize: 17 }}>
+                  {bookInfo?.name}
+                </Text>
+                <Text style={{ marginTop: 10 }}>{bookInfo?.author}</Text>
+                <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
+                  <View>
+                    <Rating stars={bookInfo?.rate ?? 0} maxStars={5} size={20} />
+                    <Text style={{ marginTop: 5 }}>{bookInfo?.rateCount} đánh giá</Text>
                   </View>
-                  <View style={{ alignItems: 'center' }}>
-                    <Icon name="eye-outline" style={{ fontSize: 20 }}></Icon>
-                    <Text>{bookInfo?.viewBook}</Text>
+                  <View style={styles.position}>
+                    <View style={{ alignItems: 'center' }}>
+                      <TouchableOpacity onPress={() => LikeBook(bookId)}>
+                        <Icon
+                          name={isHeart ? "heart" : "heart-outline"}
+                          style={{ fontSize: 20 }}
+                          color={isHeart ? "red" : "black"}
+                        ></Icon>
+                      </TouchableOpacity>
+                      <Text>{bookInfo?.countLike}</Text>
+                    </View>
+                    <View style={{ alignItems: 'center' }}>
+                      <Icon name="eye-outline" style={{ fontSize: 20 }}></Icon>
+                      <Text>{bookInfo?.viewBook}</Text>
+                    </View>
                   </View>
                 </View>
               </View>
             </View>
-          </View>
-          <Text style={{ marginTop: 10 }}>{bookInfo?.description}</Text>
-          <View
-            style={{
-              height: "40%",
-              marginTop: 10,
-              width: "100%",
-            }}
-          >
-            <Text style={{ fontWeight: "700", fontSize: 16 }}>
-              Thông tin chi tiết
-            </Text>
-            <Form
-              lable={"Tâm Lý - Hành vi - Tội phạm"}
-              title={"Thể loại"}
-            ></Form>
-            <Form lable={bookInfo?.author} title={"Tác giả"}></Form>
-            <Form lable={"VIP"} title={"Loại sách"}></Form>
-            <Form lable={"Tiếng việt"} title={"Ngôn ngữ"}></Form>
-          </View>
-        </View>
-        {/* Bình luận đánh giá */}
-        <View style={{ width: '95%' }}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={{ fontWeight: "700", fontSize: 16 }}>Đánh giá sách</Text>
-            <Text>Xem tất cả</Text>
-          </View>
-          <View>
-
-          </View>
-          {comments.length > 0 ?
-            <View>
-              {comments?.map((item) => (
-                <View style={{ borderBottomWidth: 0.2, flexDirection: 'row', marginTop: 5 }}>
-                  <View style={{ marginRight: 5 }}>
-                    <Image
-                      source={{ uri: `${BaseUrl}${bookInfo?.imageUrl}` }}
-                      style={{ height: 25, width: 25, borderRadius: 10 }}
-                    ></Image>
-                  </View>
-                  <View>
-                    <Text style={{ fontWeight: '900' }}>{item?.email}</Text>
-                    <Rating stars={item?.rate ?? 0} maxStars={5} size={13} />
-                    <Text style={{ marginTop: 5 }}>{item?.content}</Text>
-                  </View>
-                </View>
-              ))}
-            </View>
-            :
-            <View>
-              <Text style={{ color: '#cecece' }}>Không có đánh giá nào</Text>
-            </View>}
-          <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
-            <TouchableOpacity
-              style={{ ...styles.button }}
-              onPress={() => setModalVisible(!modalVisible)}
-            >
-              <Text style={{ fontSize: 14, fontWeight: "500", color: "#87c1a1" }}>
-                Đánh giá sách
+            {/* Mô tả nội dung sách */}
+            <Text style={{ marginTop: 10 }}>{bookInfo?.description}</Text>
+            <View style={{ marginTop: 10, width: "100%", }} >
+              <Text style={{ fontWeight: "700", fontSize: 16 }}>
+                Thông tin chi tiết
               </Text>
-            </TouchableOpacity>
+              <Form
+                lable={"Tâm Lý - Hành vi - Tội phạm"}
+                title={"Thể loại"}
+              ></Form>
+              <Form lable={bookInfo?.author} title={"Tác giả"}></Form>
+              <Form lable={"VIP"} title={"Loại sách"}></Form>
+              <Form lable={"Tiếng việt"} title={"Ngôn ngữ"}></Form>
+            </View>
+          </View>
+          {/* Bình luận đánh giá */}
+          <View style={{ width: '95%', marginTop: 20 }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5 }}>
+              <Text style={{ fontWeight: "700", fontSize: 16 }}>Đánh giá sách</Text>
+              <TouchableOpacity>
+              <Text style={{textDecorationLine: 'underline',}}>Xem tất cả</Text>
+              </TouchableOpacity>
+            </View>
+            {comments?.length > 0 ?
+              <View>
+                {comments?.map((item) => (
+                  <View style={{ borderBottomWidth: 0.2, flexDirection: 'row', marginTop: 5 }}>
+                    <View style={{ marginRight: 5 }}>
+                      <Image
+                        source={{ uri: `${BaseUrl}${bookInfo?.imageUrl}` }}
+                        style={{ height: 25, width: 25, borderRadius: 10 }}
+                      ></Image>
+                    </View>
+                    <View>
+                      <Text style={{ fontWeight: '900' }}>{item?.email}</Text>
+                      <Rating stars={item?.rate ?? 0} maxStars={5} size={13} />
+                      <Text style={{ marginTop: 5 }}>{item?.content}</Text>
+                    </View>
+                  </View>
+                ))}
+              </View>
+              :
+              <View>
+                <Text style={{ color: '#cecece' }}>Không có đánh giá nào</Text>
+              </View>}
+            <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
+              <TouchableOpacity
+                style={{ ...styles.button }}
+                onPress={() => setModalVisible(!modalVisible)}
+              >
+                <Text style={{ fontSize: 14, fontWeight: "500", color: "#87c1a1" }}>
+                  Đánh giá sách
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </ScrollView>
