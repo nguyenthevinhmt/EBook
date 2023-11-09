@@ -121,10 +121,12 @@ namespace EBook.Services.Implements
             {
 
             }
-            result.RatingBooks = RatingBook(bookId);
-            if (result.RatingBooks.Count() > 0)
+            var rating = RatingBook(bookId);
+            if (rating.Count() > 0)
             {
-                result.Rate = result.RatingBooks.Select(x => x.Rate).Sum() / result.RatingBooks.Count();
+                result.Rate = rating.Select(x => x.Rate).Sum() / rating.Count();
+                result.RateCount = rating.Count();
+                result.RatingBooks = rating.Take(3).ToList();
             }
             return result;
         }

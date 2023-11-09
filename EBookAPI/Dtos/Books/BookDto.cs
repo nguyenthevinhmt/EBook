@@ -72,6 +72,7 @@ namespace EBook.Dto.Books
         public int CountLike { get; set; }
 
         public int Rate { get; set; }
+        public int RateCount { get; set; }
         public List<RatingBookDto> RatingBooks { get; set; }
     }
 }

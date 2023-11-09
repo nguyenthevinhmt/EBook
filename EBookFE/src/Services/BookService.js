@@ -102,10 +102,11 @@ export const searchBook = async (keyword) => {
 };
 
 export const rateBook = async (input) => {
+  console.log (input)
   try {
     const response = await axios({
       method: "POST",
-      input,
+      data: input,
       url: `${BaseUrl}/book/add-rating-book`,
     });
     return response;

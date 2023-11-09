@@ -147,7 +147,7 @@ namespace EBook.Controllers
         {
             try
             {
-                AddRatingBook(input);
+                _bookServices.AddRatingBook(input);
                 return Ok();
             }
             catch (Exception ex)

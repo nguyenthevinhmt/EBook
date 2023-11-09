@@ -50,7 +50,9 @@ const BookInfomationScreen = ({ navigation }) => {
   const getById = async () => {
     const result = await getBookById(bookId);
     setBookInfo(result?.data);
-    setIsHeart(result?.data?.isLike)
+    setIsHeart(result?.data?.isLike);
+    console.log(result?.data);
+    setComments(result?.data?.ratingBooks)
   };
   // Thả tim
   const LikeBook = async (bookId) => {
@@ -58,11 +60,10 @@ const BookInfomationScreen = ({ navigation }) => {
     setIsHeart(result.data);
   };
 
-  const Rating = () => {
-    const data = {bookId : bookId, rate : rating, content: ratingContent}
-    console.log(data)
-    //const result = await rateBook(data);
-    //setIsHeart(result.data);
+  const CreateRating = async () => {
+    const data = { bookId: bookId, rate: rating, content: ratingContent }
+    const result = await rateBook(data);
+    setModalVisible(!modalVisible)
   };
 
   useEffect(() => {
@@ -104,7 +105,7 @@ const BookInfomationScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </View>
-      <ScrollView contentContainerStyle={{ flex: 1, alignItems: "center", marginTop: 10 }} >
+      <ScrollView contentContainerStyle={{ flex: 1, marginTop: 10, backgroundColor: 'green', width: '100%', justifyContent: 'center', alignItems:'center' }} >
         <View style={{ height: "80%", width: "95%" }}>
           <View
             style={{
@@ -129,7 +130,7 @@ const BookInfomationScreen = ({ navigation }) => {
               <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
                 <View>
                   <Rating stars={bookInfo?.rate ?? 0} maxStars={5} size={20} />
-                  <Text style={{ marginTop: 5 }}>0 đánh giá</Text>
+                  <Text style={{ marginTop: 5 }}>{bookInfo?.rateCount} đánh giá</Text>
                 </View>
                 <View style={styles.position}>
                   <View style={{ alignItems: 'center' }}>
@@ -176,11 +177,27 @@ const BookInfomationScreen = ({ navigation }) => {
             <Text style={{ fontWeight: "700", fontSize: 16 }}>Đánh giá sách</Text>
             <Text>Xem tất cả</Text>
           </View>
-          <View style={{ marginTop: 10 }}>
+          <View>
 
           </View>
           {comments.length > 0 ?
-            <View></View>
+            <View>
+              {comments?.map((item) => (
+                <View style={{ borderBottomWidth: 0.2, flexDirection: 'row', marginTop: 5 }}>
+                  <View style={{ marginRight: 5 }}>
+                    <Image
+                      source={{ uri: `${BaseUrl}${bookInfo?.imageUrl}` }}
+                      style={{ height: 25, width: 25, borderRadius: 10 }}
+                    ></Image>
+                  </View>
+                  <View>
+                    <Text style={{ fontWeight: '900' }}>{item?.email}</Text>
+                    <Rating stars={item?.rate ?? 0} maxStars={5} size={13} />
+                    <Text style={{ marginTop: 5 }}>{item?.content}</Text>
+                  </View>
+                </View>
+              ))}
+            </View>
             :
             <View>
               <Text style={{ color: '#cecece' }}>Không có đánh giá nào</Text>
@@ -195,7 +212,6 @@ const BookInfomationScreen = ({ navigation }) => {
               </Text>
             </TouchableOpacity>
           </View>
-
         </View>
       </ScrollView>
       <View
@@ -254,14 +270,9 @@ const BookInfomationScreen = ({ navigation }) => {
                   Hủy
                 </Text>
               </TouchableOpacity>
-              {/* <Pressable
-                style={[styles.button, styles.buttonOpen]}
-                onPress={Rating}>
-                <Text style={styles.textStyle}>Show Modal</Text>
-              </Pressable> */}
               <TouchableOpacity
                 style={{ ...styles.button, marginLeft: 10 }}
-                onPress={() => { Rating }}
+                onPress={() => CreateRating()}
               >
                 <Text style={{ fontSize: 14, fontWeight: "500", color: "#87c1a1" }}>
                   Đánh giá sách
