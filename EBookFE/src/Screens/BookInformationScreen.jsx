@@ -161,7 +161,7 @@ const BookInfomationScreen = ({ navigation }) => {
           <View style={{ width: '95%', marginTop: 20 }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5 }}>
               <Text style={{ fontWeight: "700", fontSize: 16 }}>Đánh giá sách</Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate("RatingScreen", { bookId })}>
               <Text style={{textDecorationLine: 'underline',}}>Xem tất cả</Text>
               </TouchableOpacity>
             </View>

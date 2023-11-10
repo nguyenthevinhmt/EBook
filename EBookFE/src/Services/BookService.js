@@ -101,6 +101,20 @@ export const searchBook = async (keyword) => {
   }
 };
 
+export const listRateBooks = async (bookId) => {
+  try {
+    const response = await axios({
+      method: "GET",
+      url: `${BaseUrl}/book/get-rating-book/${bookId}`,
+    });
+    return response;
+  } catch (error) {
+    console.log("Lỗi");
+    console.log(error.response);
+    return null;
+  }
+};
+
 export const rateBook = async (input) => {
   console.log (input)
   try {
