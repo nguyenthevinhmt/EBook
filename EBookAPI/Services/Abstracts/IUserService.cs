@@ -8,5 +8,6 @@ namespace EBook.Services.Abstracts
         LoginResultDto Login(LoginDto input);
         void CreateInfoUser(CreateUserInfoDto input);
         UserDto FindMyInfo();
+        void UpdateInfo();
     }
 }
