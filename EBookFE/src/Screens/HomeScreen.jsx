@@ -12,7 +12,7 @@ import {
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/native";
 import { bookGetAll } from "../Services/BookService";
-import { BaseUrl } from "../Utils/BaseUrl";
+import BaseUrl from "../Utils/BaseUrl";
 import { useState, useEffect } from "react";
 
 const data = [
@@ -72,7 +72,7 @@ const HomeScreen = () => {
   }, []);
 
   const rows = [];
-  for (let i = 0; i < books.length; i += itemsPerRow) {
+  for (let i = 0; i < books?.length; i += itemsPerRow) {
     const rowItems = books.slice(i, i + itemsPerRow);
     const row = (
       <View key={i} style={styles.row}>

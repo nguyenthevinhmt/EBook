@@ -1,84 +1,151 @@
 import React, { useEffect, useState } from "react";
 import {
-  View,
   Text,
-  TextInput,
+  View,
   StyleSheet,
-  Image,
-  useWindowDimensions,
+  TextInput,
   TouchableOpacity,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { GetCurrentUserInfo } from "../Services/UserService";
 
-const UserDetailScreen = () => {
-  const [userInfo, setUserInfo] = useState();
+const UserDetailScreen = ({ navigation }) => {
+  const [fullName, setFullName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   useEffect(() => {
-    async () => {
-      try {
-        const info = await GetCurrentUserInfo();
-        setUserInfo(info.data);
-      } catch (error) {
-        console.log(error);
-      }
+    const getData = async () => {
+      const result = await GetCurrentUserInfo();
+      // console.log(result.data);
+      setPhone(result?.data.phone);
+      setFullName(result?.data.fullName);
+      setEmail(result?.data.email);
     };
+
+    getData();
   }, []);
+
   return (
-    <View style={styles.container}>
-      <View style={{ marginTop: 50 }}>
-        <Text style={{ fontSize: 24, fontWeight: "500" }}>
-          Thông tin cá nhân
-        </Text>
-      </View>
-      <View style={{ ...styles.btnWrapper, width: width - 50 }}>
-        <View style={{ flexDirection: "column", width: "100%" }}>
-          <Text style={styles.orText}>Tên người dùng</Text>
+    <SafeAreaView style={styles.container}>
+      <View>
+        <View style={styles.listDetail}>
+          <Text style={styles.title}>Tên đầy đủ</Text>
           <TextInput
-            editable={true}
-            style={styles.viewInput}
-            placeholderTextColor={"#686868"}
-            placeholder="Tên người dùng"
-            value={userInfo.username}
-            onChangeText={(value) => setName(value)}
-          />
+            style={styles.input}
+            placeholder="Cập nhật tên "
+            onChangeText={(value) => {
+              setLastName(value);
+            }}
+          >
+            <Text>{fullName}</Text>
+          </TextInput>
+        </View>
+
+        <View style={styles.listDetail}>
+          <Text style={styles.title}>Số điện thoại</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Cập nhật số điện thoại"
+            onChangeText={(value) => {
+              setPhone(value);
+            }}
+          >
+            <Text>{phone}</Text>
+          </TextInput>
+        </View>
+
+        {/* <View style={styles.listDetail}>
+          <Text style={styles.title}>Điện thoại</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="chưa có số điện thoại"
+            onChangeText={(value) => {
+              setPhoneNumber(value);
+            }}
+          >
+            <Text>{phoneNumber}</Text>
+          </TextInput>
+        </View> */}
+
+        <View style={styles.listDetail}>
+          <Text style={styles.title}>Email</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="chưa có email"
+            editable={false}
+          >
+            <Text>{email}</Text>
+          </TextInput>
         </View>
       </View>
-    </View>
+
+      <View style={styles.buttonArea}>
+        <TouchableOpacity
+          style={styles.returnButt}
+          onPress={() => navigation.goBack()}
+        >
+          <Text style={{ color: "#51d67b" }}>Trở lại</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.confirmButt}
+          // onPress={() => {
+          //   handleUpdate();
+          // }}
+        >
+          <Text style={{ color: "#fff" }}>Lưu thay đổi</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "flex-start",
-    alignItems: "center",
-    width: "100%",
-    // backgroundColor: "#232020",
-  },
-  btnWrapper: {
     flexDirection: "column",
-    justifyContent: "space-evenly",
+    justifyContent: "space-between",
     alignItems: "center",
-    margin: 20,
-  },
-  orText: {
-    color: "#111",
-    fontWeight: "600",
-  },
-  viewInput: {
-    height: 40,
-    borderBottomWidth: 1,
-    borderBottomColor: "#686868",
-    flexDirection: "row",
-    paddingHorizontal: 15,
-    alignItems: "center",
-    justifyContent: "space-evenly",
-    color: "#686868",
-  },
-  uploadAudio: {
-    marginTop: 25,
-    height: 50,
+    backgroundColor: "#F1EFEF",
     width: "100%",
+  },
+
+  listDetail: {
+    backgroundColor: "#fff",
+    width: "100%",
+    height: 80,
+    paddingHorizontal: 20,
     flexDirection: "row",
     alignItems: "center",
+  },
+
+  title: {
+    width: "30%",
+  },
+
+  input: {
+    width: "80%",
+    textAlign: "right",
+  },
+
+  buttonArea: {
+    width: "100%",
+  },
+
+  returnButt: {
+    width: "100%",
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#fff",
+  },
+
+  confirmButt: {
+    width: "100%",
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#51d67b",
   },
 });
 export default UserDetailScreen;

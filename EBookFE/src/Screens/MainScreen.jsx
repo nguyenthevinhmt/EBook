@@ -37,23 +37,7 @@ const MainScreen = () => {
           ),
         }}
       />
-      {/* <BottomTabs.Screen
-        name="HomeScreen"
-        component={HomeScreen}
-        options={{
-          tabBarLabel: "Home",
-          tabBarIcon: ({ focused }) => (
-            <Image
-              source={require("../images/navigationIcon/home-svgrepo-com.png")}
-              style={{
-                width: 24,
-                height: 24,
-                tintColor: focused ? "#51d67b" : "gray",
-              }}
-            />
-          ),
-        }}
-      /> */}
+
       <BottomTabs.Screen
         name="Tủ Sách"
         component={FavoriteScreen}

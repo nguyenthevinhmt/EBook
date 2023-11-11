@@ -12,8 +12,8 @@ import React from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const UserScreen = ({ navigation }) => {
-  const FormSetting = ({ icon, title }) => (
-    <TouchableOpacity style={styles.form}>
+  const FormSetting = ({ icon, title, onPress }) => (
+    <TouchableOpacity style={styles.form} onPress={onPress}>
       <View style={{ flexDirection: "row" }}>
         <Icon name={icon} size={20} style={{ marginLeft: 10 }} />
         <Text style={{ marginLeft: 10, fontWeight: "700", fontSize: 15 }}>
@@ -27,7 +27,7 @@ const UserScreen = ({ navigation }) => {
   );
   return (
     <View style={{ flex: 1, alignItems: "center" }}>
-      <ScrollView style={{ width: "100%" }}>
+      <View style={{ width: "100%" }}>
         <View
           style={{
             height: 90,
@@ -115,14 +115,11 @@ const UserScreen = ({ navigation }) => {
               </Text>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            style={{ width: "90%" }}
-            onPress={() => navigation.navigate("UserDetailScreen")}
-          >
+          <View style={{ width: "90%" }}>
             <Text style={{ fontSize: 20, fontWeight: "700" }}>
               Thông tin tài khoản
             </Text>
-          </TouchableOpacity>
+          </View>
           <View
             style={{
               width: "90%",
@@ -135,6 +132,9 @@ const UserScreen = ({ navigation }) => {
               <FormSetting
                 icon={"badge-account"}
                 title={"Thông tin cá nhân"}
+                onPress={() => {
+                  navigation.navigate("UserDetailScreen");
+                }}
               ></FormSetting>
               <FormSetting
                 icon={"shield-account"}
@@ -189,7 +189,7 @@ const UserScreen = ({ navigation }) => {
             </View>
           </View>
         </View>
-      </ScrollView>
+      </View>
     </View>
   );
 };
