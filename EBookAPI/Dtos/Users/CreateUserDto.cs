@@ -15,7 +15,7 @@ namespace EBook.Dtos.Users
         /// <summary>
         /// Loại người dùng
         /// </summary>
-        [IntegerRange(AllowableValues = new int[] { 1, 2 })]
+        [IntegerRange(AllowableValues = new int[] { 1, 2 }, ErrorMessage ="Vui lòng chọn loại vai trò")]
         public int Usertype { get; set; }
 
     }

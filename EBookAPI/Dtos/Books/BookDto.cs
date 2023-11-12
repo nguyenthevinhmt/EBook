@@ -62,7 +62,8 @@ namespace EBook.Dto.Books
         /// Ảnh của sách
         /// </summary>
         public string ImageUrl { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public string CreatedByName { get; set; }
 
         /// <summary>
         /// Số lượt xem sách

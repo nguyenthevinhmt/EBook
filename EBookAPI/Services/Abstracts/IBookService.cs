@@ -26,5 +26,6 @@ namespace EBook.Services.Abstracts
         /// </summary>
         /// <param name="input"></param>
         void AddRatingBook(AddRatingBookDto input);
+        void Delete(int bookId);
     }
 }

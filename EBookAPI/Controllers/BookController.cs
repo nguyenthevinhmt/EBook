@@ -1,6 +1,5 @@
 ﻿using EBook.Dto.Books;
 using EBook.Dtos.Books;
-using EBook.Dtos.Users;
 using EBook.Services.Abstracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -46,6 +45,20 @@ namespace EBook.Controllers
             }
         }
 
+        [HttpPut("delete/{bookId}")]
+        public IActionResult DeleteBook(int bookId)
+        {
+            try
+            {
+                _bookServices.Delete(bookId);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return ReturnException(ex);
+            }
+
+        }
         [HttpGet("find-by-id/{bookId}")]
         public IActionResult FindById(int bookId)
         {

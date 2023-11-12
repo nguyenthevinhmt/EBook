@@ -53,6 +53,12 @@ namespace EBook.Utils
             return usr != null ? usr.Value : "";
         }
 
+        public static string GetCurrentUserType(IHttpContextAccessor httpContextAccessor)
+        {
+            var usr = httpContextAccessor.HttpContext?.User.FindFirst("user_type");
+            return usr != null ? usr.Value : "";
+        }
+
         public static int GetCurrentUserId(IHttpContextAccessor httpContextAccessor)
         {
             var claims = httpContextAccessor.HttpContext?.User?.Identity as ClaimsIdentity;

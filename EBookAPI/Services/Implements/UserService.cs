@@ -83,6 +83,7 @@ namespace EBook.Services.Implements
                 var claims = new List<Claim>
                 {
                     new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                    new Claim("user_type", user.Usertype.ToString()),
                 };
 
                 var token = new JwtSecurityToken(
