@@ -2,28 +2,40 @@ import React, { useEffect, useState } from "react";
 import {
   Text,
   View,
+  Alert,
   StyleSheet,
   TextInput,
   TouchableOpacity,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { GetCurrentUserInfo } from "../Services/UserService";
+import { UpdateUserInfo } from "../Services/UserService";
 
 const UserDetailScreen = ({ navigation }) => {
-  const [fullName, setFullName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
+  const [userInfo, setUserInfo] = useState({
+    fullName: "",
+    phone: "",
+    email: "",
+  });
+
   useEffect(() => {
     const getData = async () => {
       const result = await GetCurrentUserInfo();
-      // console.log(result.data);
-      setPhone(result?.data.phone);
-      setFullName(result?.data.fullName);
-      setEmail(result?.data.email);
+      setUserInfo(result?.data);
     };
 
     getData();
   }, []);
+
+  const handleUpdateInfo = async () => {
+    try {
+      await UpdateUserInfo(userInfo.fullName, userInfo.phone);
+      navigation.goBack();
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Lỗi khi cập nhật thông tin");
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -34,11 +46,10 @@ const UserDetailScreen = ({ navigation }) => {
             style={styles.input}
             placeholder="Cập nhật tên "
             onChangeText={(value) => {
-              setLastName(value);
+              setUserInfo((prevInfo) => ({ ...prevInfo, fullName: value }));
             }}
-          >
-            <Text>{fullName}</Text>
-          </TextInput>
+            value={userInfo.fullName}
+          />
         </View>
 
         <View style={styles.listDetail}>
@@ -47,35 +58,19 @@ const UserDetailScreen = ({ navigation }) => {
             style={styles.input}
             placeholder="Cập nhật số điện thoại"
             onChangeText={(value) => {
-              setPhone(value);
+              setUserInfo((prevInfo) => ({ ...prevInfo, phone: value }));
             }}
-          >
-            <Text>{phone}</Text>
-          </TextInput>
+            value={userInfo.phone}
+          />
         </View>
-
-        {/* <View style={styles.listDetail}>
-          <Text style={styles.title}>Điện thoại</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="chưa có số điện thoại"
-            onChangeText={(value) => {
-              setPhoneNumber(value);
-            }}
-          >
-            <Text>{phoneNumber}</Text>
-          </TextInput>
-        </View> */}
 
         <View style={styles.listDetail}>
           <Text style={styles.title}>Email</Text>
           <TextInput
             style={styles.input}
-            placeholder="chưa có email"
+            value={userInfo.email}
             editable={false}
-          >
-            <Text>{email}</Text>
-          </TextInput>
+          />
         </View>
       </View>
 
@@ -89,9 +84,9 @@ const UserDetailScreen = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.confirmButt}
-          // onPress={() => {
-          //   handleUpdate();
-          // }}
+          onPress={() => {
+            handleUpdateInfo();
+          }}
         >
           <Text style={{ color: "#fff" }}>Lưu thay đổi</Text>
         </TouchableOpacity>
@@ -148,4 +143,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#51d67b",
   },
 });
+
 export default UserDetailScreen;
