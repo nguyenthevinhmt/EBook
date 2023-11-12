@@ -103,11 +103,13 @@ namespace EBook.Services.Implements
             }
         }
 
-        public void UpdateInfo()
+        public void UpdateInfo(UpdateUserDto input)
         {
             var userId = CommonUtils.GetCurrentUserId(_httpContext);
             var user = _dbContext.Users.FirstOrDefault(c => c.Id == userId) ?? throw new Exception("Không tìm thấy người dùng");
-
+            user.FullName = input.FullName;
+            user.Phone = input.Phone;
+            _dbContext.SaveChanges();
         }
     }
 }

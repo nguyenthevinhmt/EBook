@@ -1,7 +1,6 @@
 ﻿using EBook.Dtos.Users;
 using EBook.Services.Abstracts;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EBook.Controllers
@@ -70,6 +69,20 @@ namespace EBook.Controllers
             {
                 var result = _usersServices.Login(input);
                 return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return ReturnException(ex);
+            }
+        }
+        [Authorize]
+        [HttpPut("update-user-info")]
+        public IActionResult Update([FromBody] UpdateUserDto input)
+        {
+            try
+            {
+                _usersServices.UpdateInfo(input);
+                return Ok();
             }
             catch (Exception ex)
             {
