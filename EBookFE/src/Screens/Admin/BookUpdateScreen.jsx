@@ -15,6 +15,9 @@ import * as ImagePicker from "expo-image-picker";
 import { uploadBook, getBookById, deleteBook } from "../../Services/BookService";
 import { useRoute } from "@react-navigation/native";
 import BaseUrl from "../../Utils/BaseUrl";
+import { category } from "../../Utils/constants";
+import DropDownPicker from 'react-native-dropdown-picker';
+
 const BookUpdateScreen = ({ navigation }) => {
     const route = useRoute();
     const { bookId } = route.params;
@@ -22,12 +25,14 @@ const BookUpdateScreen = ({ navigation }) => {
     const [imageUrl, setImageUrl] = useState();
     const [imageUrlApi, setImageUrlApi] = useState();
     const [filePdf, setFilePdf] = useState(null);
-    const [categoryId, setCategoryId] = useState(1);
+    const [categoryId, setCategoryId] = useState();
     const [name, setName] = useState("");
     const [publishingCompany, setPublishingCompany] = useState("");
     const [author, setAuthor] = useState("");
     const [description, setDescription] = useState("");
 
+    const [open, setOpen] = useState(false);
+    const [items, setItems] = useState(category);
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -122,6 +127,7 @@ const BookUpdateScreen = ({ navigation }) => {
         setPublishingCompany(result.data.publishingCompany);
         setDescription(result.data.description);
         setImageUrlApi(result.data.imageUrl);
+        setCategoryId(result.data.categoryId);
         console.log(result.data)
     };
 
@@ -173,7 +179,23 @@ const BookUpdateScreen = ({ navigation }) => {
               value={author}
               onChangeText={(value) => setAuthor(value)}
             />
+            
           </View> */}
+                <View style={{ flexDirection: "column", width: "100%", marginTop: 20 }}>
+                    <Text style={styles.orText}>Thể loại</Text>
+                    <View>
+                        <DropDownPicker
+                            style={{ marginTop: 10, borderColor: "#ccc" }}
+                            placeholder="Chọn vai trò"
+                            open={open}
+                            value={categoryId}
+                            items={items}
+                            setOpen={setOpen}
+                            setValue={setCategoryId}
+                            setItems={setItems}
+                        />
+                    </View>
+                </View>
                 <View style={{ flexDirection: "column", width: "100%", marginTop: 20 }}>
                     <Text style={styles.orText}>Mô tả sách</Text>
                     <TextInput

@@ -52,7 +52,6 @@ const SearchScreen = ({ navigation, route }) => {
           }}
         >
           <View>
-
             <DropDownPicker
               style={{ marginTop: 10, borderColor: "#ccc", width: '50%' }}
               placeholder="Chọn vai trò"
@@ -63,7 +62,6 @@ const SearchScreen = ({ navigation, route }) => {
               setValue={setCategoryId}
               setItems={setItems}
             />
-
           </View>
           {/* <TouchableOpacity
             style={{

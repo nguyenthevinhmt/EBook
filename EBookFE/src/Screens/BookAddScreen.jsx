@@ -12,6 +12,9 @@ import Icons from "react-native-vector-icons/Feather";
 import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from "expo-image-picker";
 import { addBook } from "../Services/BookService";
+import { category } from "../Utils/constants";
+import DropDownPicker from 'react-native-dropdown-picker';
+
 const BookAddScreen = ({ navigation }) => {
   const { width } = useWindowDimensions();
   const [imageUrl, setImageUrl] = useState();
@@ -22,6 +25,8 @@ const BookAddScreen = ({ navigation }) => {
   const [author, setAuthor] = useState("");
   const [description, setDescription] = useState("");
 
+  const [open, setOpen] = useState(false);
+  const [items, setItems] = useState(category);
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -130,6 +135,21 @@ const BookAddScreen = ({ navigation }) => {
             onChangeText={(value) => setAuthor(value)}
           />
         </View> */}
+        <View style={{ flexDirection: "column", width: "100%", marginTop: 20 }}>
+          <Text style={styles.orText}>Thể loại</Text>
+          <View>
+            <DropDownPicker
+              style={{ marginTop: 10, borderColor: "#ccc" }}
+              placeholder="Chọn vai trò"
+              open={open}
+              value={categoryId}
+              items={items}
+              setOpen={setOpen}
+              setValue={setCategoryId}
+              setItems={setItems}
+            />
+          </View>
+        </View>
         <View style={{ flexDirection: "column", width: "100%", marginTop: 20 }}>
           <Text style={styles.orText}>Mô tả sách</Text>
           <TextInput
