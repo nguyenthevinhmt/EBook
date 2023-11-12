@@ -15,7 +15,7 @@ namespace EBook.Entities
         /// <summary>
         /// Mật khẩu
         /// </summary>
-        public string Password { get; set; } 
+        public string Password { get; set; }
 
         /// <summary>
         /// Email
@@ -26,6 +26,11 @@ namespace EBook.Entities
         /// Tên đầy đủ
         /// </summary>
         public string FullName { get; set; }
+        /// <summary>
+        /// Số điện thoại
+        /// </summary>
+        public string Phone { get; set; }
+
         public List<FavoriteBook> FavoriteBooks { get; set; } = new();
 
     }

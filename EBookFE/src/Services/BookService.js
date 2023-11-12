@@ -1,4 +1,4 @@
-import BaseUrl from "../Utils/BaseUrl";
+import { BaseUrl } from "../Utils/BaseUrl";
 import axios from "../Services/interceptor";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -35,8 +35,8 @@ export const bookGetAll = async () => {
     });
     return response;
   } catch (error) {
-    console.log("Lỗi");
-    console.log(error.response);
+    console.log("Lỗi khi lấy danh sách sách");
+    console.log(error);
     return null;
   }
 };

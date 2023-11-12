@@ -3,15 +3,14 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import FavoriteScreen from "./FavoriteScreen";
 import UserScreen from "./UserScreen";
 import HomeScreen from "./HomeScreen";
-import { Image } from "react-native";
-import BookInfomationScreen from "./BookInformationScreen";
+import { Image, View, Text } from "react-native";
 import BookAddScreen from "./BookAddScreen";
 
 const BottomTabs = createBottomTabNavigator();
 const MainScreen = () => {
   return (
     <BottomTabs.Navigator
-      initialRouteName="Home"
+      initialRouteName="HomeScreen"
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarActiveTintColor: "#51d67b",
@@ -22,7 +21,7 @@ const MainScreen = () => {
       })}
     >
       <BottomTabs.Screen
-        name="Home"
+        name="HomeScreen"
         component={HomeScreen}
         options={{
           tabBarLabel: "Trang chủ",
@@ -38,6 +37,7 @@ const MainScreen = () => {
           ),
         }}
       />
+
       <BottomTabs.Screen
         name="Tủ Sách"
         component={FavoriteScreen}

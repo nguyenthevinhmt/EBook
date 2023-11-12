@@ -6,10 +6,8 @@ import {
   Image,
   useWindowDimensions,
   TouchableOpacity,
-  TouchableWithoutFeedback,
-  KeyboardAvoidingView,
 } from "react-native";
-import { useState, useRef, useMemo } from "react";
+import { useState } from "react";
 import Icons from "react-native-vector-icons/Feather";
 import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from "expo-image-picker";
@@ -80,7 +78,8 @@ const BookAddScreen = ({ navigation }) => {
       formData.append("categoryId", categoryId);
       formData.append("description", description);
       const result = await addBook(formData);
-      console.log(result)
+      console.log(result);
+      navigation.goBack();
     } catch (error) {
       console.error("Lỗi tải file nhạc:", error);
     }
@@ -164,10 +163,9 @@ const BookAddScreen = ({ navigation }) => {
               </Text>
             </View>
           </TouchableOpacity>
-          
         </View>
         <View>
-        {filePdf ? (
+          {filePdf ? (
             <View>
               <Text
                 style={{

@@ -64,7 +64,7 @@ namespace EBook.Controllers
         {
             try
             {
-                
+
                 return Ok(_bookServices.GetAllBook(input));
             }
             catch (Exception ex)

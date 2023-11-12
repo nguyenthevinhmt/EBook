@@ -8,6 +8,8 @@ import BookInfomationScreen from "./src/Screens/BookInformationScreen";
 import AddCategoryScreen from "./src/Screens/AddCategoryScreen";
 import SearchScreen from "./src/Screens/SearchScreen";
 import RatingScreen from "./src/Screens/RatingScreen";
+import UserDetailScreen from "./src/Screens/UserDetailScreen";
+import UserScreen from "./src/Screens/UserScreen";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -23,6 +25,8 @@ export default function App() {
         <Stack.Screen name={"MainScreen"} component={MainScreen} />
         <Stack.Screen name={"SearchScreen"} component={SearchScreen} />
         <Stack.Screen name={"RatingScreen"} component={RatingScreen} />
+        <Stack.Screen name={"UserScreen"} component={UserScreen} />
+
         <Stack.Screen
           name={"BookInfomationScreen"}
           component={BookInfomationScreen}
@@ -31,6 +35,7 @@ export default function App() {
           name={"AddCategoryScreen"}
           component={AddCategoryScreen}
         />
+        <Stack.Screen name={"UserDetailScreen"} component={UserDetailScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
