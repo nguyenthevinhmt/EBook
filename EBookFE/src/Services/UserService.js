@@ -1,4 +1,4 @@
-import { BaseUrl } from "../Utils/BaseUrl";
+import BaseUrl from "../Utils/BaseUrl";
 import axios from "../Services/interceptor";
 
 export const GetCurrentUserInfo = async () => {

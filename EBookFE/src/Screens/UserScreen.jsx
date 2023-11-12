@@ -5,12 +5,9 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
-  FlatList,
-  ScrollView,
 } from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { logout } from "../Services/AuthService";
 
 const UserScreen = ({ navigation }) => {
@@ -18,7 +15,14 @@ const UserScreen = ({ navigation }) => {
     <TouchableOpacity style={styles.form} onPress={onPress}>
       <View style={{ flexDirection: "row" }}>
         <Icon name={icon} size={20} style={{ marginLeft: 10 }} />
-        <Text style={{ marginLeft: 10, fontWeight: "700", fontSize: 15 }}>
+        <Text
+          style={{
+            marginLeft: 10,
+            fontWeight: "400",
+            fontSize: 13,
+            justifyContent: "center",
+          }}
+        >
           {title}
         </Text>
       </View>
@@ -30,7 +34,8 @@ const UserScreen = ({ navigation }) => {
 
   const logOut = async () => {
     const result = await logout();
-    console.log("ok")
+    navigation.navigate("LoginScreen");
+    console.log("ok");
   };
 
   return (
@@ -46,7 +51,9 @@ const UserScreen = ({ navigation }) => {
             marginLeft: "2.5%",
           }}
         >
-          <Text style={{ fontSize: 28, fontWeight: "800" }}>Cá nhân</Text>
+          <Text style={{ fontSize: 28, fontWeight: "800", color: "#51d67b" }}>
+            Cá nhân
+          </Text>
           <View
             style={{
               flexDirection: "row",
@@ -55,7 +62,7 @@ const UserScreen = ({ navigation }) => {
             }}
           >
             <TouchableOpacity>
-              <Icon name="bell-badge-outline" color={"black"} size={25} />
+              <Icon name="bell-badge-outline" color={"#51d67b"} size={25} />
             </TouchableOpacity>
           </View>
         </View>
@@ -89,10 +96,12 @@ const UserScreen = ({ navigation }) => {
                 marginLeft: 15,
               }}
             >
-              <Text style={{ fontSize: 18, fontWeight: "700" }}>
-                Nguyễn Văn A{" "}
+              <Text
+                style={{ fontSize: 18, fontWeight: "700", color: "#51d67b" }}
+              >
+                Nguyễn Văn A
               </Text>
-              <Text>Đọc giả</Text>
+              <Text style={{ color: "#ccc" }}>Đọc giả</Text>
             </View>
           </View>
           <View
@@ -105,12 +114,15 @@ const UserScreen = ({ navigation }) => {
             <TouchableOpacity
               style={{
                 height: 50,
-                backgroundColor: "#c0c0c0",
+                backgroundColor: "#fafafa",
                 width: "100%",
                 marginVertical: 5,
                 flexDirection: "row",
                 alignItems: "center",
                 borderRadius: 10,
+              }}
+              onPress={() => {
+                navigation.navigate("UnDevelopedScreen");
               }}
             >
               <Icon
@@ -118,20 +130,27 @@ const UserScreen = ({ navigation }) => {
                 size={20}
                 style={{ marginLeft: 10 }}
               />
-              <Text style={{ marginLeft: 10, fontWeight: "700", fontSize: 15 }}>
+              <Text
+                style={{
+                  marginLeft: 10,
+                  fontWeight: "400",
+                  fontSize: 14,
+                  color: "#111",
+                }}
+              >
                 Trải nghiệm đăng ký thành viên VIP
               </Text>
             </TouchableOpacity>
           </View>
-          <View style={{ width: "90%" }}>
-            <Text style={{ fontSize: 20, fontWeight: "700" }}>
+          <View style={{ width: "90%", marginVertical: 10 }}>
+            <Text style={{ fontSize: 18, fontWeight: "600" }}>
               Thông tin tài khoản
             </Text>
           </View>
           <View
             style={{
               width: "90%",
-              backgroundColor: "#c0c0c0",
+              backgroundColor: "#fafafa",
               borderRadius: 10,
               marginTop: 10,
             }}
@@ -147,27 +166,36 @@ const UserScreen = ({ navigation }) => {
               <FormSetting
                 icon={"shield-account"}
                 title={"Mật khẩu và bảo mật"}
+                onPress={() => {
+                  navigation.navigate("UnDevelopedScreen");
+                }}
               ></FormSetting>
               <FormSetting
                 icon={"credit-card-lock-outline"}
                 title={"Thông tin và quyền của bạn"}
+                onPress={() => {
+                  navigation.navigate("UnDevelopedScreen");
+                }}
               ></FormSetting>
               <FormSetting
                 icon={"bullhorn"}
                 title={"Đánh giá ứng dụng"}
+                onPress={() => {
+                  navigation.navigate("UnDevelopedScreen");
+                }}
               ></FormSetting>
             </View>
           </View>
 
-          <View style={{ width: "90%", marginTop: 10 }}>
-            <Text style={{ fontSize: 20, fontWeight: "700" }}>
+          <View style={{ width: "90%", marginVertical: 15 }}>
+            <Text style={{ fontSize: 18, fontWeight: "600" }}>
               Cài đặt tài khoản
             </Text>
           </View>
           <View
             style={{
               width: "90%",
-              backgroundColor: "#c0c0c0",
+              backgroundColor: "#fafafa",
               borderRadius: 10,
               marginTop: 10,
             }}
@@ -177,10 +205,15 @@ const UserScreen = ({ navigation }) => {
                 icon={"location-exit"}
                 title={"Đăng xuất"}
                 onPress={() => {
-                  logOut()
+                  logOut();
                 }}
               ></FormSetting>
-              <TouchableOpacity style={styles.form}>
+              <TouchableOpacity
+                style={styles.form}
+                onPress={() => {
+                  navigation.navigate("UnDevelopedScreen");
+                }}
+              >
                 <View style={{ flexDirection: "row" }}>
                   <Icon
                     name={"delete-empty"}
@@ -188,7 +221,7 @@ const UserScreen = ({ navigation }) => {
                     style={{ marginLeft: 10 }}
                   />
                   <Text
-                    style={{ marginLeft: 10, fontWeight: "700", fontSize: 15 }}
+                    style={{ marginLeft: 10, fontWeight: "500", fontSize: 13 }}
                   >
                     Xóa tài khoản
                   </Text>
@@ -211,7 +244,7 @@ const styles = StyleSheet.create({
   },
   form: {
     height: 45,
-    backgroundColor: "#c0c0c0",
+    backgroundColor: "#fafafa",
     width: "100%",
     marginVertical: 5,
     flexDirection: "row",

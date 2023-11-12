@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EBook.Migrations
 {
     [DbContext(typeof(EbookDbContext))]
-    [Migration("20231108155717_FieldViewBook3")]
-    partial class FieldViewBook3
+    [Migration("20231112133752_InitDb")]
+    partial class InitDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -183,6 +183,9 @@ namespace EBook.Migrations
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Usertype")
                         .HasColumnType("int");

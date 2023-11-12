@@ -122,7 +122,21 @@ namespace EBook.Services.Implements
                 ?? throw new Exception($"Không tìm thấy sách");
             book.ViewBook += 1;
             _dbContext.SaveChanges();
-            var result = _mapper.Map<BookDto>(book);
+            var result = new BookDto
+            {
+                Id = book.Id,
+                Code = book.Code,
+                Name = book.Name,
+                LikeCount = book.FavoriteBooks.Count(),
+                CategoryId = book.CategoryId,
+                CategoryName = _dbContext.Categories.FirstOrDefault(x => x.Id == book.CategoryId).CategoryName,
+                Author = book.Author,
+                ImageUrl = book.ImageUrl,
+                FileUrl = book.FileUrl,
+                PublishingCompany = book.PublishingCompany,
+                PublishingYear = book.PublishingYear,
+                Description = book.Description,
+            };
             result.CountLike = _dbContext.FavoriteBooks.Count(b => b.BookId == book.Id);
             try
             {
@@ -130,7 +144,7 @@ namespace EBook.Services.Implements
             }
             catch (Exception ex)
             {
-
+                throw new Exception(ex.Message);
             }
             var rating = RatingBook(bookId);
             if (rating.Count() > 0)
@@ -180,7 +194,7 @@ namespace EBook.Services.Implements
                                                 Name = c.Name,
                                                 LikeCount = c.FavoriteBooks.Count(),
                                                 CategoryId = c.CategoryId,
-                                                CategoryName = c.Category.CategoryName,
+                                                CategoryName = _dbContext.Categories.FirstOrDefault(x => x.Id == c.CategoryId).CategoryName,
                                                 Author = c.Author,
                                                 ImageUrl = c.ImageUrl,
                                                 FileUrl = c.FileUrl,
@@ -297,7 +311,7 @@ namespace EBook.Services.Implements
             if (rating != null)
             {
                 rating.Rate = input.Rate;
-                rating.Content = input.Content;   
+                rating.Content = input.Content;
                 _dbContext.SaveChanges();
             }
             else

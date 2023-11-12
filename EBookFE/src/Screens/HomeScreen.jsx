@@ -6,67 +6,28 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
-  SafeAreaView,
   KeyboardAvoidingView,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/native";
 import { bookGetAll } from "../Services/BookService";
 import BaseUrl from "../Utils/BaseUrl";
 import { useState, useEffect } from "react";
 
-const data = [
-  {
-    id: "1",
-    name: "Năng Lượng Tĩnh Lặng ",
-    author: "Eckhart Tolle",
-    image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
-  },
-  {
-    id: "2",
-    name: "Bí Mật Tư Duy Triệu Phú T. ",
-    author: "Harv Eker",
-    image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
-  },
-  {
-    id: "3",
-    name: "7 Thói Quen Hiệu Quả Stephen",
-    author: " R. Covey",
-    image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
-  },
-  {
-    id: "4",
-    name: "Nhìn Xa, Nhìn Rõ - Dr. Wayne ",
-    author: "W. Dyer",
-    image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
-  },
-  {
-    id: "5",
-    name: "Tư Duy Tích Cực ",
-    author: " Norman Vincent Peale",
-    image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
-  },
-  {
-    id: "6",
-    name: "Tư Duy Nhanh Và Chậm ",
-    author: " Daniel Kahneman",
-    image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
-  },
-];
-
-const itemsPerRow = 3;
+const itemsPerRow = 2;
 const HomeScreen = () => {
   const navigation = useNavigation();
   const [books, setBooks] = useState([]);
   const [keyword, setKeyword] = useState("");
   const BookInformation = (bookId) => {
-    navigation.navigate("BookInfomationScreen", { bookId });
+    navigation.navigate("BookInfomationScreen", { bookId: bookId });
   };
 
   const getBooks = async () => {
     const result = await bookGetAll();
     setBooks(result?.data);
-    console.log("books", books)
+    console.log("books", books);
   };
   useEffect(() => {
     getBooks();
@@ -80,11 +41,9 @@ const HomeScreen = () => {
         {rowItems.map((item) => (
           <TouchableOpacity
             style={{
-              height: 200,
-              width: 125,
+              height: 230,
+              width: 150,
               marginHorizontal: 5,
-              //alignItems: "center",
-              //justifyContent: "space-between",
             }}
             onPress={() => BookInformation(item.id)}
             key={item.id}
@@ -92,11 +51,9 @@ const HomeScreen = () => {
             <Image
               style={{ height: "85%", width: "100%", borderRadius: 5 }}
               source={{ uri: `${BaseUrl}${item.imageUrl}` }}
+              resizeMode="contain"
             ></Image>
             <View style={{ flexDirection: "column", height: 30 }}>
-              <Text style={{ marginTop: 10 }} numberOfLines={1}>
-                {item.name}
-              </Text>
               <Text style={{ marginTop: 10 }} numberOfLines={1}>
                 {item.name}
               </Text>
@@ -108,7 +65,7 @@ const HomeScreen = () => {
     rows.push(row);
   }
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <KeyboardAvoidingView style={styles.container} behavior="height">
         <View
           style={{
@@ -127,14 +84,14 @@ const HomeScreen = () => {
               flexDirection: "row",
             }}
           >
-            <TouchableOpacity>
+            {/* <TouchableOpacity>
               <Icon name="menu" size={30} color={"#555"}></Icon>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <View
               style={{
                 marginTop: 5,
                 height: "90%",
-                width: "85%",
+                width: "95%",
                 borderWidth: 1,
                 flexDirection: "row",
                 alignItems: "center",
@@ -150,8 +107,8 @@ const HomeScreen = () => {
                 style={{ marginHorizontal: 5 }}
               ></Icon>
               <TextInput
-                style={{ height: "100%", width: "85%" }}
-                placeholder="Tìm kiếm danh sách"
+                style={{ height: "100%", width: "95%" }}
+                placeholder="Tìm kiếm sách"
                 placeholderTextColor={"#555"}
                 value={keyword}
                 onChangeText={(value) => setKeyword(value)}
@@ -166,37 +123,6 @@ const HomeScreen = () => {
           contentContainerStyle={{ alignItems: "center", marginTop: 10 }}
         >
           <View style={{ height: "100%", width: "95%" }}>
-            <Text style={{ fontWeight: "600" }}>Hôm nay đọc gì</Text>
-            <ScrollView
-              horizontal
-              contentContainerStyle={{
-                height: 200,
-                width: "100%",
-                alignItems: "center",
-                marginTop: 15,
-              }}
-            >
-              {data.map((item) => {
-                return (
-                  <View
-                    style={{
-                      height: "85%",
-                      width: 115,
-                      marginHorizontal: 10,
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    }}
-                    key={item.id}
-                  >
-                    <Image
-                      style={{ height: "85%", width: "100%" }}
-                      source={{ uri: item.image }}
-                    ></Image>
-                    <Text>{item.name}</Text>
-                  </View>
-                );
-              })}
-            </ScrollView>
             <View
               style={{
                 height: 50,
@@ -207,40 +133,25 @@ const HomeScreen = () => {
                 alignItems: "center",
               }}
             >
-              <Text style={{ fontWeight: "600" }}>Sách mới nhất</Text>
-              <TouchableOpacity onPress={()=> navigation.navigate("SearchScreen", { keyword: null })}>
-                <Text>Xem tất cả</Text>
+              <Text style={{ fontWeight: "600", color: "#51d67b" }}>
+                Hôm nay đọc gì
+              </Text>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("SearchScreen", { keyword: null })
+                }
+              >
+                <Text style={{ color: "#51d67b" }}>Xem thêm</Text>
               </TouchableOpacity>
             </View>
-            <View
-              style={{
-                height: 30,
-                width: "100%",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Text>THỂ LOẠI</Text>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <Icon name="chevron-down" size={25} color={"black"}></Icon>
-                <Text style={{ marginHorizontal: 8 }}>LOẠI SÁCH</Text>
-                <Icon name="chevron-down" size={25} color={"black"}></Icon>
-              </View>
-            </View>
+
             <ScrollView contentContainerStyle={{ marginTop: 10 }}>
               {rows}
             </ScrollView>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -255,8 +166,9 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
-    justifyContent: "flex-start",
+    justifyContent: "space-around",
     marginBottom: 10,
+    width: "100%",
   },
 });
 

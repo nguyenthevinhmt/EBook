@@ -4,18 +4,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const addBook = async (formData) => {
   const token = await AsyncStorage.getItem("accessToken");
-  console.log('token', token)
+  console.log("token", token);
   axios
-    .post(
-      `${BaseUrl}/book/add`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`
-        }
+    .post(`${BaseUrl}/book/add`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
       },
-    )
+    })
     .then((response) => {
       return response;
     })
@@ -28,18 +24,14 @@ export const addBook = async (formData) => {
 
 export const uploadBook = async (formData) => {
   const token = await AsyncStorage.getItem("accessToken");
-  console.log('token', token)
+  console.log("token", token);
   axios
-    .put(
-      `${BaseUrl}/book/update`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`
-        }
+    .put(`${BaseUrl}/book/update`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
       },
-    )
+    })
     .then((response) => {
       return response;
     })
@@ -56,9 +48,9 @@ export const deleteBook = async (bookId) => {
     const response = await axios({
       method: "PUT",
       url: `${BaseUrl}/book/delete/${bookId}`,
-      headers:{
-        Authorization: `Bearer ${token}`
-      }
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return response;
   } catch (error) {
@@ -74,9 +66,9 @@ export const bookGetAll = async () => {
     const response = await axios({
       method: "GET",
       url: `${BaseUrl}/book/get-all`,
-      headers:{
-        Authorization: `Bearer ${token}`
-      }
+      // headers:{
+      //   Authorization: `Bearer ${token}`
+      // }
     });
     return response;
   } catch (error) {
@@ -107,7 +99,7 @@ export const bookFavorite = async (keyword, categoryId) => {
       url: `${BaseUrl}/book/get-all-like`,
       params: {
         Name: keyword,
-        CategoryId: categoryId
+        CategoryId: categoryId,
       },
     });
     return response;
@@ -125,7 +117,7 @@ export const bookManager = async (keyword, categoryId) => {
       url: `${BaseUrl}/book/get-all-admin`,
       params: {
         Name: keyword,
-        CategoryId: categoryId
+        CategoryId: categoryId,
       },
     });
     return response;
@@ -158,7 +150,7 @@ export const searchBook = async (keyword, categoryId) => {
       url: `${BaseUrl}/book/get-all`,
       params: {
         Name: keyword,
-        CategoryId: categoryId
+        CategoryId: categoryId,
       },
     });
     return response;
@@ -184,7 +176,7 @@ export const listRateBooks = async (bookId) => {
 };
 
 export const rateBook = async (input) => {
-  console.log (input)
+  console.log(input);
   try {
     const response = await axios({
       method: "POST",

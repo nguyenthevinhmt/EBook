@@ -1,5 +1,4 @@
 ﻿using EBook.Dtos.Books;
-using EBook.Entities;
 
 namespace EBook.Dto.Books
 {
@@ -15,7 +14,7 @@ namespace EBook.Dto.Books
         /// <summary>
         /// Lượt thích
         /// </summary>
-        public int? LikeCount {  get; set; }
+        public int? LikeCount { get; set; }
 
         /// <summary>
         /// Mã sách
@@ -31,7 +30,6 @@ namespace EBook.Dto.Books
         /// </summary>
         public int? CategoryId { get; set; }
         public string CategoryName { get; set; }
-        public Category Category { get; set; }
 
         /// <summary>
         /// Tác giả

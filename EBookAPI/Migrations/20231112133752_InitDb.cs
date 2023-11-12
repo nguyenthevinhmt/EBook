@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EBook.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class InitDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,7 +34,8 @@ namespace EBook.Migrations
                     Usertype = table.Column<int>(type: "int", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FullName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
+                    FullName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -99,6 +100,35 @@ namespace EBook.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "RatingBooks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BookId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Rate = table.Column<int>(type: "int", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Deleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RatingBooks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RatingBooks_Books_BookId",
+                        column: x => x.BookId,
+                        principalTable: "Books",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RatingBooks_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "CategoryDescription", "CategoryName" },
@@ -118,6 +148,16 @@ namespace EBook.Migrations
                 name: "IX_FavoriteBooks_UserId",
                 table: "FavoriteBooks",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RatingBooks_BookId",
+                table: "RatingBooks",
+                column: "BookId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RatingBooks_UserId",
+                table: "RatingBooks",
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -125,6 +165,9 @@ namespace EBook.Migrations
         {
             migrationBuilder.DropTable(
                 name: "FavoriteBooks");
+
+            migrationBuilder.DropTable(
+                name: "RatingBooks");
 
             migrationBuilder.DropTable(
                 name: "Books");

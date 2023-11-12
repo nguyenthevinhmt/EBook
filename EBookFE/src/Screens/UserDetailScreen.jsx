@@ -39,7 +39,10 @@ const UserDetailScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View>
+      <Text style={{ fontSize: 16, fontWeight: "700", marginTop: 20 }}>
+        Thông tin tài khoản
+      </Text>
+      <View style={{ flex: 9, backgroundColor: "#fafafa", marginTop: 20 }}>
         <View style={styles.listDetail}>
           <Text style={styles.title}>Tên đầy đủ</Text>
           <TextInput
@@ -101,7 +104,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#F1EFEF",
+    backgroundColor: "#fafafa",
     width: "100%",
   },
 
@@ -124,7 +127,12 @@ const styles = StyleSheet.create({
   },
 
   buttonArea: {
-    width: "100%",
+    flex: 1,
+    width: "45%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 20,
   },
 
   returnButt: {
@@ -133,6 +141,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#fff",
+    marginRight: 10,
   },
 
   confirmButt: {
@@ -141,6 +150,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#51d67b",
+    marginLeft: 10,
   },
 });
 
