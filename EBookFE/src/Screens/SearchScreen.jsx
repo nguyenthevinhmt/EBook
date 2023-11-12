@@ -12,33 +12,60 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { searchBook } from "../Services/BookService";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import BookCard from "../Components/BookCard";
-const SearchScreen = ({navigation, route }) => {
-  const [result, setResult] = useState([]);
+import DropDownPicker from 'react-native-dropdown-picker';
+import { category } from "../Utils/constants";
+const SearchScreen = ({ navigation, route }) => {
   const { keyword } = route.params;
+  const [result, setResult] = useState([]);
+  const [searchName, setSearchName] = useState(keyword);
+  const [categoryId, setCategoryId] = useState();
+  const [open, setOpen] = useState(false);
+  const [items, setItems] = useState(category);
 
   const search = async () => {
-    const result = await searchBook(keyword);
+    const result = await searchBook(searchName, categoryId);
     setResult(result.data);
   };
 
   useEffect(() => {
     search();
-  }, []);
+  }, [searchName, categoryId]);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <KeyboardAvoidingView style={styles.container} behavior="height">
         <View style={styles.headerSearch}>
           <Icon name="magnify" size={18} color={"#666"}></Icon>
-          <TextInput style={{ paddingHorizontal: 10 }} placeholder="Tìm kiếm" />
+          <TextInput style={{ paddingHorizontal: 10 }} placeholder="Tìm kiếm"
+            value={searchName}
+            onChangeText={(value) => setSearchName(value)}
+            onSubmitEditing={() => {
+              //navigation.navigate("SearchScreen", { keyword });
+            }}
+          />
         </View>
         <View
           style={{
             alignItems: "flex-end",
-            marginHorizontal: 25,
-            marginVertical: 8,
+            marginHorizontal: 15,
+            marginVertical: 2,
+            justifyContent: 'flex-end',
           }}
         >
-          <TouchableOpacity
+          <View>
+
+            <DropDownPicker
+              style={{ marginTop: 10, borderColor: "#ccc", width: '50%' }}
+              placeholder="Chọn vai trò"
+              open={open}
+              value={categoryId}
+              items={items}
+              setOpen={setOpen}
+              setValue={setCategoryId}
+              setItems={setItems}
+            />
+
+          </View>
+          {/* <TouchableOpacity
             style={{
               flexDirection: "row",
               backgroundColor: "#fafafa",
@@ -57,11 +84,11 @@ const SearchScreen = ({navigation, route }) => {
               color={"#111"}
               style={{ marginLeft: 8 }}
             ></Icon>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         <View
           style={{
-            flex: 1,
+            //flex: 1,
             width: "100%",
             justifyContent: "center",
             //alignItems: "center",

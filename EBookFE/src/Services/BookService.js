@@ -1,4 +1,4 @@
-import { BaseUrl } from "../Utils/BaseUrl";
+import BaseUrl from "../Utils/BaseUrl";
 import axios from "../Services/interceptor";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -24,14 +24,59 @@ export const addBook = async (formData) => {
       console.log(error?.response);
       return null;
     });
+};
 
+export const uploadBook = async (formData) => {
+  const token = await AsyncStorage.getItem("accessToken");
+  console.log('token', token)
+  axios
+    .put(
+      `${BaseUrl}/book/update`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`
+        }
+      },
+    )
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      console.log("Lỗi");
+      console.log(error?.response);
+      return null;
+    });
+};
+
+export const deleteBook = async (bookId) => {
+  const token = await AsyncStorage.getItem("accessToken");
+  try {
+    const response = await axios({
+      method: "PUT",
+      url: `${BaseUrl}/book/delete/${bookId}`,
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return response;
+  } catch (error) {
+    console.log("Lỗi khi lấy danh sách sách");
+    console.log(error);
+    return null;
+  }
 };
 
 export const bookGetAll = async () => {
+  const token = await AsyncStorage.getItem("accessToken");
   try {
     const response = await axios({
       method: "GET",
       url: `${BaseUrl}/book/get-all`,
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
     });
     return response;
   } catch (error) {
@@ -55,11 +100,33 @@ export const getBookById = async (bookId) => {
   }
 };
 
-export const bookFavorite = async () => {
+export const bookFavorite = async (keyword, categoryId) => {
   try {
     const response = await axios({
       method: "GET",
       url: `${BaseUrl}/book/get-all-like`,
+      params: {
+        Name: keyword,
+        CategoryId: categoryId
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log("Lỗi");
+    console.log(error.response);
+    return null;
+  }
+};
+
+export const bookManager = async (keyword, categoryId) => {
+  try {
+    const response = await axios({
+      method: "GET",
+      url: `${BaseUrl}/book/get-all-admin`,
+      params: {
+        Name: keyword,
+        CategoryId: categoryId
+      },
     });
     return response;
   } catch (error) {
@@ -84,13 +151,14 @@ export const favoriteBook = async (bookId) => {
   }
 };
 
-export const searchBook = async (keyword) => {
+export const searchBook = async (keyword, categoryId) => {
   try {
     const response = await axios({
       method: "GET",
       url: `${BaseUrl}/book/get-all`,
       params: {
         Name: keyword,
+        CategoryId: categoryId
       },
     });
     return response;

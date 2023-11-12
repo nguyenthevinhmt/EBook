@@ -12,7 +12,7 @@ import {
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/native";
 import { bookGetAll } from "../Services/BookService";
-import { BaseUrl } from "../Utils/BaseUrl";
+import BaseUrl from "../Utils/BaseUrl";
 import { useState, useEffect } from "react";
 
 const data = [
@@ -66,6 +66,7 @@ const HomeScreen = () => {
   const getBooks = async () => {
     const result = await bookGetAll();
     setBooks(result?.data);
+    console.log("books", books)
   };
   useEffect(() => {
     getBooks();
@@ -207,7 +208,7 @@ const HomeScreen = () => {
               }}
             >
               <Text style={{ fontWeight: "600" }}>Sách mới nhất</Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={()=> navigation.navigate("SearchScreen", { keyword: null })}>
                 <Text>Xem tất cả</Text>
               </TouchableOpacity>
             </View>

@@ -1,6 +1,6 @@
-import { BaseUrl } from "../Utils/BaseUrl";
 import axios from "../Services/interceptor";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import BaseUrl from "../Utils/BaseUrl";
 
 export const login = async (email, password) => {
   try {
@@ -33,11 +33,13 @@ export const logout = async () => {
   }
 };
 
-export const register = async (email, password) => {
+export const register = async (email, password, userType) => {
+  console.log(`${BaseUrl}/users/register`)
   try {
     const response = await axios.post(`${BaseUrl}/users/register`, {
       email,
       password,
+      userType
     });
     return response;
   } catch (error) {

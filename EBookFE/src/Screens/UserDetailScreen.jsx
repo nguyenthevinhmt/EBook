@@ -29,7 +29,7 @@ const UserDetailScreen = ({ navigation }) => {
 
   const handleUpdateInfo = async () => {
     try {
-      await UpdateUserInfo(userInfo.fullName, userInfo.phone);
+      await UpdateUserInfo(userInfo?.fullName, userInfo?.phone);
       navigation.goBack();
     } catch (error) {
       console.log(error);
@@ -48,7 +48,7 @@ const UserDetailScreen = ({ navigation }) => {
             onChangeText={(value) => {
               setUserInfo((prevInfo) => ({ ...prevInfo, fullName: value }));
             }}
-            value={userInfo.fullName}
+            value={userInfo?.fullName}
           />
         </View>
 
@@ -60,7 +60,7 @@ const UserDetailScreen = ({ navigation }) => {
             onChangeText={(value) => {
               setUserInfo((prevInfo) => ({ ...prevInfo, phone: value }));
             }}
-            value={userInfo.phone}
+            value={userInfo?.phone}
           />
         </View>
 
@@ -68,7 +68,7 @@ const UserDetailScreen = ({ navigation }) => {
           <Text style={styles.title}>Email</Text>
           <TextInput
             style={styles.input}
-            value={userInfo.email}
+            value={userInfo?.email}
             editable={false}
           />
         </View>

@@ -10,6 +10,8 @@ import {
 } from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { logout } from "../Services/AuthService";
 
 const UserScreen = ({ navigation }) => {
   const FormSetting = ({ icon, title, onPress }) => (
@@ -25,6 +27,12 @@ const UserScreen = ({ navigation }) => {
       </View>
     </TouchableOpacity>
   );
+
+  const logOut = async () => {
+    const result = await logout();
+    console.log("ok")
+  };
+
   return (
     <View style={{ flex: 1, alignItems: "center" }}>
       <View style={{ width: "100%" }}>
@@ -168,6 +176,9 @@ const UserScreen = ({ navigation }) => {
               <FormSetting
                 icon={"location-exit"}
                 title={"Đăng xuất"}
+                onPress={() => {
+                  logOut()
+                }}
               ></FormSetting>
               <TouchableOpacity style={styles.form}>
                 <View style={{ flexDirection: "row" }}>

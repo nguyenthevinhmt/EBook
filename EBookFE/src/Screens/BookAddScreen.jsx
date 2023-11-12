@@ -46,7 +46,6 @@ const BookAddScreen = ({ navigation }) => {
     }
   };
 
-  // Tải bài hát
   const uploadFile = async () => {
     try {
       const formData = new FormData();
@@ -81,7 +80,7 @@ const BookAddScreen = ({ navigation }) => {
       console.log(result);
       navigation.goBack();
     } catch (error) {
-      console.error("Lỗi tải file nhạc:", error);
+      console.error("Lỗi tải sách:", error);
     }
   };
 

@@ -14,18 +14,23 @@ import BookCard from "../Components/BookCard";
 // import Icon from "react-native-vector-icons";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { bookFavorite } from "../Services/BookService";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import DropDownPicker from 'react-native-dropdown-picker';
+import { category } from "../Utils/constants";
 const FavoriteScreen = ({ navigation }) => {
 
   const [books, setBooks] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [items, setItems] = useState(category);
+  const [searchName, setSearchName] = useState('');
+  const [categoryId, setCategoryId] = useState();
   const getBookFavorite = async () => {
     //await AsyncStorage.removeItem("accessToken");
-    const result = await bookFavorite();
+    const result = await bookFavorite(searchName, categoryId);
     setBooks(result?.data);
   };
   useEffect(() => {
     getBookFavorite();
-  }, []);
+  }, [searchName, categoryId]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -35,6 +40,11 @@ const FavoriteScreen = ({ navigation }) => {
           <TextInput
             style={{ paddingHorizontal: 10 }}
             placeholder="Tìm kiếm sách yêu thích của bạn ..."
+            value={searchName}
+            onChangeText={(value) => setSearchName(value)}
+            onSubmitEditing={() => {
+              //navigation.navigate("SearchScreen", { keyword });
+            }}
           />
         </View>
         <View
@@ -44,26 +54,18 @@ const FavoriteScreen = ({ navigation }) => {
             marginVertical: 8,
           }}
         >
-          <TouchableOpacity
-            style={{
-              flexDirection: "row",
-              backgroundColor: "#fafafa",
-              padding: 8,
-              borderRadius: 5,
-              justifyContent: "center",
-              alignItems: "center",
-              borderColor: "#ccc",
-              borderWidth: 1,
-            }}
-          >
-            <Text style={{ marginLeft: 8 }}>Thể loại</Text>
-            <Icon
-              name="chevron-down"
-              size={18}
-              color={"#111"}
-              style={{ marginLeft: 8 }}
-            ></Icon>
-          </TouchableOpacity>
+          <View>
+            <DropDownPicker
+              style={{ marginTop: 10, borderColor: "#ccc", width: '50%' }}
+              placeholder="Chọn thể loại"
+              open={open}
+              value={categoryId}
+              items={items}
+              setOpen={setOpen}
+              setValue={setCategoryId}
+              setItems={setItems}
+            />
+          </View>
         </View>
         <View
           style={{

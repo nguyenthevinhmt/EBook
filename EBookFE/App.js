@@ -10,6 +10,9 @@ import SearchScreen from "./src/Screens/SearchScreen";
 import RatingScreen from "./src/Screens/RatingScreen";
 import UserDetailScreen from "./src/Screens/UserDetailScreen";
 import UserScreen from "./src/Screens/UserScreen";
+import BookManagerScreen from "./src/Screens/Admin/BookManagerScreen";
+import BookAddScreen from "./src/Screens/BookAddScreen";
+import BookUpdateScreen from "./src/Screens/Admin/BookUpdateScreen";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -26,6 +29,12 @@ export default function App() {
         <Stack.Screen name={"SearchScreen"} component={SearchScreen} />
         <Stack.Screen name={"RatingScreen"} component={RatingScreen} />
         <Stack.Screen name={"UserScreen"} component={UserScreen} />
+        {/* Quản lý sách */}
+        <Stack.Screen name={"BookManagerScreen"} component={BookManagerScreen} />
+        {/* Thêm sách */}
+        <Stack.Screen name={"BookAddScreen"} component={BookAddScreen} />
+        {/* Cập nhật sách */}
+        <Stack.Screen name={"BookUpdateScreen"} component={BookUpdateScreen} />
 
         <Stack.Screen
           name={"BookInfomationScreen"}

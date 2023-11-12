@@ -6,7 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import { useState } from "react";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   ValidationEmail,
@@ -15,11 +15,13 @@ import {
 } from "../Utils/validation";
 import { register } from "../Services/AuthService";
 import { useNavigation } from "@react-navigation/native";
+import DropDownPicker from 'react-native-dropdown-picker';
 
 export const RegisterScreen = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userType, setUserType] = useState(2);
   const [rePassword, setRePassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -27,6 +29,11 @@ export const RegisterScreen = () => {
   const [isValidEmail, setIsValidEmail] = useState(false);
   const [isValidPassword, setIsValidPassword] = useState(false);
   const [isValidRePassword, setIsValidRePassword] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [items, setItems] = useState([
+    { label: 'Đọc giả', value: 2 },
+    { label: 'Quản trị viên', value: 1 }
+  ]);
 
   const handleRegister = async () => {
     const checkEmail = ValidationEmail(email);
@@ -57,7 +64,7 @@ export const RegisterScreen = () => {
       hasError = true;
     }
 
-    const result = await register(email, password);
+    const result = await register(email, password, userType);
     if (result != null) {
       hasError = true;
       console.log(result);
@@ -174,6 +181,17 @@ export const RegisterScreen = () => {
           {isValidRePassword ? (
             <Text style={styles.textError}>{rePasswordError}</Text>
           ) : null}
+
+          <DropDownPicker
+          style={{marginTop: 10, borderColor: "#ccc"}}
+            placeholder="Chọn vai trò"
+            open={open}
+            value={userType}
+            items={items}
+            setOpen={setOpen}
+            setValue={setUserType}
+            setItems={setItems}
+          />
 
           <TouchableOpacity
             style={[styles.button, styles.loginButton]}
