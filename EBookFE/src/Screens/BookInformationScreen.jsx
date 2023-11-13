@@ -231,7 +231,7 @@ const BookInfomationScreen = ({ navigation }) => {
                 onPress={() => setModalVisible(!modalVisible)}
               >
                 <Text
-                  style={{ fontSize: 14, fontWeight: "500", color: "#87c1a1" }}
+                  style={{ fontSize: 14, fontWeight: "500", color: "#51d67b" }}
                 >
                   Đánh giá sách
                 </Text>
@@ -255,7 +255,7 @@ const BookInfomationScreen = ({ navigation }) => {
             borderRadius: 25,
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: "#87c1a1",
+            backgroundColor: "#51d67a",
           }}
         >
           <Text style={{ fontSize: 16, fontWeight: "500", color: "#fff" }}>

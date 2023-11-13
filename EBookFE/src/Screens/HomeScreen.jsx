@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
+  FlatList,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -15,7 +16,7 @@ import { bookGetAll } from "../Services/BookService";
 import BaseUrl from "../Utils/BaseUrl";
 import { useState, useEffect } from "react";
 
-const itemsPerRow = 2;
+const itemsPerRow = 3;
 const HomeScreen = () => {
   const navigation = useNavigation();
   const [books, setBooks] = useState([]);
@@ -41,20 +42,23 @@ const HomeScreen = () => {
         {rowItems.map((item) => (
           <TouchableOpacity
             style={{
-              height: 230,
-              width: 150,
+              height: 180,
+              width: 106,
               marginHorizontal: 5,
             }}
             onPress={() => BookInformation(item.id)}
             key={item.id}
           >
             <Image
-              style={{ height: "85%", width: "100%", borderRadius: 5 }}
+              style={{ height: "75%", width: "95%", borderRadius: 5 }}
               source={{ uri: `${BaseUrl}${item.imageUrl}` }}
-              resizeMode="contain"
+              // resizeMode="contain"
             ></Image>
             <View style={{ flexDirection: "column", height: 30 }}>
-              <Text style={{ marginTop: 10 }} numberOfLines={1}>
+              <Text
+                style={{ marginTop: 10, fontSize: 9, alignItems: "center" }}
+                numberOfLines={1}
+              >
                 {item.name}
               </Text>
             </View>
@@ -65,13 +69,13 @@ const HomeScreen = () => {
     rows.push(row);
   }
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <KeyboardAvoidingView style={styles.container} behavior="height">
         <View
           style={{
-            height: "10%",
-            width: "95%",
-            marginLeft: "2.5%",
+            height: 80,
+            width: "100%",
+            // marginLeft: "2.5%",
             justifyContent: "flex-end",
           }}
         >
@@ -148,10 +152,40 @@ const HomeScreen = () => {
             <ScrollView contentContainerStyle={{ marginTop: 10 }}>
               {rows}
             </ScrollView>
+            {/* <FlatList
+              data={books}
+              numColumns={3}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({ item }) => (
+                <View>
+                  <TouchableOpacity
+                    style={{
+                      height: 250,
+                      flex: 0.33,
+                      marginHorizontal: 5,
+                      marginVertical: 5,
+                    }}
+                    onPress={() => BookInformation(item.id)}
+                    key={item.id}
+                  >
+                    <Image
+                      style={{ height: "85%", width: "100%", borderRadius: 5 }}
+                      source={{ uri: `${BaseUrl}${item.imageUrl}` }}
+                      resizeMode="contain"
+                    ></Image>
+                    <View style={{ flexDirection: "column", height: 30 }}>
+                      <Text style={{ marginTop: 10 }} numberOfLines={1}>
+                        {item.name}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              )}
+            /> */}
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -162,11 +196,10 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    padding: 10,
   },
   row: {
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "flex-start",
     marginBottom: 10,
     width: "100%",
   },

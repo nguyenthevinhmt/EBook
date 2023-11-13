@@ -41,15 +41,15 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   image: {
-    // width: "100%",
-    height: 140,
+    width: 106,
+    height: 150,
     resizeMode: "cover",
     borderRadius: 8,
   },
   title: {
     marginTop: 8,
-    fontWeight: "bold",
-    fontSize: 14,
+    fontWeight: "600",
+    fontSize: 9,
     width: "100%",
   },
   statsContainer: {
