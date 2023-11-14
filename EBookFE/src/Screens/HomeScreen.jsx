@@ -24,6 +24,50 @@ const HomeScreen = () => {
   const BookInformation = (bookId) => {
     navigation.navigate("BookInfomationScreen", { bookId: bookId });
   };
+  const data = [
+    {
+      id: "1",
+      name: "Năng Lượng Tĩnh Lặng ",
+      author: "Eckhart Tolle",
+      image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
+      viewCount: "20",
+    },
+    {
+      id: "2",
+      name: "Bí Mật Tư Duy Triệu Phú T. ",
+      author: "Harv Eker",
+      image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
+      viewCount: "20",
+    },
+    {
+      id: "3",
+      name: "7 Thói Quen Hiệu Quả Stephen",
+      author: " R. Covey",
+      image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
+      viewCount: "20",
+    },
+    {
+      id: "4",
+      name: "Nhìn Xa, Nhìn Rõ - Dr. Wayne ",
+      author: "W. Dyer",
+      image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
+      viewCount: "20",
+    },
+    {
+      id: "5",
+      name: "Tư Duy Tích Cực ",
+      author: " Norman Vincent Peale",
+      image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
+      viewCount: "20",
+    },
+    {
+      id: "6",
+      name: "Tư Duy Nhanh Và Chậm ",
+      author: " Daniel Kahneman",
+      image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
+      viewCount: "20",
+    },
+  ];
 
   const getBooks = async () => {
     const result = await bookGetAll();
@@ -75,7 +119,6 @@ const HomeScreen = () => {
           style={{
             height: 80,
             width: "100%",
-            // marginLeft: "2.5%",
             justifyContent: "flex-end",
           }}
         >
@@ -125,8 +168,53 @@ const HomeScreen = () => {
         </View>
         <ScrollView
           contentContainerStyle={{ alignItems: "center", marginTop: 10 }}
+          showsVerticalScrollIndicator={false}
         >
           <View style={{ height: "100%", width: "95%" }}>
+            <Text style={{ fontWeight: "600", color: "red" }}>
+              * Sách nổi bật
+            </Text>
+            <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{
+                height: 200,
+                marginTop: 15,
+                paddingBottom: 20,
+              }}
+              style={{
+                backgroundColor: "#fafafa",
+                borderRadius: 8,
+                marginTop: 10,
+              }}
+            >
+              {data.map((item) => {
+                return (
+                  <View
+                    style={{
+                      height: "95%",
+                      width: 106,
+                      marginHorizontal: 10,
+                      // justifyContent: "space-between",
+                      // alignItems: "center",
+                    }}
+                    key={item.id}
+                  >
+                    <Image
+                      style={{ height: "85%", width: "100%", borderRadius: 5 }}
+                      source={{ uri: item.image }}
+                    ></Image>
+                    <Text
+                      style={{ fontSize: 10 }}
+                      numberOfLines={1}
+                      ellipsizeMode="tail"
+                    >
+                      {item.name}
+                    </Text>
+                  </View>
+                );
+              })}
+            </ScrollView>
             <View
               style={{
                 height: 50,
@@ -149,39 +237,12 @@ const HomeScreen = () => {
               </TouchableOpacity>
             </View>
 
-            <ScrollView contentContainerStyle={{ marginTop: 10 }}>
+            <ScrollView
+              contentContainerStyle={{ marginTop: 10 }}
+              style={{ backgroundColor: "#fafafa", borderRadius: 8 }}
+            >
               {rows}
             </ScrollView>
-            {/* <FlatList
-              data={books}
-              numColumns={3}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={({ item }) => (
-                <View>
-                  <TouchableOpacity
-                    style={{
-                      height: 250,
-                      flex: 0.33,
-                      marginHorizontal: 5,
-                      marginVertical: 5,
-                    }}
-                    onPress={() => BookInformation(item.id)}
-                    key={item.id}
-                  >
-                    <Image
-                      style={{ height: "85%", width: "100%", borderRadius: 5 }}
-                      source={{ uri: `${BaseUrl}${item.imageUrl}` }}
-                      resizeMode="contain"
-                    ></Image>
-                    <View style={{ flexDirection: "column", height: 30 }}>
-                      <Text style={{ marginTop: 10 }} numberOfLines={1}>
-                        {item.name}
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              )}
-            /> */}
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

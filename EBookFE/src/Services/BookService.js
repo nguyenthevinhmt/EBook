@@ -66,9 +66,9 @@ export const bookGetAll = async () => {
     const response = await axios({
       method: "GET",
       url: `${BaseUrl}/book/get-all`,
-      // headers:{
-      //   Authorization: `Bearer ${token}`
-      // }
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return response;
   } catch (error) {

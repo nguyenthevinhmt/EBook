@@ -27,19 +27,19 @@ export const login = async (email, password) => {
 };
 export const logout = async () => {
   try {
-    await AsyncStorage.removeItem("accessToken");
+    await AsyncStorage.clear();
   } catch (error) {
     console.error("Lỗi khi xóa token:", error);
   }
 };
 
 export const register = async (email, password, userType) => {
-  console.log(`${BaseUrl}/users/register`)
+  console.log(`${BaseUrl}/users/register`);
   try {
     const response = await axios.post(`${BaseUrl}/users/register`, {
       email,
       password,
-      userType
+      userType,
     });
     return response;
   } catch (error) {
