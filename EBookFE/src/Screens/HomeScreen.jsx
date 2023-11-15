@@ -12,13 +12,14 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/native";
-import { bookGetAll } from "../Services/BookService";
+import { bookGetAll, getBookByLikeCount } from "../Services/BookService";
 import BaseUrl from "../Utils/BaseUrl";
 import { useState, useEffect } from "react";
 
 const itemsPerRow = 3;
 const HomeScreen = () => {
   const navigation = useNavigation();
+  const [hotBooks, setHotBooks] = useState([]);
   const [books, setBooks] = useState([]);
   const [keyword, setKeyword] = useState("");
   const BookInformation = (bookId) => {
@@ -74,8 +75,16 @@ const HomeScreen = () => {
     setBooks(result?.data);
     console.log("books", books);
   };
+
+  const getBooksByViewCount = async () => {
+    const result = await getBookByLikeCount();
+    setHotBooks(result?.data);
+    console.log("respone", books);
+  };
+
   useEffect(() => {
     getBooks();
+    getBooksByViewCount();
   }, []);
 
   const rows = [];
@@ -188,7 +197,7 @@ const HomeScreen = () => {
                 marginTop: 10,
               }}
             >
-              {data.map((item) => {
+              {hotBooks.map((item) => {
                 return (
                   <View
                     style={{
@@ -202,7 +211,7 @@ const HomeScreen = () => {
                   >
                     <Image
                       style={{ height: "85%", width: "100%", borderRadius: 5 }}
-                      source={{ uri: item.image }}
+                      source={{ uri: `${BaseUrl}${item.imageUrl}` }}
                     ></Image>
                     <Text
                       style={{ fontSize: 10 }}

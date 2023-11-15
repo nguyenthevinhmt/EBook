@@ -22,6 +22,20 @@ export const addBook = async (formData) => {
     });
 };
 
+export const getBookByLikeCount = async () => {
+  try {
+    const response = await axios({
+      method: "GET",
+      url: `${BaseUrl}/book/get-book-by-view-count`,
+    });
+    return response;
+  } catch (error) {
+    console.log("Lỗi khi lấy danh sách các sách xem nhiều nhất");
+    console.log(error.response);
+    return null;
+  }
+};
+
 export const uploadBook = async (formData) => {
   const token = await AsyncStorage.getItem("accessToken");
   console.log("token", token);
