@@ -6,6 +6,7 @@ import {
   Image,
   useWindowDimensions,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import { useState } from "react";
 import Icons from "react-native-vector-icons/Feather";
@@ -83,7 +84,9 @@ const BookAddScreen = ({ navigation }) => {
       formData.append("description", description);
       const result = await addBook(formData);
       console.log(result);
-      navigation.goBack();
+      if (result){
+        navigation.goBack();
+      }
     } catch (error) {
       console.error("Lỗi tải sách:", error);
     }
@@ -91,6 +94,7 @@ const BookAddScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <ScrollView>
       <View style={{ marginTop: 50 }}>
         <Text style={{ fontSize: 24, fontWeight: "500" }}>Thêm sách</Text>
       </View>
@@ -251,6 +255,7 @@ const BookAddScreen = ({ navigation }) => {
           <Text style={{ color: "#51d67b" }}>Thêm sách</Text>
         </TouchableOpacity>
       </View>
+      </ScrollView>
     </View>
   );
 };

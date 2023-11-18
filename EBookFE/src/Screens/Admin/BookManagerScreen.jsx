@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -18,6 +18,7 @@ import { bookManager } from "../../Services/BookService";
 import { category } from "../../Utils/constants";
 import { formatDateDDMMYYYY } from "../../Utils/constants";
 import DropDownPicker from 'react-native-dropdown-picker';
+import { useFocusEffect } from '@react-navigation/native';
 const BookManagerScreen = () => {
   const navigation = useNavigation();
   const [result, setResult] = useState([]);
@@ -29,8 +30,14 @@ const BookManagerScreen = () => {
   const bookManagers = async () => {
     const result = await bookManager(searchName, categoryId);
     setResult(result.data);
-    console.log(result.data)
   };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // Gọi lại fetchData khi màn hình được focus lại
+      bookManagers();
+    }, [])
+  );
 
   useEffect(() => {
     bookManagers();
@@ -60,9 +67,9 @@ const BookManagerScreen = () => {
             height: 50
           }}
         >
-          <View style={{width: '50%'}}>
+          <View style={{ width: '50%' }}>
             <DropDownPicker
-              style={{borderColor: "#ccc", width: '70%' }}
+              style={{ borderColor: "#ccc", width: '70%' }}
               placeholder="Chọn thể loại"
               open={open}
               value={categoryId}
@@ -106,13 +113,13 @@ const BookManagerScreen = () => {
                   navigation.navigate(
                     "BookUpdateScreen",
                     (params = { bookId: item.id })
-                  ); 
+                  );
                 }}
               >
                 <Image source={{ uri: `${BaseUrl}${item.imageUrl}` }} style={styles.image} />
                 <View>
                   <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
-                    {item.name} 
+                    {item.name}
                   </Text>
                   <Text style={styles.author} numberOfLines={1} ellipsizeMode="tail">
                     - Tác giả: {item?.author}

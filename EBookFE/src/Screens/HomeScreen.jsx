@@ -14,7 +14,8 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/native";
 import { bookGetAll, getBookByLikeCount } from "../Services/BookService";
 import BaseUrl from "../Utils/BaseUrl";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { useFocusEffect } from '@react-navigation/native';
 
 const itemsPerRow = 3;
 const HomeScreen = () => {
@@ -82,6 +83,13 @@ const HomeScreen = () => {
     console.log("respone", books);
   };
 
+  useFocusEffect(
+    React.useCallback(() => {
+      getBooks();React
+      getBooksByViewCount();
+    }, [])
+  );
+
   useEffect(() => {
     getBooks();
     getBooksByViewCount();
@@ -92,7 +100,7 @@ const HomeScreen = () => {
     const rowItems = books.slice(i, i + itemsPerRow);
     const row = (
       <View key={i} style={styles.row}>
-        {rowItems.map((item) => (
+        {rowItems?.map((item) => (
           <TouchableOpacity
             style={{
               height: 180,
@@ -105,7 +113,7 @@ const HomeScreen = () => {
             <Image
               style={{ height: "75%", width: "95%", borderRadius: 5 }}
               source={{ uri: `${BaseUrl}${item.imageUrl}` }}
-              // resizeMode="contain"
+            // resizeMode="contain"
             ></Image>
             <View style={{ flexDirection: "column", height: 30 }}>
               <Text
@@ -197,7 +205,7 @@ const HomeScreen = () => {
                 marginTop: 10,
               }}
             >
-              {hotBooks.map((item) => {
+              {hotBooks?.map((item) => {
                 return (
                   <View
                     style={{

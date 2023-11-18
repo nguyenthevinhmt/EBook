@@ -6,7 +6,8 @@ import {
     Image,
     useWindowDimensions,
     TouchableOpacity,
-    Alert
+    Alert,
+    ScrollView
 } from "react-native";
 import { useEffect, useState } from "react";
 import Icons from "react-native-vector-icons/Feather";
@@ -122,13 +123,15 @@ const BookUpdateScreen = ({ navigation }) => {
 
     const bookInfo = async () => {
         const result = await getBookById(bookId);
-        setName(result.data.name);
-        setAuthor(result.data.author);
-        setPublishingCompany(result.data.publishingCompany);
-        setDescription(result.data.description);
-        setImageUrlApi(result.data.imageUrl);
-        setCategoryId(result.data.categoryId);
-        console.log(result.data)
+        if (result) {
+            setName(result.data.name);
+            setAuthor(result.data.author);
+            setPublishingCompany(result.data.publishingCompany);
+            setDescription(result.data.description);
+            setImageUrlApi(result.data.imageUrl);
+            setCategoryId(result.data.categoryId);
+            console.log(result.data)
+        }
     };
 
     useEffect(() => {
@@ -139,38 +142,39 @@ const BookUpdateScreen = ({ navigation }) => {
             <View style={{ marginTop: 50 }}>
                 <Text style={{ fontSize: 24, fontWeight: "500" }}>Cập nhật sách</Text>
             </View>
-            <View style={{ ...styles.btnWrapper, width: width - 50 }}>
-                <View style={{ flexDirection: "column", width: "100%" }}>
-                    <Text style={styles.orText}>Tên sách</Text>
-                    <TextInput
-                        style={styles.viewInput}
-                        placeholderTextColor={"#686868"}
-                        placeholder="Nhập vào tên sách..."
-                        value={name}
-                        onChangeText={(value) => setName(value)}
-                    />
-                </View>
-                <View style={{ flexDirection: "column", width: "100%", marginTop: 20 }}>
-                    <Text style={styles.orText}>Tác giả</Text>
-                    <TextInput
-                        style={styles.viewInput}
-                        placeholder="Nhập vào tên tác giả ..."
-                        placeholderTextColor={"#686868"}
-                        value={author}
-                        onChangeText={(value) => setAuthor(value)}
-                    />
-                </View>
-                <View style={{ flexDirection: "column", width: "100%", marginTop: 20 }}>
-                    <Text style={styles.orText}>Nhà xuất bản</Text>
-                    <TextInput
-                        style={styles.viewInput}
-                        placeholder="Nhập vào tên nhà xuất bản ..."
-                        placeholderTextColor={"#686868"}
-                        value={publishingCompany}
-                        onChangeText={(value) => setPublishingCompany(value)}
-                    />
-                </View>
-                {/* <View style={{ flexDirection: "column", width: "100%", marginTop: 20 }}>
+            <ScrollView>
+                <View style={{ ...styles.btnWrapper, width: width - 50 }}>
+                    <View style={{ flexDirection: "column", width: "100%" }}>
+                        <Text style={styles.orText}>Tên sách</Text>
+                        <TextInput
+                            style={styles.viewInput}
+                            placeholderTextColor={"#686868"}
+                            placeholder="Nhập vào tên sách..."
+                            value={name}
+                            onChangeText={(value) => setName(value)}
+                        />
+                    </View>
+                    <View style={{ flexDirection: "column", width: "100%", marginTop: 20 }}>
+                        <Text style={styles.orText}>Tác giả</Text>
+                        <TextInput
+                            style={styles.viewInput}
+                            placeholder="Nhập vào tên tác giả ..."
+                            placeholderTextColor={"#686868"}
+                            value={author}
+                            onChangeText={(value) => setAuthor(value)}
+                        />
+                    </View>
+                    <View style={{ flexDirection: "column", width: "100%", marginTop: 20 }}>
+                        <Text style={styles.orText}>Nhà xuất bản</Text>
+                        <TextInput
+                            style={styles.viewInput}
+                            placeholder="Nhập vào tên nhà xuất bản ..."
+                            placeholderTextColor={"#686868"}
+                            value={publishingCompany}
+                            onChangeText={(value) => setPublishingCompany(value)}
+                        />
+                    </View>
+                    {/* <View style={{ flexDirection: "column", width: "100%", marginTop: 20 }}>
             <Text style={styles.orText}>Năm xuất bản</Text>
             <TextInput
               style={styles.viewInput}
@@ -181,125 +185,126 @@ const BookUpdateScreen = ({ navigation }) => {
             />
             
           </View> */}
-                <View style={{ flexDirection: "column", width: "100%", marginTop: 20 }}>
-                    <Text style={styles.orText}>Thể loại</Text>
-                    <View>
-                        <DropDownPicker
-                            style={{ marginTop: 10, borderColor: "#ccc" }}
-                            placeholder="Chọn vai trò"
-                            open={open}
-                            value={categoryId}
-                            items={items}
-                            setOpen={setOpen}
-                            setValue={setCategoryId}
-                            setItems={setItems}
+                    <View style={{ flexDirection: "column", width: "100%", marginTop: 20 }}>
+                        <Text style={styles.orText}>Thể loại</Text>
+                        <View>
+                            <DropDownPicker
+                                style={{ marginTop: 10, borderColor: "#ccc" }}
+                                placeholder="Chọn vai trò"
+                                open={open}
+                                value={categoryId}
+                                items={items}
+                                setOpen={setOpen}
+                                setValue={setCategoryId}
+                                setItems={setItems}
+                            />
+                        </View>
+                    </View>
+                    <View style={{ flexDirection: "column", width: "100%", marginTop: 20 }}>
+                        <Text style={styles.orText}>Mô tả sách</Text>
+                        <TextInput
+                            style={styles.viewInput}
+                            placeholder="Mô tả sách ..."
+                            placeholderTextColor={"#686868"}
+                            value={description}
+                            onChangeText={(value) => setDescription(value)}
                         />
                     </View>
-                </View>
-                <View style={{ flexDirection: "column", width: "100%", marginTop: 20 }}>
-                    <Text style={styles.orText}>Mô tả sách</Text>
-                    <TextInput
-                        style={styles.viewInput}
-                        placeholder="Mô tả sách ..."
-                        placeholderTextColor={"#686868"}
-                        value={description}
-                        onChangeText={(value) => setDescription(value)}
-                    />
-                </View>
-                <View style={{ ...styles.uploadAudio }}>
-                    <TouchableOpacity
-                        onPress={pickPdf}
-                        style={{ marginRight: 10, width: "100%" }}
-                    >
-                        <View
-                            style={{
-                                backgroundColor: "#51d67b",
-                                borderRadius: 10,
-                                justifyContent: "center",
-                                alignItems: "center",
-                                padding: 10,
-                            }}
+                    <View style={{ ...styles.uploadAudio }}>
+                        <TouchableOpacity
+                            onPress={pickPdf}
+                            style={{ marginRight: 10, width: "100%" }}
                         >
-                            <Text
-                                style={{ fontSize: 13, fontWeight: "600", color: "#ffffff" }}
-                            >
-                                Tải nội dung{" "}
-                                <Icons name={"folder-plus"} size={15} color={"#ffffff"} />
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-                <View>
-                    {filePdf ? (
-                        <View>
-                            <Text
+                            <View
                                 style={{
-                                    color: "#686868",
-                                    borderBottomWidth: 0.5,
-                                    borderBottomColor: "#ffffff99",
+                                    backgroundColor: "#51d67b",
+                                    borderRadius: 10,
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    padding: 10,
                                 }}
                             >
-                                {filePdf.name}
-                            </Text>
-                        </View>
-                    ) : null}
-                </View>
-                <View style={{ flexDirection: "column", width: "100%", marginTop: 10 }}>
-                    <TouchableOpacity
-                        onPress={pickImage}
-                        style={{ marginRight: 10, width: "100%" }}
-                    >
-                        <View
-                            style={{
-                                backgroundColor: "#686868",
-                                padding: 10,
-                                borderRadius: 10,
-                                justifyContent: "center",
-                                alignItems: "center",
-                            }}
+                                <Text
+                                    style={{ fontSize: 13, fontWeight: "600", color: "#ffffff" }}
+                                >
+                                    Tải nội dung{" "}
+                                    <Icons name={"folder-plus"} size={15} color={"#ffffff"} />
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                    <View>
+                        {filePdf ? (
+                            <View>
+                                <Text
+                                    style={{
+                                        color: "#686868",
+                                        borderBottomWidth: 0.5,
+                                        borderBottomColor: "#ffffff99",
+                                    }}
+                                >
+                                    {filePdf.name}
+                                </Text>
+                            </View>
+                        ) : null}
+                    </View>
+                    <View style={{ flexDirection: "column", width: "100%", marginTop: 10 }}>
+                        <TouchableOpacity
+                            onPress={pickImage}
+                            style={{ marginRight: 10, width: "100%" }}
                         >
-                            <Text
-                                style={{ fontSize: 13, fontWeight: "600", color: "#ffffff" }}
+                            <View
+                                style={{
+                                    backgroundColor: "#686868",
+                                    padding: 10,
+                                    borderRadius: 10,
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                }}
                             >
-                                Tải ảnh{" "}
-                                <Icons name={"folder-plus"} size={15} color={"#ffffff"} />
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
-                    {imageUrlApi ? (
-                        <Image
-                            source={{ uri: `${BaseUrl}${imageUrlApi}` }}
-                            resizeMode="cover"
-                            style={{
-                                width: 100,
-                                height: 200,
-                                marginTop: 10,
-                                borderRadius: 15,
-                                borderWidth: 1,
-                            }}
-                        />
-                    ) :
-                        <Image
-                            source={{ uri: imageUrl }}
-                            resizeMode="cover"
-                            style={{
-                                width: 100,
-                                height: 200,
-                                marginTop: 10,
-                                borderRadius: 15,
-                                borderWidth: 1,
-                            }}
-                        />}
+                                <Text
+                                    style={{ fontSize: 13, fontWeight: "600", color: "#ffffff" }}
+                                >
+                                    Tải ảnh{" "}
+                                    <Icons name={"folder-plus"} size={15} color={"#ffffff"} />
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                        {imageUrlApi ? (
+                            <Image
+                                source={{ uri: `${BaseUrl}${imageUrlApi}` }}
+                                resizeMode="cover"
+                                style={{
+                                    width: 100,
+                                    height: 200,
+                                    marginTop: 10,
+                                    borderRadius: 15,
+                                    borderWidth: 1,
+                                }}
+                            />
+                        ) :
+                            <Image
+                                source={{ uri: imageUrl }}
+                                resizeMode="cover"
+                                style={{
+                                    width: 100,
+                                    height: 200,
+                                    marginTop: 10,
+                                    borderRadius: 15,
+                                    borderWidth: 1,
+                                }}
+                            />}
+                    </View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', width: '100%' }}>
+                        <TouchableOpacity style={{ ...styles.inputSubmit, backgroundColor: 'red', borderColor: 'red' }} onPress={deleteBookId}>
+                            <Text style={{ color: "#fff", fontWeight: '600' }}>Xóa sách</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{ ...styles.inputSubmit }} onPress={updateBook}>
+                            <Text style={{ color: "#51d67b", fontWeight: '600' }}>Cập nhật sách</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-around', width: '100%' }}>
-                    <TouchableOpacity style={{ ...styles.inputSubmit, backgroundColor: 'red', borderColor: 'red' }} onPress={deleteBookId}>
-                        <Text style={{ color: "#fff", fontWeight: '600' }}>Xóa sách</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{ ...styles.inputSubmit }} onPress={updateBook}>
-                        <Text style={{ color: "#51d67b", fontWeight: '600' }}>Cập nhật sách</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
+            </ScrollView>
         </View>
     );
 };
