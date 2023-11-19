@@ -85,6 +85,18 @@ namespace EBook.Controllers
                 return ReturnException(ex);
             }
         }
+        [HttpGet("get-book-by-view-count")]
+        public IActionResult GetAllBookByViewCountDesc()
+        {
+            try
+            {
+                return Ok(_bookServices.GetAllBookByViewCount());
+            }
+            catch (Exception ex)
+            {
+                return ReturnException(ex);
+            }
+        }
 
         [HttpGet("get-all-like")]
         public IActionResult GetAllBookLike([FromQuery] FilterBookDto input)

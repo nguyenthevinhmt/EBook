@@ -32,6 +32,11 @@ namespace EBook.Services.Implements
             _fileService = fileService;
             _dbContext = dbContext;
         }
+        public List<BookDto> GetAllBookByViewCount()
+        {
+            var result = _dbContext.Books.Where(c => !c.Deleted).OrderByDescending(c => c.ViewBook);
+            return _mapper.Map<List<BookDto>>(result);
+        }
 
         public BookDto AddBook(CreateBookDto input)
         {
