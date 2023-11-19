@@ -181,7 +181,7 @@ const HomeScreen = () => {
         >
           <View style={{ height: "100%", width: "95%" }}>
             <Text style={{ fontWeight: "600", color: "red" }}>
-              * Sách nổi bật
+              Sách nổi bật
             </Text>
             <ScrollView
               horizontal={true}
@@ -195,6 +195,12 @@ const HomeScreen = () => {
                 backgroundColor: "#fafafa",
                 borderRadius: 8,
                 marginTop: 10,
+                shadowColor: "#000",
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.3,
+                shadowRadius: 3,
+                elevation: 5,
+                borderRadius: 9,
               }}
             >
               {hotBooks.map((item) => {
@@ -235,7 +241,7 @@ const HomeScreen = () => {
                 alignItems: "center",
               }}
             >
-              <Text style={{ fontWeight: "600", color: "#51d67b" }}>
+              <Text style={{ fontWeight: "600", color: "#72D9FC" }}>
                 Hôm nay đọc gì
               </Text>
               <TouchableOpacity
@@ -243,13 +249,22 @@ const HomeScreen = () => {
                   navigation.navigate("SearchScreen", { keyword: null })
                 }
               >
-                <Text style={{ color: "#51d67b" }}>Xem thêm</Text>
+                <Text style={{ color: "#72D9FC" }}>Xem thêm</Text>
               </TouchableOpacity>
             </View>
 
             <ScrollView
               contentContainerStyle={{ marginTop: 10 }}
-              style={{ backgroundColor: "#fafafa", borderRadius: 8 }}
+              style={{
+                backgroundColor: "#fafafa",
+                borderRadius: 8,
+                shadowColor: "#000",
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.3,
+                shadowRadius: 3,
+                elevation: 5,
+                borderRadius: 9,
+              }}
             >
               {rows}
             </ScrollView>

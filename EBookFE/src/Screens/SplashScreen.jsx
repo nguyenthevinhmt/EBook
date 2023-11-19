@@ -11,7 +11,7 @@ if (!global.atob) {
 }
 const SplashScreen = () => {
   const navigation = useNavigation();
-  const logoImage = require("../images/logo.png");
+  const logoImage = require("../images/book_logo.png");
   useEffect(() => {
     const checkTokenValidity = async () => {
       const accessToken = await AsyncStorage.getItem("accessToken");
@@ -51,7 +51,7 @@ const SplashScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fafafa",
+    backgroundColor: "#fff",
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
@@ -59,13 +59,14 @@ const styles = StyleSheet.create({
 
   logo: {
     width: 250,
-    height: 150,
+    height: 250,
   },
 
   textLogo: {
-    color: "#111",
+    color: "#72D9FC",
     textAlign: "center",
     fontSize: 20,
+    fontWeight: "500",
   },
 });
 export default SplashScreen;

@@ -45,7 +45,7 @@ const UserScreen = ({ navigation }) => {
 
   const logOut = async () => {
     const result = await logout();
-    navigation.navigate("LoginScreen");
+    navigation.replace("LoginScreen");
     console.log("ok");
   };
 
@@ -62,7 +62,7 @@ const UserScreen = ({ navigation }) => {
             marginLeft: "2.5%",
           }}
         >
-          <Text style={{ fontSize: 28, fontWeight: "800", color: "#51d67b" }}>
+          <Text style={{ fontSize: 28, fontWeight: "800", color: "#72D9FC" }}>
             Cá nhân
           </Text>
           <View
@@ -73,7 +73,7 @@ const UserScreen = ({ navigation }) => {
             }}
           >
             <TouchableOpacity>
-              <Icon name="bell-badge-outline" color={"#51d67b"} size={25} />
+              <Icon name="bell-badge-outline" color={"#72D9FC"} size={25} />
             </TouchableOpacity>
           </View>
         </View>
@@ -111,7 +111,7 @@ const UserScreen = ({ navigation }) => {
               }}
             >
               <Text
-                style={{ fontSize: 18, fontWeight: "700", color: "#51d67b" }}
+                style={{ fontSize: 18, fontWeight: "700", color: "#72D9FC" }}
               >
                 {username === "" ? "Vui lòng cập nhật thông tin" : username}
                 {/* Nguyễn Văn A */}
@@ -180,9 +180,9 @@ const UserScreen = ({ navigation }) => {
               ></FormSetting>
               <FormSetting
                 icon={"shield-account"}
-                title={"Mật khẩu và bảo mật"}
+                title={"Đổi mật khẩu"}
                 onPress={() => {
-                  navigation.navigate("UnDevelopedScreen");
+                  navigation.navigate("ChangePasswordScreen");
                 }}
               ></FormSetting>
               <FormSetting

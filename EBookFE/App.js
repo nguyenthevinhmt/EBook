@@ -14,6 +14,7 @@ import BookManagerScreen from "./src/Screens/Admin/BookManagerScreen";
 import BookAddScreen from "./src/Screens/BookAddScreen";
 import BookUpdateScreen from "./src/Screens/Admin/BookUpdateScreen";
 import UnDevelopedScreen from "./src/Screens/UnDevelopedScreen";
+import ChangePasswordScreen from "./src/Screens/ChangePasswordScreen";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -30,6 +31,10 @@ export default function App() {
         <Stack.Screen name={"SearchScreen"} component={SearchScreen} />
         <Stack.Screen name={"RatingScreen"} component={RatingScreen} />
         <Stack.Screen name={"UserScreen"} component={UserScreen} />
+        <Stack.Screen
+          name={"ChangePasswordScreen"}
+          component={ChangePasswordScreen}
+        />
         <Stack.Screen
           name={"UnDevelopedScreen"}
           component={UnDevelopedScreen}

@@ -23,3 +23,14 @@ export const UpdateUserInfo = async (fullName, phone) => {
     console.log(error);
   }
 };
+export const ChangePassword = async (oldPassword, newPassword) => {
+  try {
+    const res = await axios.put(`${BaseUrl}/users/change-password`, {
+      oldPassword,
+      newPassword,
+    });
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -17,19 +17,19 @@ const MainScreen = () => {
     const accessToken = await AsyncStorage.getItem("accessToken");
     if (accessToken !== null) {
       const decodedToken = jwtDecode(accessToken);
-      setUserType(decodedToken.user_type)
-      console.log("decodedToken", decodedToken)
+      setUserType(decodedToken.user_type);
+      console.log("decodedToken", decodedToken);
     }
   };
   useEffect(() => {
-    deCodeJwt()
+    deCodeJwt();
   }, []);
   return (
     <BottomTabs.Navigator
       initialRouteName="HomeScreen"
       screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarActiveTintColor: "#51d67b",
+        tabBarActiveTintColor: "#72D9FC",
         tabBarInactiveTintColor: "gray",
         tabBarStyle: {
           display: "flex",
@@ -47,7 +47,7 @@ const MainScreen = () => {
               style={{
                 width: 24,
                 height: 24,
-                tintColor: focused ? "#51d67b" : "gray",
+                tintColor: focused ? "#72D9FC" : "gray",
               }}
             />
           ),
@@ -65,13 +65,13 @@ const MainScreen = () => {
               style={{
                 width: 24,
                 height: 24,
-                tintColor: focused ? "#51d67b" : "gray",
+                tintColor: focused ? "#72D9FC" : "gray",
               }}
             />
           ),
         }}
       />
-      {userType == 1 &&
+      {userType == 1 && (
         <BottomTabs.Screen
           name="BookManagerScreen"
           component={BookManagerScreen}
@@ -83,14 +83,14 @@ const MainScreen = () => {
                 style={{
                   width: 24,
                   height: 24,
-                  tintColor: focused ? "#51d67b" : "gray",
+                  tintColor: focused ? "#72D9FC" : "gray",
                 }}
               />
             ),
           }}
         />
-      }
-      {userType == 1 &&
+      )}
+      {userType == 1 && (
         <BottomTabs.Screen
           name="BookAddScreen"
           component={BookAddScreen}
@@ -102,13 +102,13 @@ const MainScreen = () => {
                 style={{
                   width: 24,
                   height: 24,
-                  tintColor: focused ? "#51d67b" : "gray",
+                  tintColor: focused ? "#72D9FC" : "gray",
                 }}
               />
             ),
           }}
         />
-      }
+      )}
       <BottomTabs.Screen
         name="Tôi"
         component={UserScreen}
@@ -120,7 +120,7 @@ const MainScreen = () => {
               style={{
                 width: 24,
                 height: 24,
-                tintColor: focused ? "#51d67b" : "gray",
+                tintColor: focused ? "#72D9FC" : "gray",
               }}
             />
           ),

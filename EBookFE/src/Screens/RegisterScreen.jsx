@@ -15,7 +15,7 @@ import {
 } from "../Utils/validation";
 import { register } from "../Services/AuthService";
 import { useNavigation } from "@react-navigation/native";
-import DropDownPicker from 'react-native-dropdown-picker';
+import DropDownPicker from "react-native-dropdown-picker";
 
 export const RegisterScreen = () => {
   const navigation = useNavigation();
@@ -31,8 +31,8 @@ export const RegisterScreen = () => {
   const [isValidRePassword, setIsValidRePassword] = useState(false);
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([
-    { label: 'Đọc giả', value: 2 },
-    { label: 'Quản trị viên', value: 1 }
+    { label: "Đọc giả", value: 2 },
+    { label: "Quản trị viên", value: 1 },
   ]);
 
   const handleRegister = async () => {
@@ -90,7 +90,7 @@ export const RegisterScreen = () => {
       <View style={styles.container}>
         <View style={styles.logoApp}>
           <Image
-            source={require("../images/logo.png")}
+            source={require("../images/book_logo.png")}
             style={styles.logoImage}
           />
         </View>
@@ -183,7 +183,7 @@ export const RegisterScreen = () => {
           ) : null}
 
           <DropDownPicker
-          style={{marginTop: 10, borderColor: "#ccc"}}
+            style={{ marginTop: 10, borderColor: "#ccc" }}
             placeholder="Chọn vai trò"
             open={open}
             value={userType}
@@ -223,7 +223,7 @@ export const RegisterScreen = () => {
               style={{
                 textAlign: "center",
                 fontSize: 14,
-                color: "#51d67b",
+                color: "#72D9FC",
                 fontWeight: "600",
               }}
             >
@@ -252,11 +252,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     margin: "auto",
     flex: 1,
+    marginTop: 20,
   },
 
   logoImage: {
     width: 250,
-    height: 150,
+    height: 250,
     marginVertical: 90,
   },
 
@@ -317,13 +318,13 @@ const styles = StyleSheet.create({
   },
 
   loginButton: {
-    backgroundColor: "#51d67b",
+    backgroundColor: "#72D9FC",
   },
 
   registerButton: {
     backgroundColor: "#FFF",
     borderWidth: 1,
-    borderColor: "#51d67b",
+    borderColor: "#72D9FC",
   },
 });
 export default RegisterScreen;

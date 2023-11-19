@@ -89,5 +89,19 @@ namespace EBook.Controllers
                 return ReturnException(ex);
             }
         }
+        [HttpPut("change-password")]
+        public IActionResult ChangePassword([FromBody] ChangePasswordDto input)
+        {
+            try
+            {
+                _usersServices.ChangePassword(input);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return ReturnException(ex);
+            }
+
+        }
     }
 }

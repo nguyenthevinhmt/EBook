@@ -58,7 +58,7 @@ export const LoginScreen = () => {
       <View style={styles.container}>
         <View style={styles.logoApp}>
           <Image
-            source={require("../images/logo.png")}
+            source={require("../images/book_logo.png")}
             style={styles.logoImage}
           />
         </View>
@@ -155,7 +155,7 @@ export const LoginScreen = () => {
               style={{
                 textAlign: "center",
                 fontSize: 14,
-                color: "#51d67b",
+                color: "#72D9FC",
                 fontWeight: "600",
               }}
             >
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
 
   logoImage: {
     width: 250,
-    height: 150,
+    height: 250,
     marginBottom: 50,
   },
 
@@ -254,13 +254,13 @@ const styles = StyleSheet.create({
   },
 
   loginButton: {
-    backgroundColor: "#51d67b",
+    backgroundColor: "#72D9FC",
   },
 
   registerButton: {
     backgroundColor: "#FFF",
     borderWidth: 1,
-    borderColor: "#51d67b",
+    borderColor: "#72D9FC",
   },
 });
 

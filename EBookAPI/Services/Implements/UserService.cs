@@ -112,5 +112,20 @@ namespace EBook.Services.Implements
             user.Phone = input.Phone;
             _dbContext.SaveChanges();
         }
+
+        public void ChangePassword(ChangePasswordDto input)
+        {
+            var userId = CommonUtils.GetCurrentUserId(_httpContext);
+            var user = _dbContext.Users.FirstOrDefault(c => c.Id == userId) ?? throw new Exception("Không tìm thấy người dùng");
+            if (CommonUtils.CreateMD5(input.oldPassWord) == user.Password)
+            {
+                user.Password = CommonUtils.CreateMD5(input.newPassWord);
+                _dbContext.SaveChanges();
+            }
+            else if (CommonUtils.CreateMD5(input.oldPassWord) != user.Password)
+            {
+                throw new Exception("Mật khẩu hiện tại không đúng");
+            }
+        }
     }
 }

@@ -1,78 +1,64 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
-  Text,
   View,
-  Alert,
   StyleSheet,
-  TextInput,
   TouchableOpacity,
+  Text,
+  TextInput,
+  Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { GetCurrentUserInfo } from "../Services/UserService";
-import { UpdateUserInfo } from "../Services/UserService";
+import { ChangePassword } from "../Services/UserService";
 
-const UserDetailScreen = ({ navigation }) => {
-  const [userInfo, setUserInfo] = useState({
-    fullName: "",
-    phone: "",
-    email: "",
+const ChangePasswordScreen = ({ navigation }) => {
+  const [formPassword, setFormPassword] = useState({
+    oldPassword: "",
+    newPassword: "",
   });
 
-  useEffect(() => {
-    const getData = async () => {
-      const result = await GetCurrentUserInfo();
-      setUserInfo(result?.data);
-    };
-
-    getData();
-  }, []);
-
-  const handleUpdateInfo = async () => {
+  const handleChangePassword = async () => {
     try {
-      await UpdateUserInfo(userInfo?.fullName, userInfo?.phone);
-      navigation.goBack();
+      const res = await ChangePassword(
+        formPassword.oldPassword,
+        formPassword.newPassword
+      );
+      console.log(res);
+      if (res.status === 200) navigation.goBack();
     } catch (error) {
       console.log(error);
-      Alert.alert("Lỗi khi cập nhật thông tin");
+      Alert.alert("Thay đổi mật khẩu không thành công");
     }
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={{ fontSize: 16, fontWeight: "700", marginTop: 20 }}>
-        Thông tin tài khoản
+        Thay đổi mật khẩu
       </Text>
       <View style={{ flex: 9, backgroundColor: "#fafafa", marginTop: 20 }}>
         <View style={styles.listDetail}>
-          <Text style={styles.title}>Tên đầy đủ</Text>
+          <Text style={styles.title}>Nhập vào mật khẩu hiện tại</Text>
           <TextInput
             style={styles.input}
-            placeholder="Cập nhật tên "
+            placeholder="mật khẩu hiện tại"
+            secureTextEntry={true}
             onChangeText={(value) => {
-              setUserInfo((prevInfo) => ({ ...prevInfo, fullName: value }));
+              setFormPassword((prev) => ({ ...prev, oldPassword: value }));
             }}
-            value={userInfo?.fullName}
+            value={formPassword.oldPassword}
           />
         </View>
 
         <View style={styles.listDetail}>
-          <Text style={styles.title}>Số điện thoại</Text>
+          <Text style={styles.title}>Nhập vào mật khẩu mới</Text>
           <TextInput
             style={styles.input}
-            placeholder="Cập nhật số điện thoại"
+            placeholder="mật khẩu mới"
+            secureTextEntry={true}
             onChangeText={(value) => {
-              setUserInfo((prevInfo) => ({ ...prevInfo, phone: value }));
+              setFormPassword((prev) => ({ ...prev, newPassword: value }));
             }}
-            value={userInfo?.phone}
-          />
-        </View>
-
-        <View style={styles.listDetail}>
-          <Text style={styles.title}>Email</Text>
-          <TextInput
-            style={styles.input}
-            value={userInfo?.email}
-            editable={false}
+            value={formPassword.newPassword}
           />
         </View>
       </View>
@@ -88,16 +74,15 @@ const UserDetailScreen = ({ navigation }) => {
         <TouchableOpacity
           style={styles.confirmButt}
           onPress={() => {
-            handleUpdateInfo();
+            handleChangePassword();
           }}
         >
-          <Text style={{ color: "#fff" }}>Lưu thay đổi</Text>
+          <Text style={{ color: "#fff" }}>Cập nhật</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -123,6 +108,7 @@ const styles = StyleSheet.create({
 
   input: {
     width: "80%",
+    height: "100%",
     textAlign: "right",
   },
 
@@ -166,4 +152,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserDetailScreen;
+export default ChangePasswordScreen;
