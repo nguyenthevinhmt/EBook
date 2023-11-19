@@ -14,6 +14,7 @@ namespace EBook.Services.Abstracts
         List<BookDto> GetAllBookLike(FilterBookDto input);
         List<BookDto> SearchBook(FilterBookDto input);
 
+        List<BookDto> GetAllBookByViewCount();
         /// <summary>
         /// Danh sách Đánh giá sách
         /// </summary>
@@ -27,5 +28,6 @@ namespace EBook.Services.Abstracts
         /// <param name="input"></param>
         void AddRatingBook(AddRatingBookDto input);
         void Delete(int bookId);
+
     }
 }

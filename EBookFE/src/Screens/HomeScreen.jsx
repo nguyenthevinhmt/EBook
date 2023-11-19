@@ -199,7 +199,7 @@ const HomeScreen = () => {
             >
               {hotBooks.map((item) => {
                 return (
-                  <View
+                  <TouchableOpacity
                     style={{
                       height: "95%",
                       width: 106,
@@ -208,6 +208,7 @@ const HomeScreen = () => {
                       // alignItems: "center",
                     }}
                     key={item.id}
+                    onPress={() => BookInformation(item.id)}
                   >
                     <Image
                       style={{ height: "85%", width: "100%", borderRadius: 5 }}
@@ -220,7 +221,7 @@ const HomeScreen = () => {
                     >
                       {item.name}
                     </Text>
-                  </View>
+                  </TouchableOpacity>
                 );
               })}
             </ScrollView>
