@@ -141,6 +141,7 @@ namespace EBook.Services.Implements
                 PublishingCompany = book.PublishingCompany,
                 PublishingYear = book.PublishingYear,
                 Description = book.Description,
+                ViewBook = book.ViewBook,
             };
             result.CountLike = _dbContext.FavoriteBooks.Count(b => b.BookId == book.Id);
             try
@@ -302,7 +303,7 @@ namespace EBook.Services.Implements
                              Content = rating.Content,
                              Rate = rating.Rate,
                              Email = user.Email,
-                             FullName = user.FullName
+                             FullName = user.FullName ?? user.Email
                          };
             return result.ToList();
         }

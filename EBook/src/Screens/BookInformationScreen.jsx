@@ -14,7 +14,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useState, useRef, useMemo, useEffect } from "react";
 import { favoriteBook } from "../Services/BookService";
 import { useRoute } from "@react-navigation/native";
-import { getBookById, rateBook } from "../Services/BookService";
+import { getBookById, rateBook, listRateBooks } from "../Services/BookService";
 import BaseUrl from "../Utils/BaseUrl";
 import { Rating, RatingInput } from "react-native-stock-star-rating";
 
@@ -46,6 +46,7 @@ const BookInfomationScreen = ({ navigation }) => {
   const [ratingContent, setRatingContent] = useState(null);
   const [rating, setRating] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   const getById = async () => {
     const result = await getBookById(bookId);
     setBookInfo(result?.data);
@@ -63,11 +64,21 @@ const BookInfomationScreen = ({ navigation }) => {
     const data = { bookId: bookId, rate: rating, content: ratingContent };
     const result = await rateBook(data);
     setModalVisible(!modalVisible);
+    setRefresh(!refresh)
+  };
+
+  const RateBooks = async () => {
+    const result = await listRateBooks(bookId);
+    setComments(result?.data);
   };
 
   useEffect(() => {
     getById();
   }, []);
+
+  useEffect(() => {
+    RateBooks();
+  }, [refresh]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -208,7 +219,7 @@ const BookInfomationScreen = ({ navigation }) => {
                       ></Image>
                     </View>
                     <View>
-                      <Text style={{ fontWeight: "900" }}>{item?.email}</Text>
+                      <Text style={{ fontWeight: "900" }}>{item?.fullName}</Text>
                       <Rating stars={item?.rate ?? 0} maxStars={5} size={13} />
                       <Text style={{ marginTop: 5 }}>{item?.content}</Text>
                     </View>
