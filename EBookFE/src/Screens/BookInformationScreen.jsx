@@ -7,7 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   Modal,
-  Alert
+  Alert,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -200,6 +200,7 @@ const BookInfomationScreen = ({ navigation }) => {
                       flexDirection: "row",
                       marginTop: 5,
                     }}
+                    key={item.id}
                   >
                     <View style={{ marginRight: 5 }}>
                       <Image
