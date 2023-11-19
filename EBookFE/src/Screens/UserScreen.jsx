@@ -6,22 +6,23 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { logout } from "../Services/AuthService";
-
+import { GetCurrentUserInfo } from "../Services/UserService";
+import { useFocusEffect } from "@react-navigation/native";
 const UserScreen = ({ navigation }) => {
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState();
   const getUserName = async () => {
     const res = await GetCurrentUserInfo();
-    console.log(res?.data);
-    setUsername(res?.data?.fullName);
+    console.log("res.data", res?.data);
+    setUsername(res?.data.fullName);
   };
-  useEffect(() => {
-    async () => {
-      await getUserName();
-    };
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      getUserName();
+    }, [])
+  );
   const FormSetting = ({ icon, title, onPress }) => (
     <TouchableOpacity style={styles.form} onPress={onPress}>
       <View style={{ flexDirection: "row" }}>
@@ -114,7 +115,6 @@ const UserScreen = ({ navigation }) => {
                 style={{ fontSize: 18, fontWeight: "700", color: "#72D9FC" }}
               >
                 {username === "" ? "Vui lòng cập nhật thông tin" : username}
-                {/* Nguyễn Văn A */}
               </Text>
               <Text style={{ color: "#ccc" }}>Đọc giả</Text>
             </View>
