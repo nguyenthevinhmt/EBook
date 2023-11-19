@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native'
 import React from 'react'
 import Pdf from 'react-native-pdf';
 
-const BookPDFScreen = () => {
+const PdfRead = () => {
     const PdfResource = { uri: 'https://pdfobject.com/pdf/sample.pdf', cache: true };
     
     return (
@@ -20,7 +20,7 @@ const BookPDFScreen = () => {
     )
 }
 
-export default BookPDFScreen
+export default PdfRead
 
 const styles = StyleSheet.create({
     container: {
