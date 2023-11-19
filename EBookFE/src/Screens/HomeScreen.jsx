@@ -15,7 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import { bookGetAll, getBookByLikeCount } from "../Services/BookService";
 import BaseUrl from "../Utils/BaseUrl";
 import React, { useState, useEffect } from "react";
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect } from "@react-navigation/native";
 
 const itemsPerRow = 3;
 const HomeScreen = () => {
@@ -26,50 +26,6 @@ const HomeScreen = () => {
   const BookInformation = (bookId) => {
     navigation.navigate("BookInfomationScreen", { bookId: bookId });
   };
-  const data = [
-    {
-      id: "1",
-      name: "Năng Lượng Tĩnh Lặng ",
-      author: "Eckhart Tolle",
-      image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
-      viewCount: "20",
-    },
-    {
-      id: "2",
-      name: "Bí Mật Tư Duy Triệu Phú T. ",
-      author: "Harv Eker",
-      image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
-      viewCount: "20",
-    },
-    {
-      id: "3",
-      name: "7 Thói Quen Hiệu Quả Stephen",
-      author: " R. Covey",
-      image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
-      viewCount: "20",
-    },
-    {
-      id: "4",
-      name: "Nhìn Xa, Nhìn Rõ - Dr. Wayne ",
-      author: "W. Dyer",
-      image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
-      viewCount: "20",
-    },
-    {
-      id: "5",
-      name: "Tư Duy Tích Cực ",
-      author: " Norman Vincent Peale",
-      image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
-      viewCount: "20",
-    },
-    {
-      id: "6",
-      name: "Tư Duy Nhanh Và Chậm ",
-      author: " Daniel Kahneman",
-      image: "https://m.media-amazon.com/images/I/51JJjOHi2sL.jpg",
-      viewCount: "20",
-    },
-  ];
 
   const getBooks = async () => {
     const result = await bookGetAll();
@@ -85,14 +41,17 @@ const HomeScreen = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      getBooks();React
+      getBooks();
+      React;
       getBooksByViewCount();
     }, [])
   );
 
   useEffect(() => {
-    getBooks();
-    getBooksByViewCount();
+    async () => {
+      await getBooks();
+      await getBooksByViewCount();
+    };
   }, []);
 
   const rows = [];
@@ -113,7 +72,7 @@ const HomeScreen = () => {
             <Image
               style={{ height: "75%", width: "95%", borderRadius: 5 }}
               source={{ uri: `${BaseUrl}${item.imageUrl}` }}
-            // resizeMode="contain"
+              // resizeMode="contain"
             ></Image>
             <View style={{ flexDirection: "column", height: 30 }}>
               <Text

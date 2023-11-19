@@ -37,6 +37,7 @@ import BookAddScreen from "./src/Screens/BookAddScreen";
 import BookUpdateScreen from "./src/Screens/Admin/BookUpdateScreen";
 import UnDevelopedScreen from "./src/Screens/UnDevelopedScreen";
 import BookPDFScreen from "./src/Screens/BookPDFScreen";
+import ChangePasswordScreen from "./src/Screens/ChangePasswordScreen";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -53,19 +54,34 @@ export default function App() {
         <Stack.Screen name={"SearchScreen"} component={SearchScreen} />
         <Stack.Screen name={"RatingScreen"} component={RatingScreen} />
         <Stack.Screen name={"UserScreen"} component={UserScreen} />
-        <Stack.Screen name={"UnDevelopedScreen"} component={UnDevelopedScreen}
+        <Stack.Screen
+          name={"UnDevelopedScreen"}
+          component={UnDevelopedScreen}
         />
         {/* Quản lý sách */}
-        <Stack.Screen name={"BookManagerScreen"} component={BookManagerScreen} />
+        <Stack.Screen
+          name={"BookManagerScreen"}
+          component={BookManagerScreen}
+        />
         {/* Thêm sách */}
         <Stack.Screen name={"BookAddScreen"} component={BookAddScreen} />
         {/* Cập nhật sách */}
         <Stack.Screen name={"BookUpdateScreen"} component={BookUpdateScreen} />
 
-        <Stack.Screen name={"BookInfomationScreen"} component={BookInfomationScreen} />
+        <Stack.Screen
+          name={"BookInfomationScreen"}
+          component={BookInfomationScreen}
+        />
         <Stack.Screen name={"BookPDFScreen"} component={BookPDFScreen} />
-        <Stack.Screen name={"AddCategoryScreen"} component={AddCategoryScreen} />
+        <Stack.Screen
+          name={"AddCategoryScreen"}
+          component={AddCategoryScreen}
+        />
         <Stack.Screen name={"UserDetailScreen"} component={UserDetailScreen} />
+        <Stack.Screen
+          name={"ChangePasswordScreen"}
+          component={ChangePasswordScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

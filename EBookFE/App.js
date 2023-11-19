@@ -1,3 +1,25 @@
+// import { StatusBar } from 'expo-status-bar';
+// import { StyleSheet, Text, View } from 'react-native';
+// import React from 'react'
+// import PdfRead from './srcc';
+
+// export default function App() {
+//   return (
+//     <View style={styles.container}>
+//       <PdfRead></PdfRead>
+//     </View>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: '#fff',
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+// });
+
 import LoginScreen from "./src/Screens/LoginScreen";
 import SplashScreen from "./src/Screens/SplashScreen";
 import RegisterScreen from "./src/Screens/RegisterScreen";
@@ -14,7 +36,7 @@ import BookManagerScreen from "./src/Screens/Admin/BookManagerScreen";
 import BookAddScreen from "./src/Screens/BookAddScreen";
 import BookUpdateScreen from "./src/Screens/Admin/BookUpdateScreen";
 import UnDevelopedScreen from "./src/Screens/UnDevelopedScreen";
-import ChangePasswordScreen from "./src/Screens/ChangePasswordScreen";
+import BookPDFScreen from "./src/Screens/BookPDFScreen";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -31,10 +53,6 @@ export default function App() {
         <Stack.Screen name={"SearchScreen"} component={SearchScreen} />
         <Stack.Screen name={"RatingScreen"} component={RatingScreen} />
         <Stack.Screen name={"UserScreen"} component={UserScreen} />
-        <Stack.Screen
-          name={"ChangePasswordScreen"}
-          component={ChangePasswordScreen}
-        />
         <Stack.Screen
           name={"UnDevelopedScreen"}
           component={UnDevelopedScreen}
@@ -53,6 +71,7 @@ export default function App() {
           name={"BookInfomationScreen"}
           component={BookInfomationScreen}
         />
+        <Stack.Screen name={"BookPDFScreen"} component={BookPDFScreen} />
         <Stack.Screen
           name={"AddCategoryScreen"}
           component={AddCategoryScreen}

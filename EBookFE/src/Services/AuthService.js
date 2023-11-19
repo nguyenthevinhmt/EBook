@@ -1,7 +1,6 @@
 import axios from "../Services/interceptor";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import BaseUrl from "../Utils/BaseUrl";
-
 export const login = async (email, password) => {
   try {
     const response = await axios({

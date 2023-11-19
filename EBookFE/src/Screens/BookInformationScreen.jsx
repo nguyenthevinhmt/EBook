@@ -259,6 +259,12 @@ const BookInfomationScreen = ({ navigation }) => {
             justifyContent: "center",
             backgroundColor: "#72D9FC",
           }}
+          onPress={() =>
+            navigation.navigate("BookPDFScreen", {
+              bookUrl: bookInfo?.fileUrl,
+              bookName: bookInfo?.name,
+            })
+          }
         >
           <Text style={{ fontSize: 16, fontWeight: "500", color: "#fff" }}>
             Đọc sách
