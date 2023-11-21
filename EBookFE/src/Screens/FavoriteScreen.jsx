@@ -1,36 +1,36 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import {
   StyleSheet,
   Text,
   View,
   TextInput,
-  TouchableOpacity,
   FlatList,
   KeyboardAvoidingView,
 } from "react-native";
-
 import { SafeAreaView } from "react-native-safe-area-context";
 import BookCard from "../Components/BookCard";
-// import Icon from "react-native-vector-icons";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { bookFavorite } from "../Services/BookService";
-import DropDownPicker from 'react-native-dropdown-picker';
+import DropDownPicker from "react-native-dropdown-picker";
 import { category } from "../Utils/constants";
-const FavoriteScreen = ({ navigation }) => {
+import { useFocusEffect } from "@react-navigation/native";
 
+const FavoriteScreen = ({ navigation }) => {
   const [books, setBooks] = useState([]);
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState(category);
-  const [searchName, setSearchName] = useState('');
+  const [searchName, setSearchName] = useState("");
   const [categoryId, setCategoryId] = useState();
   const getBookFavorite = async () => {
     //await AsyncStorage.removeItem("accessToken");
     const result = await bookFavorite(searchName, categoryId);
     setBooks(result?.data);
   };
-  useEffect(() => {
-    getBookFavorite();
-  }, [searchName, categoryId]);
+  useFocusEffect(
+    useCallback(() => {
+      getBookFavorite();
+    }, [searchName, categoryId])
+  );
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -56,7 +56,7 @@ const FavoriteScreen = ({ navigation }) => {
         >
           <View>
             <DropDownPicker
-              style={{ marginTop: 10, borderColor: "#ccc", width: '50%' }}
+              style={{ marginTop: 10, borderColor: "#ccc", width: "50%" }}
               placeholder="Chọn thể loại"
               open={open}
               value={categoryId}

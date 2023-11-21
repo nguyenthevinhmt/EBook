@@ -12,7 +12,7 @@ import { logout } from "../Services/AuthService";
 import { GetCurrentUserInfo } from "../Services/UserService";
 import { useFocusEffect } from "@react-navigation/native";
 const UserScreen = ({ navigation }) => {
-  const [username, setUsername] = useState();
+  const [username, setUsername] = useState("");
   const getUserName = async () => {
     const res = await GetCurrentUserInfo();
     console.log("res.data", res?.data);
@@ -114,7 +114,7 @@ const UserScreen = ({ navigation }) => {
               <Text
                 style={{ fontSize: 18, fontWeight: "700", color: "#72D9FC" }}
               >
-                {username === "" ? "Vui lòng cập nhật thông tin" : username}
+                {username === null ? "Vui lòng cập nhật thông tin" : username}
               </Text>
               <Text style={{ color: "#ccc" }}>Đọc giả</Text>
             </View>

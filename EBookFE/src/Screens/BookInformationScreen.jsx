@@ -11,9 +11,9 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useState, useRef, useMemo, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { favoriteBook } from "../Services/BookService";
-import { useRoute } from "@react-navigation/native";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { getBookById, rateBook } from "../Services/BookService";
 import BaseUrl from "../Utils/BaseUrl";
 import { Rating, RatingInput } from "react-native-stock-star-rating";
@@ -46,6 +46,7 @@ const BookInfomationScreen = ({ navigation }) => {
   const [ratingContent, setRatingContent] = useState(null);
   const [rating, setRating] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
+  const [checkComment, setCheckComment] = useState(0);
   const getById = async () => {
     const result = await getBookById(bookId);
     setBookInfo(result?.data);
@@ -63,11 +64,16 @@ const BookInfomationScreen = ({ navigation }) => {
     const data = { bookId: bookId, rate: rating, content: ratingContent };
     const result = await rateBook(data);
     setModalVisible(!modalVisible);
+    setCheckComment((prev) => {
+      prev + 1;
+    });
   };
 
-  useEffect(() => {
-    getById();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      getById();
+    }, [checkComment])
+  );
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -167,8 +173,8 @@ const BookInfomationScreen = ({ navigation }) => {
               </Text>
               <Form lable={bookInfo?.categoryName} title={"Thể loại"}></Form>
               <Form lable={bookInfo?.author} title={"Tác giả"}></Form>
-              <Form lable={"VIP"} title={"Loại sách"}></Form>
-              <Form lable={"Tiếng việt"} title={"Ngôn ngữ"}></Form>
+              <Form lable={"publishingYear"} title={"Phát hành"}></Form>
+              {/* <Form lable={"Tiếng việt"} title={"Ngôn ngữ"}></Form> */}
             </View>
           </View>
           {/* Bình luận đánh giá */}

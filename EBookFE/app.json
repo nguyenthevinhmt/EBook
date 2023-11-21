@@ -29,7 +29,7 @@
         "android.permission.DOWNLOAD_WITHOUT_NOTIFICATION",
         "android.permission.ACCESS_NETWORK_STATE"
       ],
-      "package": "com.nguyenthevinh.EBookApp"
+      "package": "com.expo.EBookApp"
     },
     "web": {
       "favicon": "./assets/favicon.png"

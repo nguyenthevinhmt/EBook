@@ -72,7 +72,7 @@ export const RegisterScreen = () => {
       hasError = false;
     }
 
-    if (hasError == true) {
+    if (hasError == false) {
       // Nếu không có lỗi, thực hiện đăng kí thành công
       setEmailError("");
       setIsValidEmail(false);

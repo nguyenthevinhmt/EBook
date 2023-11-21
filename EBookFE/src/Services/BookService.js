@@ -1,17 +1,9 @@
 import BaseUrl from "../Utils/BaseUrl";
 import axios from "../Services/interceptor";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const addBook = async (formData) => {
-  const token = await AsyncStorage.getItem("accessToken");
-  console.log("token", token);
   axios
-    .post(`${BaseUrl}/book/add`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    .post(`${BaseUrl}/book/add`, formData)
     .then((response) => {
       return response;
     })
@@ -37,15 +29,8 @@ export const getBookByLikeCount = async () => {
 };
 
 export const uploadBook = async (formData) => {
-  const token = await AsyncStorage.getItem("accessToken");
-  console.log("token", token);
   axios
-    .put(`${BaseUrl}/book/update`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    .put(`${BaseUrl}/book/update`, formData)
     .then((response) => {
       return response;
     })
@@ -57,14 +42,10 @@ export const uploadBook = async (formData) => {
 };
 
 export const deleteBook = async (bookId) => {
-  const token = await AsyncStorage.getItem("accessToken");
   try {
     const response = await axios({
       method: "PUT",
       url: `${BaseUrl}/book/delete/${bookId}`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
     });
     return response;
   } catch (error) {
@@ -75,14 +56,10 @@ export const deleteBook = async (bookId) => {
 };
 
 export const bookGetAll = async () => {
-  const token = await AsyncStorage.getItem("accessToken");
   try {
     const response = await axios({
       method: "GET",
       url: `${BaseUrl}/book/get-all`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
     });
     return response;
   } catch (error) {
