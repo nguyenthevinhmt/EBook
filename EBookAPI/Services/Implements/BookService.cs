@@ -74,7 +74,7 @@ namespace EBook.Services.Implements
         {
             var userId = CommonUtils.GetCurrentUserId(_httpContext);
 
-            var book = _dbContext.Books.FirstOrDefault(b => b.Id == input.Id && b.UserId == userId && !b.Deleted)
+            var book = _dbContext.Books.FirstOrDefault(b => b.Id == input.Id && !b.Deleted)
                 ?? throw new Exception($"Không tìm thấy sách");
 
             if (input.FileUrl != null)
@@ -108,7 +108,7 @@ namespace EBook.Services.Implements
         {
             var userId = CommonUtils.GetCurrentUserId(_httpContext);
 
-            var book = _dbContext.Books.FirstOrDefault(b => b.Id == bookId && b.UserId == userId && !b.Deleted)
+            var book = _dbContext.Books.FirstOrDefault(b => b.Id == bookId && !b.Deleted)
                 ?? throw new Exception($"Không tìm thấy sách");
 
             book.Deleted = true;
