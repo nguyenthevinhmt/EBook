@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
   KeyboardAvoidingView,
-  Image
+  Image,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import BookCard from "../../Components/BookCard";
@@ -17,8 +17,8 @@ import { useNavigation } from "@react-navigation/native";
 import { bookManager } from "../../Services/BookService";
 import { category } from "../../Utils/constants";
 import { formatDateDDMMYYYY } from "../../Utils/constants";
-import DropDownPicker from 'react-native-dropdown-picker';
-import { useFocusEffect } from '@react-navigation/native';
+import DropDownPicker from "react-native-dropdown-picker";
+import { useFocusEffect } from "@react-navigation/native";
 const BookManagerScreen = () => {
   const navigation = useNavigation();
   const [result, setResult] = useState([]);
@@ -33,15 +33,14 @@ const BookManagerScreen = () => {
   };
 
   useFocusEffect(
-    React.useCallback(() => {
-      // Gọi lại fetchData khi màn hình được focus lại
+    useCallback(() => {
       bookManagers();
-    }, [])
+    }, [searchName, categoryId])
   );
 
-  useEffect(() => {
-    bookManagers();
-  }, [searchName, categoryId]);
+  // useEffect(() => {
+  //   bookManagers();
+  // }, [searchName, categoryId]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -60,16 +59,16 @@ const BookManagerScreen = () => {
         </View>
         <View
           style={{
-            flexDirection: 'row',
+            flexDirection: "row",
             marginHorizontal: 15,
             marginVertical: 8,
-            justifyContent: 'space-between',
-            height: 50
+            justifyContent: "space-between",
+            height: 50,
           }}
         >
-          <View style={{ width: '50%' }}>
+          <View style={{ width: "50%" }}>
             <DropDownPicker
-              style={{ borderColor: "#ccc", width: '70%' }}
+              style={{ borderColor: "#ccc", width: "70%" }}
               placeholder="Chọn thể loại"
               open={open}
               value={categoryId}
@@ -91,16 +90,18 @@ const BookManagerScreen = () => {
             }}
             onPress={() => navigation.navigate("BookAddScreen")}
           >
-            <Text style={{ marginLeft: 8, color: "#fff", fontWeight: '500' }}>Đăng tải sách</Text>
+            <Text style={{ marginLeft: 8, color: "#fff", fontWeight: "500" }}>
+              Đăng tải sách
+            </Text>
           </TouchableOpacity>
         </View>
         <View
           style={{
-            //flex: 1,
+            flex: 1,
             width: "100%",
             justifyContent: "center",
             alignItems: "center",
-            marginLeft: 5
+            marginLeft: 5,
           }}
         >
           <FlatList
@@ -108,7 +109,8 @@ const BookManagerScreen = () => {
             showsVerticalScrollIndicator={false}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-              <TouchableOpacity style={styles.cardContainer}
+              <TouchableOpacity
+                style={styles.cardContainer}
                 onPress={() => {
                   navigation.navigate(
                     "BookUpdateScreen",
@@ -116,21 +118,44 @@ const BookManagerScreen = () => {
                   );
                 }}
               >
-                <Image source={{ uri: `${BaseUrl}${item.imageUrl}` }} style={styles.image} />
+                <Image
+                  source={{ uri: `${BaseUrl}${item.imageUrl}` }}
+                  style={styles.image}
+                />
                 <View>
-                  <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
+                  <Text
+                    style={styles.title}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
                     {item.name}
                   </Text>
-                  <Text style={styles.author} numberOfLines={1} ellipsizeMode="tail">
+                  <Text
+                    style={styles.author}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
                     - Tác giả: {item?.author}
                   </Text>
-                  <Text style={styles.author} numberOfLines={1} ellipsizeMode="tail">
+                  <Text
+                    style={styles.author}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
                     - Thể loại: {item?.categoryName}
                   </Text>
-                  <Text style={styles.author} numberOfLines={1} ellipsizeMode="tail">
+                  <Text
+                    style={styles.author}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
                     - Người đăng tải: {item?.createdByName}
                   </Text>
-                  <Text style={styles.author} numberOfLines={1} ellipsizeMode="tail">
+                  <Text
+                    style={styles.author}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
                     - Ngày đăng tải: {formatDateDDMMYYYY(item?.createdDate)}
                   </Text>
                 </View>
@@ -169,11 +194,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-around", // Điều này sẽ đảm bảo có không gian đều xung quanh các items
   },
-  flatListContentContainer: {},
+  flatListContentContainer: {
+    // height: "100%",
+  },
   cardContainer: {
-    width: '100%',
+    width: "100%",
     padding: 5,
-    flexDirection: 'row',
+    flexDirection: "row",
     //backgroundColor: 'red'
   },
   author: {
@@ -185,7 +212,7 @@ const styles = StyleSheet.create({
     height: 140,
     resizeMode: "cover",
     borderRadius: 8,
-    marginRight: 10
+    marginRight: 10,
   },
   title: {
     marginTop: 8,

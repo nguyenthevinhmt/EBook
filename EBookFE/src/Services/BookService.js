@@ -109,6 +109,7 @@ export const bookManager = async (keyword, categoryId) => {
       params: {
         Name: keyword,
         CategoryId: categoryId,
+        Index: 25,
       },
     });
     return response;
