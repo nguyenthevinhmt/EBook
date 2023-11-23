@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Alert,
   ScrollView,
+  ToastAndroid,
 } from "react-native";
 import { useEffect, useState } from "react";
 import Icons from "react-native-vector-icons/Feather";
@@ -61,6 +62,9 @@ const BookUpdateScreen = ({ navigation }) => {
       console.error("Error picking document: ", err);
     }
   };
+  const showAlert = (text) => {
+    ToastAndroid.show(text, ToastAndroid.SHORT);
+  };
 
   const updateBook = async () => {
     try {
@@ -98,6 +102,7 @@ const BookUpdateScreen = ({ navigation }) => {
       formData.append("description", description);
       const result = await uploadBook(formData);
       console.log(result);
+      showAlert("Cập nhật sách thành công");
       navigation.goBack();
     } catch (error) {
       console.error("Lỗi tải sách:", error);
@@ -108,6 +113,7 @@ const BookUpdateScreen = ({ navigation }) => {
     try {
       const result = await deleteBook(bookId);
       console.log(result);
+      showAlert("Xóa sách thành công");
       navigation.goBack();
     } catch (error) {
       console.error("Xóa sách không thành công: ", error);

@@ -7,6 +7,7 @@ import {
   useWindowDimensions,
   TouchableOpacity,
   ScrollView,
+  ToastAndroid,
 } from "react-native";
 import { useState } from "react";
 import Icons from "react-native-vector-icons/Feather";
@@ -37,6 +38,9 @@ const BookAddScreen = ({ navigation }) => {
     if (!result.canceled) {
       setImageUrl(result.assets[0].uri);
     }
+  };
+  const showAlert = (text) => {
+    ToastAndroid.show(text, ToastAndroid.SHORT);
   };
 
   const pickPdf = async () => {
@@ -83,21 +87,22 @@ const BookAddScreen = ({ navigation }) => {
       formData.append("categoryId", categoryId);
       formData.append("description", description);
       const result = await addBook(formData);
-      console.log(result);
+      console.log("kết quả trả về khi thêm", result);
       if (result) {
         setImageUrl();
         setAuthor();
         setImageUrl();
         setFilePdf(null);
         setCategoryId(1);
-        setName();
-        setPublishingCompany();
-        setDescription();
-
+        setName("");
+        setPublishingCompany("");
+        setDescription("");
+        showAlert("Thêm sách thành công");
         navigation.goBack();
       }
     } catch (error) {
       console.error("Lỗi tải sách:", error);
+      showAlert("Thêm sách không thành công");
     }
   };
 
@@ -258,7 +263,7 @@ const BookAddScreen = ({ navigation }) => {
             ) : null}
           </View>
           <TouchableOpacity
-            onPress={async () => await uploadFile()}
+            onPress={uploadFile}
             style={{
               padding: 10,
               width: "100%",

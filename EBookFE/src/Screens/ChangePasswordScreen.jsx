@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   Text,
   TextInput,
-  Alert,
+  ToastAndroid,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ChangePassword } from "../Services/UserService";
@@ -15,6 +15,9 @@ const ChangePasswordScreen = ({ navigation }) => {
     oldPassword: "",
     newPassword: "",
   });
+  const showAlert = (text) => {
+    ToastAndroid.show(text, ToastAndroid.SHORT);
+  };
 
   const handleChangePassword = async () => {
     try {
@@ -26,7 +29,7 @@ const ChangePasswordScreen = ({ navigation }) => {
       if (res.status === 200) navigation.goBack();
     } catch (error) {
       console.log(error);
-      Alert.alert("Thay đổi mật khẩu không thành công");
+      showAlert("Thay đổi mật khẩu không thành công!");
     }
   };
 

@@ -2,16 +2,16 @@ import BaseUrl from "../Utils/BaseUrl";
 import axios from "../Services/interceptor";
 
 export const addBook = async (formData) => {
-  axios
-    .post(`${BaseUrl}/book/add`, formData)
-    .then((response) => {
-      return response;
-    })
-    .catch((error) => {
-      console.log("Lỗi");
-      console.log(error?.response);
-      return null;
+  try {
+    const res = axios.post(`${BaseUrl}/book/add`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data", // Đặt loại nội dung là form data
+      },
     });
+    return res;
+  } catch (error) {
+    console.log("Có lỗi khi thêm sách");
+  }
 };
 
 export const getBookByLikeCount = async () => {
