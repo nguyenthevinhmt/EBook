@@ -87,19 +87,9 @@ const BookAddScreen = ({ navigation }) => {
       formData.append("categoryId", categoryId);
       formData.append("description", description);
       const result = await addBook(formData);
-      console.log("kết quả trả về khi thêm", result);
-      if (result) {
-        setImageUrl();
-        setAuthor();
-        setImageUrl();
-        setFilePdf(null);
-        setCategoryId(1);
-        setName("");
-        setPublishingCompany("");
-        setDescription("");
-        showAlert("Thêm sách thành công");
+      setTimeout(() => {
         navigation.goBack();
-      }
+      }, 1000);
     } catch (error) {
       console.error("Lỗi tải sách:", error);
       showAlert("Thêm sách không thành công");

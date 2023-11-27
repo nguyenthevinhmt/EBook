@@ -101,9 +101,10 @@ const BookUpdateScreen = ({ navigation }) => {
       formData.append("categoryId", categoryId);
       formData.append("description", description);
       const result = await uploadBook(formData);
-      console.log(result);
       showAlert("Cập nhật sách thành công");
-      navigation.goBack();
+      setTimeout(() => {
+        navigation.goBack();
+      }, 1000);
     } catch (error) {
       console.error("Lỗi tải sách:", error);
     }
@@ -112,9 +113,10 @@ const BookUpdateScreen = ({ navigation }) => {
   const deleteFunc = async () => {
     try {
       const result = await deleteBook(bookId);
-      console.log(result);
       showAlert("Xóa sách thành công");
-      navigation.goBack();
+      setTimeout(() => {
+        navigation.goBack();
+      }, 1000);
     } catch (error) {
       console.error("Xóa sách không thành công: ", error);
     }

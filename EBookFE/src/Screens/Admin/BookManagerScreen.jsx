@@ -29,6 +29,7 @@ const BookManagerScreen = () => {
   const bookManagers = async () => {
     const result = await bookManager(searchName, categoryId);
     setResult(result.data);
+    console.log("ok", result.data)
   };
 
   useFocusEffect(
@@ -43,7 +44,7 @@ const BookManagerScreen = () => {
         <View style={styles.headerSearch}>
           <Icon name="magnify" size={18} color={"#666"}></Icon>
           <TextInput
-            style={{ paddingHorizontal: 10 }}
+            style={{ paddingHorizontal: 10, height: 20 }}
             placeholder="Tìm kiếm sách của bạn ..."
             value={searchName}
             onChangeText={(value) => setSearchName(value)}
@@ -92,10 +93,11 @@ const BookManagerScreen = () => {
         </View>
         <View
           style={{
-            flex: 1,
+            // flex: 1,
+            // width: "100%",
+            // justifyContent: "center",
+            // alignItems: "center",
             width: "100%",
-            justifyContent: "center",
-            alignItems: "center",
             marginLeft: 5,
           }}
         >
@@ -156,7 +158,6 @@ const BookManagerScreen = () => {
                 </View>
               </TouchableOpacity>
             )}
-            numColumns={3}
             contentContainerStyle={styles.flatListContentContainer}
           />
         </View>

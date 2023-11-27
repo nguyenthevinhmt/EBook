@@ -93,7 +93,6 @@ const BookUpdateScreen = ({ navigation }) => {
             formData.append("categoryId", categoryId);
             formData.append("description", description);
             const result = await uploadBook(formData);
-            console.log(result);
             navigation.goBack();
         } catch (error) {
             console.error("Lỗi tải sách:", error);

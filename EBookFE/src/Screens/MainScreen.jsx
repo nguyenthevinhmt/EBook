@@ -90,25 +90,6 @@ const MainScreen = () => {
           }}
         />
       )}
-      {userType == 1 && (
-        <BottomTabs.Screen
-          name="BookAddScreen"
-          component={BookAddScreen}
-          options={{
-            tabBarLabel: "Thêm sách",
-            tabBarIcon: ({ focused }) => (
-              <Image
-                source={require("../images/navigationIcon/user-svgrepo-com.png")}
-                style={{
-                  width: 24,
-                  height: 24,
-                  tintColor: focused ? "#72D9FC" : "gray",
-                }}
-              />
-            ),
-          }}
-        />
-      )}
       <BottomTabs.Screen
         name="Tôi"
         component={UserScreen}
