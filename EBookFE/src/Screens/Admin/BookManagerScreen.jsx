@@ -29,7 +29,7 @@ const BookManagerScreen = () => {
   const bookManagers = async () => {
     const result = await bookManager(searchName, categoryId);
     setResult(result.data);
-    console.log("ok", result.data)
+    console.log("ok", result.data);
   };
 
   useFocusEffect(
@@ -93,7 +93,7 @@ const BookManagerScreen = () => {
         </View>
         <View
           style={{
-            // flex: 1,
+            flex: 1,
             // width: "100%",
             // justifyContent: "center",
             // alignItems: "center",
